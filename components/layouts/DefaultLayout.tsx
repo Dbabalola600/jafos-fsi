@@ -5,7 +5,7 @@ function DefaultLayout({ children }: { children?: JSX.Element }) {
     return (
 
         <div className="bg-primaryColour md:py-32 min-h-screen">
-            <div className="bg-white max-w-5xl mx-auto py-20 px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
+            <div className="bg-white max-w-5xl mx-auto py-5 px-10 md:py-10 md:px-20 min-h-screen md:min-h-0">
                 <main>
                     <Head>
                         <title>Jafos</title>
