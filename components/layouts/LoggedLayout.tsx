@@ -5,9 +5,9 @@ import NavBar from "./NavBar";
 export default function LoggedLayout({ children }: { children?: JSX.Element }) {
     return (
 
-        <div className="bg-primaryColour md:py-32 min-h-screen">
-            <NavBar/>
-            <div className="bg-white max-w-5xl mx-auto py-20 px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
+        <div className="bg-primaryColour md:space-y-20  min-h-screen">
+            <NavBar />
+            <div className="bg-white max-w-5xl mx-auto py-20  px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
                 <main>
                     <Head>
                         <title>Jafos</title>
@@ -16,6 +16,8 @@ export default function LoggedLayout({ children }: { children?: JSX.Element }) {
                     </Head>
 
                     {children}
+
+
                 </main>
 
             </div>

@@ -8,7 +8,7 @@ import { InferGetStaticPropsType } from "next";
 
 
 
-export default function NavBar2(  ) {
+export default function EmpNav(  ) {
   
     
     
@@ -65,7 +65,7 @@ export default function NavBar2(  ) {
 
 
                 {/*Note that in this div we will use a ternary operator to decide whether or not to display the content of the div  */}
-                <div
+                {/* <div
                     className={`${active ? '' : 'hidden'
                         }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
                 >
@@ -93,7 +93,7 @@ export default function NavBar2(  ) {
 
 
                     </div>
-                </div>
+                </div> */}
             </nav>
         </>
     )
