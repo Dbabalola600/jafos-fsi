@@ -53,19 +53,14 @@ function Login() {
               {isButtonLoading ? "Loading..." : "Proceed"}
           </button> */}
                         <Link
-                            href="student/DashBoard">
+                            href="/Caterer/DashBoard">
                             <button className="w-full btn-primary btn ">
                                 SIGN IN
                             </button>
                         </Link>
 
 
-                        <h6 className="text-center md:text-xl w-full">
-                            Don't have an account?{" "}
-                            <span className=" hover:underline">
-                                <Link href="student/CreateAccount">Create account</Link>
-                            </span>
-                        </h6>
+
                     </div>
 
 

@@ -30,7 +30,7 @@ const Home: NextPage = () => {
 
           <div className=' col-span-6 mx-auto'>
             <Link
-              href="/">
+              href="/Caterer">
               <button className="btn btn-lg btn-primary w-[500px]">Seller</button>
             </Link>
           </div>
