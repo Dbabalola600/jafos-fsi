@@ -8,10 +8,10 @@ import { InferGetStaticPropsType } from "next";
 
 
 
-export default function EmpNav() {
-
-
-
+export default function NavBar2(  ) {
+  
+    
+    
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -40,7 +40,7 @@ export default function EmpNav() {
                     </a>
                 </Link>
 
-                {/* <button
+                <button
                     className=' inline-flex p-3 hover:primaryColour rounded lg:hidden text-white ml-auto hover:text-white outline-none'
                     onClick={handleClick}
                 >
@@ -50,7 +50,7 @@ export default function EmpNav() {
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
-
+                        
                     >
                         <path
                             strokeLinecap='round'
@@ -59,13 +59,13 @@ export default function EmpNav() {
                             d='M4 6h16M4 12h16M4 18h16'
                         />
                     </svg>
-                </button> */}
-              
+                </button>
+
 
 
 
                 {/*Note that in this div we will use a ternary operator to decide whether or not to display the content of the div  */}
-                {/* <div
+                <div
                     className={`${active ? '' : 'hidden'
                         }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
                 >
@@ -80,12 +80,12 @@ export default function EmpNav() {
 
                         <Link href='/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Home
+                                Cart
                             </a>
                         </Link>
 
                         <Link href='/'>
-                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-grayColour hover:text-primaryColour bg-red-600'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
                                 LogOut
                             </a>
                         </Link>
@@ -93,7 +93,7 @@ export default function EmpNav() {
 
 
                     </div>
-                </div> */}
+                </div>
             </nav>
         </>
     )

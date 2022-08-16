@@ -1,19 +1,23 @@
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import Header from "../../components/shared/Header";
-import LoggedLayout from "../../components/layouts/LoggedLayout";
 
-
+import CatLayout from "./Layout/CatLayout";
 
 
 function DashBoard (){
     return (
-        <LoggedLayout>
+        <CatLayout>
             <>
+
+            <div 
+            className=" bg-black md:w-60">
             <Header
             title="WELCOME USER"
             />
+            </div>
+           
             </>
-        </LoggedLayout>
+        </CatLayout>
     )
 }
 

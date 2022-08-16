@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import EmpNav from "./EmpNav";
-function DefaultLayout({ children }: { children?: JSX.Element }) {
+import NavBar from "./NavBar";
+
+export default function CatLayout({ children }: { children?: JSX.Element }) {
     return (
 
         <div className="bg-primaryColour md:space-y-20  min-h-screen">
-            <EmpNav/>
-            <div className="bg-white max-w-5xl mx-auto py-5 px-10 md:py-10 md:px-20 min-h-screen md:min-h-0">
+            <NavBar />
+            <div className="bg-white max-w-5xl mx-auto py-20  px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
                 <main>
                     <Head>
                         <title>Jafos</title>
@@ -15,6 +16,8 @@ function DefaultLayout({ children }: { children?: JSX.Element }) {
                     </Head>
 
                     {children}
+
+
                 </main>
 
             </div>
@@ -22,4 +25,3 @@ function DefaultLayout({ children }: { children?: JSX.Element }) {
     )
 }
 
-export default DefaultLayout;

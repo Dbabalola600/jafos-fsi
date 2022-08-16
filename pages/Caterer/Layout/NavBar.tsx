@@ -73,19 +73,19 @@ export default function NavBar2(  ) {
 
                         <Link href='/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Home
+                                Offerings
                             </a>
                         </Link>
 
 
-                        <Link href='/'>
+                        <Link href='/Caterer/Orders'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Home
+                                Orders
                             </a>
                         </Link>
 
                         <Link href='/'>
-                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-grayColour hover:text-primaryColour bg-red-600'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
                                 LogOut
                             </a>
                         </Link>
