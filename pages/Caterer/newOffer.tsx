@@ -3,97 +3,41 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import Header from "../../components/shared/Header";
 import TextInput from "../../components/shared/TextInput";
 
-
-import { FormEventHandler, useState } from "react";
-import newStudent from "../api/test/newstudent";
-import addStudent from "../api/test/newstudent";
-import { useRouter } from "next/router";
+import CatLayout from "./Layout/CatLayout";
 
 
-
-
-
-function CreateAccount() {
-    const router = useRouter()
-
-    const [data, setData] = useState(null)
-    const [isLoading, setLoading] = useState(false)
-
-    const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
-        e.preventDefault()
-        setLoading(true)
-        const formElements = e.currentTarget.elements as typeof e.currentTarget.elements & {
-            firstname: HTMLInputElement
-        }
-        const form = e.currentTarget.elements as any
-
-        const body = {
-            firstname: form.item(0).value,
-            lastname: form.item(1).value,
-            email: form.item(2).value,
-            matricno: form.item(3).value,
-            password: form.item(4).value,
-        }
-
-
-
-        const response = await fetch("/api/test/newstudent", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-
-                if (res.status == 200) {
-                    router.push("/student/")
-                }
-            }).catch(err => {
-                console.log(err)
-            })
-
-        setLoading(false)
-
-    }
-
-    
+function newOffer() {
     return (
-        <DefaultLayout>
+        <CatLayout>
             <form
                 autoSave={"off"}
-                onSubmit={
-                    newadd
-                }
+                // onSubmit={
+                //     newadd
+                // }
                 autoComplete={"off"}
                 className="w-full py-20 space-y-16  text-black text-base md:text-xl"
             >
 
                 <Header
-                    title="Create Account"
+                    title="ADD PRODUCT"
                     desc=" please provide necessary details for account creation" />
 
                 <div className="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-12 md:gap-y-28">
 
-                    {/* first name */}
+                    {/* title */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
                             // errorMessage={errors.firstName?.message}
-                            placeholder="First Name"
+                            placeholder="Title"
                             // registerName="fistName"
                             // register={register("firstName")}
                             type="text"
-                            name="firstname"
-                            id="firstname"
+                            name="title"
+                            id="title"
                         />
                     </div>
 
-                    {/* lastname */}
-                    <div className="col-span-12  md:col-span-6 ">
-                        <TextInput
-                            // errorMessage={errors.firstName?.message}
-                            placeholder="Last Name"
-                            // registerName="fistName"
-                            // register={register("firstName")}
-                            type="text"
-                            name="lastname"
-                            id="lastname"
-                        />
-                    </div>
+                  
 
                     {/* email */}
                     <div className="col-span-12  md:col-span-6 ">
@@ -109,35 +53,53 @@ function CreateAccount() {
                     </div>
 
 
-                    {/* matricNumber */}
+                    {/* price */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
                             // errorMessage={errors.firstName?.message}
-                            placeholder="Matric Number"
+                            placeholder="Price"
                             // registerName="fistName"
                             // register={register("firstName")}
                             type="number"
 
-                            name="matricno"
-                            id="matricno"
+                            name="price"
+                            id="price"
 
                         />
                     </div>
 
 
-                    {/* password */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
                             // errorMessage={errors.firstName?.message}
-                            placeholder="Password"
+                            placeholder="Category"
                             // registerName="fistName"
                             // register={register("firstName")}
-                            type="password"
-                            name="password"
-                            id="password"
+                            type="text"
+
+                            name="category"
+                            id="category"
 
                         />
                     </div>
+
+
+                    <div className="col-span-12  md:col-span-6 ">
+                        <TextInput
+                            // errorMessage={errors.firstName?.message}
+                            placeholder="Description"
+                            // registerName="fistName"
+                            // register={register("firstName")}
+                            type="text"
+
+                            name="description"
+                            id="description"
+
+                        />
+                    </div>
+
+
+                  
 
                 </div>
 
@@ -154,8 +116,8 @@ function CreateAccount() {
           </button> */}
                     <button className="w-full btn-primary btn "
                         type="submit">
-                        {isLoading ? "Loading..." : "Proceed"}
-
+                        {/* {isLoading ? "Loading..." : "Proceed"} */}
+Proceed
                     </button>
 
                     <h6 className="text-center md:text-xl w-full">
@@ -167,14 +129,8 @@ function CreateAccount() {
                 </div>
 
             </form>
-        </DefaultLayout>
+        </CatLayout>
     )
 }
 
-
-
-
-
-export default CreateAccount
-
-
+export default newOffer;

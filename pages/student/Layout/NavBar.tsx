@@ -34,7 +34,8 @@ export default function NavBar2(  ) {
 
                         <img
                             src="/logo.svg"
-                            alt="Logo"
+                            alt="Logo"className="w-10"
+
                         />
 
                     </a>

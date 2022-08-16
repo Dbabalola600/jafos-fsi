@@ -35,6 +35,7 @@ export default function EmpNav() {
                         <img
                             src="/logo.svg"
                             alt="Logo"
+                            className="w-10"
                         />
 
                     </a>
