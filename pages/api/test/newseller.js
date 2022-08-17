@@ -13,15 +13,11 @@ export default async function addSeller(req, res) {
     console.log('CONNECTED TO MONGO');
     
     console.log('CREATING DOCUMENT');
-    const {firstname, lastname, storename, password} = JSON.parse(req.body)
     
-    const seller = await Seller.create({
-      firstname,
-      lastname,
-      storename,
-      password, 
+    const seller = await Seller.create(
+    req.body
       
-    });
+    );
     console.log('CREATED SELLER');
 
     res.json({ seller });

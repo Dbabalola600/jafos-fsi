@@ -5,15 +5,15 @@ const SellerSchema = new Schema({
   firstname: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   lastname: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   storename: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
