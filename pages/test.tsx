@@ -48,12 +48,13 @@ function DashBoard({ tests }: InferGetServerSidePropsType<typeof getServerSidePr
 }
 
 export async function getServerSideProps(){
-    const res = await fetch("http://localhost:3000/api/test/testfetch", {method: "GET", body: JSON.stringify(Test)}) 
-   const tests = await Test.find();
-  
+    const res = await fetch("http://localhost:3000/api/test/testfetch", {method: "GET"}).then(res=>res.json()) 
+//    const tests = await Test.find();
+   console.log(res)
+   
     return {
         props: {
-          tests: JSON.parse(JSON.stringify(tests)),
+          tests: res.tests ,
         },
       };
 }

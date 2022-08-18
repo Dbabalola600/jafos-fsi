@@ -5,7 +5,7 @@ import Test from '../../../model/testModel';
 //export const getServerSideprops = async () =>
 //export default async function fetchtest(getServerSideprops)
 
-export const getServerSideprops = async () =>{
+export default async function fetchtest(req,res) {
   try {
     console.log('CONNECTING TO MONGO');
     await connectMongo();
@@ -15,15 +15,16 @@ export const getServerSideprops = async () =>{
     const tests = await Test.find();
     console.log('FETCHED DOCUMENTS');
 
-    return {
-      props: {
-        tests: JSON.parse(JSON.stringify(tests)),
-      },
-    };
+    res.status(200).json({
+        tests,
+      })
+
+    return 
+
   } catch (error) {
     console.log(error);
-    return {
+    return res.status(400).json( {
       notFound: true,
-    };
+    });
   }
 };
