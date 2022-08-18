@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import mongoose, { Schema, model, models } from 'mongoose';
 
 const testSchema = new Schema({
   name: String,
@@ -7,6 +7,13 @@ const testSchema = new Schema({
     required: true,
     unique: true,
   },
+
+  order:{
+    type : mongoose.Schema.ObjectId,
+    ref: 'TestOrder',
+    required: false,
+    unique: false
+  }
 });
 
 const Test = models.Test || model('Test', testSchema);

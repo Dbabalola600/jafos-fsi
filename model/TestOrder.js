@@ -20,7 +20,7 @@ const TestOrderSchema = new Schema ({
 
       user: {
         type : mongoose.Schema.ObjectId,
-        ref: 'test',
+        ref: 'Test',
         required: true,
         unique: false
         
@@ -31,6 +31,6 @@ const TestOrderSchema = new Schema ({
 
 
 
-const TestOrder = models.TestProduct || model('TestOrder', TestOrderSchema);
+const TestOrder = models.TestOrder || model('TestOrder', TestOrderSchema);
 
 export default TestOrder;

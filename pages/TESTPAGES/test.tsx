@@ -1,8 +1,8 @@
 
-import Header from "../components/shared/Header";
+import Header from "../../components/shared/Header";
 
-import StuLayout from "./student/Layout/StuLayout";
-import Test from '../model/testModel';
+import StuLayout from "../student/Layout/StuLayout";
+import Test from '../../model/testModel';
 import { InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
 import { Key } from "react";
 
