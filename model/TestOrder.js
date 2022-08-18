@@ -22,9 +22,12 @@ const TestOrderSchema = new Schema ({
         type : mongoose.Schema.ObjectId,
         ref: 'test',
         required: true,
+        unique: false
         
-      }
-});
+      }     
+},
+{ timestamps: true }
+);
 
 
 
