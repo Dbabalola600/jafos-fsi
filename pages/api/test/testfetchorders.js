@@ -2,6 +2,10 @@ import connectMongo from '../../../utils/connectMongo';
 import Test from '../../../model/testModel';
 import TestOrder from '../../../model/TestOrder'
 
+//import mongoose from 'mongoose';
+
+const mongoose = require("mongoose")
+
 
 //export const getServerSideprops = async () =>
 //export default async function fetchtest(getServerSideprops)
@@ -9,7 +13,7 @@ import TestOrder from '../../../model/TestOrder'
 export default async function testfetchorder(req,res) {
   try {
     console.log('CONNECTING TO MONGO');
-    await connectMongo();
+  await connectMongo();
     console.log('CONNECTED TO MONGO');
 
     console.log('FETCHING DOCUMENTS');
@@ -18,27 +22,26 @@ export default async function testfetchorder(req,res) {
     // const orders = await TestOrder.find()
 
     const orders =(await TestOrder.find())
-   
-    const newOrderStruct =  orders.map( async(oriOrder) => {
-        const existingUser = await Test.findOne({ _id: oriOrder.user });
-        console.log(existingUser);
-        // if (!existingUser) {
-        //     return { ...oriOrder, user: null };
-        // }
-        return {
+  
+    const newOrderStruct = await Promise.all(orders.map( async(oriOrder) => {
+        const existingUser = await Test.findById(oriOrder.user);
+        console.log(existingUser)
+        if (!existingUser) {
+            return { ...oriOrder, userObj: null };
+        }
+        return ({
             ...oriOrder,
-            user: existingUser
-        };
+            userObj: existingUser
+        });
 
-    }) 
-    console.log(newOrderStruct)
+    }) )
+    
     console.log('FETCHED ORDERS');
 
-    
+    console.log(newOrderStruct)
 
     res.status(200).json({
-       orders,   
-      
+       orders: newOrderStruct
       })
 
     return 

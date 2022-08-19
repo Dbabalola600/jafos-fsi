@@ -8,12 +8,12 @@ const testSchema = new Schema({
     unique: true,
   },
 
-  order:{
-    type : mongoose.Schema.ObjectId,
-    ref: 'TestOrder',
-    required: false,
-    unique: false
-  }
+  // order:{
+  //   type : mongoose.Schema.ObjectId,
+  //   ref: 'TestOrder',
+  //   required: false,
+  //   unique: false
+  // }
 });
 
 const Test = models.Test || model('Test', testSchema);
