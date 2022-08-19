@@ -13,6 +13,7 @@ function DashBoard (){
             className=" bg-black md:w-60">
             <Header
             title="WELCOME USER"
+            desc="this is the caterer dashboard"
             />
             </div>
            
