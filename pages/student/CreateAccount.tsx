@@ -148,10 +148,7 @@ function CreateAccount() {
 
 
                 <div className=" w-full  space-y-6">
-                    {/* <button className="btn1 w-full" type="submit"
-                 disabled={isButtonLoading}>
-              {isButtonLoading ? "Loading..." : "Proceed"}
-          </button> */}
+                  
                     <button className="w-full btn-primary btn "
                         type="submit">
                         {isLoading ? "Loading..." : "Proceed"}
