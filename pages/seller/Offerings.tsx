@@ -24,7 +24,7 @@ function Offerings() {
 
                     <div className='  mx-auto'>
                         <Link
-                            href="/Caterer/newOffer">
+                            href="/seller/newOffer">
                             <button className="btn btn-lg btn-primary btn-block">
                                 Add Offering
                             </button>

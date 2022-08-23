@@ -48,7 +48,7 @@ function DashBoard({ tests }: InferGetServerSidePropsType<typeof getServerSidePr
 }
 
 export async function getServerSideProps(){
-    const res = await fetch("http://localhost:3000/api/test/testfetch", {method: "GET"}).then(res=>res.json()) 
+    const res = await fetch("http://localhost:3000/api/test/testfetch", {method: "GET", headers:{"Authorization": window.localStorage.getItem("token") || ""}}).then(res=>res.json()) 
 //    const tests = await Test.find();
    console.log(res)
    

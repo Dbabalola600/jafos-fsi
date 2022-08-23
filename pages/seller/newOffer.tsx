@@ -32,7 +32,7 @@ function newOffer() {
             .then(res => {
 
                 if (res.status == 200) {
-                    router.push("/Caterer/Offerings")
+                    router.push("/seller/Offerings")
                 }
             }).catch(err => {
                 console.log(err)

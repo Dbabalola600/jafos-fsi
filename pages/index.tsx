@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
         <div className='  mx-auto'>
           <Link
-            href="/Caterer">
+            href="/seller">
             <button className="btn btn-lg btn-primary btn-block">
               Seller
             </button>

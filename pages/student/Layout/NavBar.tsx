@@ -5,13 +5,38 @@ import { Fragment, useState } from "react";
 
 
 import { InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
 
 
 
-export default function NavBar2(  ) {
-  
-    
-    
+export default function NavBar2() {
+    const [isLoading, setLoading] = useState(false)
+    const router = useRouter()
+    const logout = async () => {
+        //e.preventDefault()
+
+
+        setLoading(true)
+
+        await fetch("api/logout", { method: "POST" })
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json()
+                }
+                if (res.status == 400) {
+                    console.log("error")
+                }
+
+            }).then((data) => {
+                window.localStorage.getItem("token")
+                window.localStorage.clear()
+                router.push('/')
+            }).catch(err => {
+                console.log(err)
+            })
+        setLoading(false)
+    }
+
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -25,7 +50,7 @@ export default function NavBar2(  ) {
 
                         <img
                             src="/logo.svg"
-                            alt="Logo"className="w-10"
+                            alt="Logo" className="w-10"
 
                         />
 
@@ -42,7 +67,7 @@ export default function NavBar2(  ) {
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
-                        
+
                     >
                         <path
                             strokeLinecap='round'
@@ -76,11 +101,12 @@ export default function NavBar2(  ) {
                             </a>
                         </Link>
 
-                        <Link href='/'>
-                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
-                                LogOut
-                            </a>
-                        </Link>
+                        <button
+                            onClick={logout}
+                            className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
+                            {isLoading ? "Loading..." : "LOGOUT"}
+
+                        </button>
 
 
 

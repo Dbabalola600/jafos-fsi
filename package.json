@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.0.4",
+    "@types/jsonwebtoken": "^8.5.8",
+    "bcryptjs": "^2.4.3",
     "daisyui": "^2.22.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.9.0",
     "mongoose": "^6.5.2",
     "next": "12.2.4",

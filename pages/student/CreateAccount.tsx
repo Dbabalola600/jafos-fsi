@@ -5,8 +5,8 @@ import TextInput from "../../components/shared/TextInput";
 
 
 import { FormEventHandler, useState } from "react";
-import newStudent from "../api/test/newstudent";
-import addStudent from "../api/test/newstudent";
+import newStudent from "../api/student/createAccount";
+import addStudent from "../api/student/createAccount";
 import { useRouter } from "next/router";
 
 
@@ -37,7 +37,7 @@ function CreateAccount() {
 
 
 
-        const response = await fetch("/api/test/newstudent", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/createAccount", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
             .then(res => {
 
                 if (res.status == 200) {

@@ -1,4 +1,6 @@
 import { Schema, model, models } from 'mongoose';
+import bycrpt from 'bcryptjs'
+
 
 const StudentSchema = new Schema({
   
@@ -27,7 +29,15 @@ const StudentSchema = new Schema({
     required: true,
     unique: false,
   },
+  role: {
+    type: String,
+    enum: ['student', 'seller'  ],
+    default: 'student'
+  }
 });
+
+
+
 
 const Student = models.Student || model('Student', StudentSchema);
 

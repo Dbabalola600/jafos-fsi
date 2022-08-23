@@ -5,13 +5,39 @@ import { Fragment, useState } from "react";
 
 
 import { InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
 
 
 
-export default function NavBar2(  ) {
-  
-    
-    
+export default function NavBar2() {
+
+    const [isLoading, setLoading] = useState(false)
+    const router = useRouter()
+
+    const logout = async () => {
+        //e.preventDefault()
+
+
+        setLoading(true)
+
+        await fetch("api/logout", { method: "POST" })
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json()
+                }
+                if (res.status == 400) {
+                    console.log("error")
+                }
+
+            }).then((data) => {
+                window.localStorage.getItem("token")
+                window.localStorage.clear()
+                router.push('/')
+            }).catch(err => {
+                console.log(err)
+            })
+        setLoading(false)
+    }
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -20,10 +46,10 @@ export default function NavBar2(  ) {
     return (
         <>
             <nav className='flex items-center flex-wrap bg-black p-3 sticky top-0 z-50 '>
-                <Link href='/Caterer/DashBoard'>
+                <Link href='/seller/DashBoard'>
                     <a className='inline-flex items-center p-2 mr-4 '>
 
-                      
+
 
                         <img
                             src="/logo.svg"
@@ -44,7 +70,7 @@ export default function NavBar2(  ) {
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
-                        
+
                     >
                         <path
                             strokeLinecap='round'
@@ -72,17 +98,18 @@ export default function NavBar2(  ) {
                         </Link>
 
 
-                        <Link href='/Caterer/Orders'>
+                        <Link href='/seller/Orders'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Orders
                             </a>
                         </Link>
 
-                        <Link href='/'>
-                            <a className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
-                                LogOut
-                            </a>
-                        </Link>
+                        <button
+                            onClick={logout}
+                            className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>
+                            {isLoading ? "Loading..." : "LOGOUT"}
+
+                        </button>
 
 
 

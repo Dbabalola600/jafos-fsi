@@ -19,23 +19,22 @@ export default async function Login(req, res) {
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { matricno, password } = JSON.parse(req.body)
-        // const authTokens = await this.generateAuthenticationTokens({ id: Student._id })
+        const {  storename, password } = JSON.parse(req.body)
+      
 
+       const existingSeller = await Seller.findOne({ storename })
 
+        if (!existingSeller) return res.status(401).json({ message: "invalid " })
 
-        const existingStudent = await StudentModel.findOne({ matricno })
+        //console.log(existingSeller)
        
-        if (!existingStudent) return res.status(401).json({ message: "Invalid matric no or password" })
+        const isSeller = await Seller.findOne({password})
+        if (!isSeller)  return res.status(401).json({ message: "Invalid matric no or password" })
        
-        console.log(existingStudent)
-        const isStudent = await bcryptjs.compare(password, existingStudent.password)
-
-        if (!isStudent) return res.status(401).json({ message: "Invalid matric no or password" })
-
-
-        const token = JWT.sign({ id: Student._id }, JWT_SECRET);
-        
+       console.log(isSeller)
+      
+        const token = JWT.sign({ id: Seller._id }, JWT_SECRET);
+       
         console.log(token)
         return res.status(200).json({ message: "login successful", token })
 

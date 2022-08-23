@@ -2,27 +2,18 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import TextInput from "../../components/shared/TextInput";
 import Header from "../../components/shared/Header";
 import Link from "next/link";
-
 import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loginerro from "../../components/shared/loginerro";
 
-import login from "../api/login"
-
-
 
 function Login() {
-    
-
-   
 
 
     const router = useRouter()
-
     const [isLoading, setLoading] = useState(false)
 
     const [showtoast, settoast] = useState({ message: "", show: false })
-
 
     useEffect(() => {
         if (showtoast.show) {
@@ -33,24 +24,26 @@ function Login() {
 
     }, [showtoast.show])
 
+
     const login: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
-
         setLoading(true)
 
+
         const formElements = e.currentTarget.elements as typeof e.currentTarget.elements & {
-            matricno: HTMLInputElement
+            storename: HTMLInputElement
         }
         const form = e.currentTarget.elements as any
 
         const body = {
-            matricno: form.item(0).value,
+            storename: form.item(0).value,
             password: form.item(1).value,
         }
 
 
 
-        const response = await fetch("/api/login", { method: "POST", body: JSON.stringify(body) })
+
+        const response = await fetch("/api/loginSell", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {
@@ -60,16 +53,19 @@ function Login() {
                 if (res.status == 401) {
                     settoast({ message: " message", show: true })
                 }
-            }).then((data)=>{
+            }).then((data) => {
                 window.localStorage.setItem("token", data.token);
-                    router.push("/student/DashBoard")
+                router.push("/seller/DashBoard")
             }).catch(err => {
                 console.log(err)
             })
 
         setLoading(false)
 
+
     }
+
+
 
     return (
         <>
@@ -88,12 +84,7 @@ function Login() {
                         desc=" please provide necessary details for sign in"
                     />
 
-
-                    
-                    {showtoast.show && <Loginerro title="invalid matric no or password" />}
-
-
-
+                    {showtoast.show && <Loginerro title="invalid login credentials" />}
 
 
 
@@ -102,9 +93,9 @@ function Login() {
 
                     <div className="mx-auto  w-full ">
                         <TextInput
-                            placeholder=" Matric Number"
-                            name="matricno"
-                            type='number'
+                            placeholder=" Store Name"
+                            name="storename"
+                            type='text'
 
                         />
                     </div>
@@ -112,7 +103,7 @@ function Login() {
 
                     <div className="mx-auto w-full ">
                         <TextInput
-                            placeholder="Password"
+                            placeholder=" Password"
                             name="password"
                             type='password'
                         />
@@ -129,12 +120,8 @@ function Login() {
 
                         </button>
 
-                        <h6 className="text-center md:text-xl w-full">
-                            Don't have an account?{" "}
-                            <span className=" hover:underline">
-                                <Link href="student/CreateAccount">Create account</Link>
-                            </span>
-                        </h6>
+
+
                     </div>
 
 

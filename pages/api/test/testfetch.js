@@ -1,6 +1,6 @@
 import connectMongo from '../../../utils/connectMongo';
 import Test from '../../../model/testModel';
-
+import Seller from '../../../model/Seller'
 
 //export const getServerSideprops = async () =>
 //export default async function fetchtest(getServerSideprops)
@@ -12,7 +12,8 @@ export default async function fetchtest(req,res) {
     console.log('CONNECTED TO MONGO');
 
     console.log('FETCHING DOCUMENTS');
-    const tests = await Test.find();
+    const tests = await Seller.find();
+    
     console.log('FETCHED DOCUMENTS');
 
     res.status(200).json({

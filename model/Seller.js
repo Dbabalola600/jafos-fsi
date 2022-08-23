@@ -22,6 +22,11 @@ const SellerSchema = new Schema({
     required: true,
     unique: false,
   },
+  role: {
+    type: String,
+    enum: ['student', 'seller'  ],
+    default: 'seller'
+  }
 });
 
 const Seller = models.Seller || model('Seller', SellerSchema);
