@@ -8,13 +8,18 @@ import { useRouter } from "next/router";
 import Loginerro from "../../components/shared/loginerro";
 
 import login from "../api/login"
+import {getCookie, setCookie, hasCookie, getCookies} from 'cookies-next'
 
 
 
-function Login() {
-    
 
-   
+
+
+
+function Login(res: any,req: any) {
+
+
+
 
 
     const router = useRouter()
@@ -60,9 +65,12 @@ function Login() {
                 if (res.status == 401) {
                     settoast({ message: " message", show: true })
                 }
-            }).then((data)=>{
-                window.localStorage.setItem("token", data.token);
-                    router.push("/student/DashBoard")
+            }).then((token) => {
+                // window.localStorage.setItem("token", data.token);
+               console.log( getCookie("token"))
+               
+                
+                router.push("/student/")
             }).catch(err => {
                 console.log(err)
             })
@@ -89,7 +97,7 @@ function Login() {
                     />
 
 
-                    
+
                     {showtoast.show && <Loginerro title="invalid matric no or password" />}
 
 
@@ -146,6 +154,9 @@ function Login() {
         </>
     )
 }
+
+
+
 
 
 export default Login;
