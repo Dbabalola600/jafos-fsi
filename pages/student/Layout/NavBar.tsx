@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import { Fragment, useState } from "react";
-
+import {deleteCookie } from "cookies-next"
 
 
 import { InferGetStaticPropsType } from "next";
@@ -28,8 +28,11 @@ export default function NavBar2() {
                 }
 
             }).then((data) => {
-                window.localStorage.getItem("token")
-                window.localStorage.clear()
+                // window.localStorage.getItem("token")
+                // window.localStorage.clear()
+                deleteCookie('user', {path:'/', domain:'localhost'})
+
+
                 router.push('/')
             }).catch(err => {
                 console.log(err)

@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, models } from 'mongoose';
 
 const testSchema = new Schema({
+  _id: String,
   name: String,
   email: {
     type: String,

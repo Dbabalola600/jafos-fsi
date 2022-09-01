@@ -70,7 +70,7 @@ function Login(res: any,req: any) {
                console.log( getCookie("token"))
                
                 
-                router.push("/student/")
+                router.push("/student/DashBoard")
             }).catch(err => {
                 console.log(err)
             })

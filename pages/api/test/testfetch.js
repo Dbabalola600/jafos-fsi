@@ -13,7 +13,9 @@ export default async function fetchtest(req,res) {
     console.log('CONNECTED TO MONGO');
 
     console.log('FETCHING DOCUMENTS');
-    const tests = await Seller.find();
+    // const tests = await Test.findById({_id: req.body._id});
+
+    const tests = await Student.findById({_id:req.headers._id})
     
     console.log('FETCHED DOCUMENTS');
 
