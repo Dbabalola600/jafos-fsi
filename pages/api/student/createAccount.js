@@ -14,12 +14,12 @@ export default async function addStudent(req, res) {
     
     console.log('CREATING DOCUMENT');
     const {firstname, lastname, email, password, matricno} = JSON.parse(req.body)
-    const hashpassword = await bcrypt.hash(password, 10)
+    // const hashpassword = await bcrypt.hash(password, 10)
     const student = await Student.create({
       firstname,
       lastname,
       email,
-      password: hashpassword, 
+      password, 
       matricno
     });
     console.log('CREATED STUDENT');

@@ -4,7 +4,8 @@ import Header from "../../components/shared/Header";
 import Link from "next/link";
 import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Loginerro from "../../components/shared/loginerro";
+import ErrMess from "../../components/shared/ErrMess"
+import { getCookie } from "cookies-next";
 
 
 function Login() {
@@ -47,15 +48,19 @@ function Login() {
             .then(res => {
 
                 if (res.status == 200) {
+                    router.push("/seller/DashBoard")
                     return res.json()
 
                 }
                 if (res.status == 401) {
                     settoast({ message: " message", show: true })
+                    // router.reload()
                 }
             }).then((data) => {
-                window.localStorage.setItem("token", data.token);
-                router.push("/seller/DashBoard")
+                // window.localStorage.setItem("token", data.token);
+                console.log( getCookie("token"))
+               
+                
             }).catch(err => {
                 console.log(err)
             })
@@ -84,7 +89,7 @@ function Login() {
                         desc=" please provide necessary details for sign in"
                     />
 
-                    {showtoast.show && <Loginerro title="invalid login credentials" />}
+                    {showtoast.show && <ErrMess title="invalid login credentials" />}
 
 
 

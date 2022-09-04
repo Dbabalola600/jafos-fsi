@@ -6,6 +6,8 @@ import JWT from 'jsonwebtoken';
 import Student from '../../model/StudentModel';
 import Seller from '../../model/Seller'
 
+import { setCookie, getCookie, getCookies } from 'cookies-next'
+import cookies from 'next-cookies'
 
 
 /**
@@ -19,23 +21,29 @@ export default async function Login(req, res) {
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const {  storename, password } = JSON.parse(req.body)
-      
+        const { storename, password } = JSON.parse(req.body)
 
-       const existingSeller = await Seller.findOne({ storename })
+
+        const existingSeller = await Seller.findOne({ storename })
 
         if (!existingSeller) return res.status(401).json({ message: "invalid " })
 
         //console.log(existingSeller)
-       
-        const isSeller = await Seller.findOne({password})
-        if (!isSeller)  return res.status(401).json({ message: "Invalid matric no or password" })
-       
-       console.log(isSeller)
-      
-        const token = JWT.sign({ id: Seller._id }, JWT_SECRET);
-       
-        console.log(token)
+
+        const isSeller = await Seller.findOne({ password })
+        if (!isSeller) return res.status(401).json({ message: "Invalid matric no or password" })
+
+        console.log(isSeller)
+
+
+        // const token = JWT.sign({ id: Seller._id }, JWT_SECRET);
+
+        const user = existingSeller._id
+        setCookie('user', existingSeller._id, { req, res })
+
+
+
+        console.log(user)
         return res.status(200).json({ message: "login successful", token })
 
 

@@ -19,7 +19,7 @@ type Student = {
 
 
 function DashBoard() {
-    const [student, setStudent] = useState<Student | null>(null);
+    const [student, setStudent] = useState<Student>();
 
 
     //this works
@@ -38,47 +38,45 @@ function DashBoard() {
         const response = await fetch("http://localhost:3000/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Student
 
+        console.log(JSON.stringify(response, ['student', 'firstname']))
+
 
         setStudent(response)
 
-       
-        console.log(response)
+        const user = JSON.stringify(response, ['student', 'lastname'])
         
-        
+       console.log(user)
+
     }
+
     useEffect(() => {
         showinfo()
-
+       
     }, [])
-   
+
 
     return (
         <StuLayout>
             <>
 
-                {/* {student?.map((student: {
-                    _id: string;
-                    firstname: string
-                    lastname: string
-                    matricno: string
-                }) => (
+
+
+                {/* {students.map(student => (
+
                     <div
-                        className=" bg-black md:w-60"
-                        key={student._id}>
-                        <Header
-                            title={"WELCOME" + student.firstname}
-                            desc="this is the student dahboard"
-                        />
+                        key={student._id}
+                    >
+                        {student.firstname}
                     </div>
-                )
-                )}   */}
+
+                ))} */}
 
 
                 <Header
                     title="dashboard"
                 />
                 <div className="text-red-500 text-3xl">
-                    welcome {student?.firstname }
+                    welcome {student?.firstname}
                 </div>
 
 
@@ -88,32 +86,5 @@ function DashBoard() {
 }
 
 
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-
-
-//     const token = getCookie("user", { req, res })
-//     console.log(token)
-//     // const Ntoken = JSON.stringify(token)
-//     // console.log(Ntoken)
-
-//     // const student = await fetch("http://localhost:3000/api/student/fetchStudent", { method: "GET", headers: {"Authorization": token?.toString() || ""} }).then(res => res.json())
-//     const student = await fetch("http://localhost:3000/api/student/fetchStudent",
-//         {
-//             method: "GET",
-//             headers: {
-//                 'Content-Type': 'application/json',
-
-//             },
-//             // body: (JSON.stringify(token))
-//         }).then(res => res.json()) as Student[]
-//     return {
-//         props: {
-//             students: student
-//         }
-//     }
-
-// }
-
-// headers: {  window.localStorage.getItem("token") || "" }
 
 export default DashBoard;

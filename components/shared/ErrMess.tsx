@@ -6,7 +6,7 @@ type myProps = {
 }
 
 
-function Loginerro(props:myProps) {
+function ErrMess(props:myProps) {
     return (
 
     <div className="alert alert-error shadow-lg ">
@@ -27,4 +27,4 @@ function Loginerro(props:myProps) {
 }
 
 
-export default Loginerro;
+export default ErrMess;

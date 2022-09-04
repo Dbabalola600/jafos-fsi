@@ -5,10 +5,10 @@ import Link from "next/link";
 
 import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Loginerro from "../../components/shared/loginerro";
-
+import ErrMess from "../../components/shared/ErrMess";
+import GoodMess from "../../components/shared/GoodMess"
 import login from "../api/login"
-import {getCookie, setCookie, hasCookie, getCookies} from 'cookies-next'
+import { getCookie, setCookie, hasCookie, getCookies } from 'cookies-next'
 
 
 
@@ -16,11 +16,7 @@ import {getCookie, setCookie, hasCookie, getCookies} from 'cookies-next'
 
 
 
-function Login(res: any,req: any) {
-
-
-
-
+function Login() {
 
     const router = useRouter()
 
@@ -28,6 +24,7 @@ function Login(res: any,req: any) {
 
     const [showtoast, settoast] = useState({ message: "", show: false })
 
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
 
     useEffect(() => {
         if (showtoast.show) {
@@ -37,6 +34,16 @@ function Login(res: any,req: any) {
         }
 
     }, [showtoast.show])
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
     const login: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -59,18 +66,22 @@ function Login(res: any,req: any) {
             .then(res => {
 
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+                    router.push("/student/DashBoard")
                     return res.json()
 
                 }
                 if (res.status == 401) {
                     settoast({ message: " message", show: true })
+                    // e.preventDefault()
+                    // router.reload()
                 }
-            }).then((token) => {
+            }).then((data) => {
                 // window.localStorage.setItem("token", data.token);
-               console.log( getCookie("token"))
-               
-                
-                router.push("/student/DashBoard")
+                console.log(getCookie("token"))
+
+
+
             }).catch(err => {
                 console.log(err)
             })
@@ -98,8 +109,8 @@ function Login(res: any,req: any) {
 
 
 
-                    {showtoast.show && <Loginerro title="invalid matric no or password" />}
-
+                    {showtoast.show && <ErrMess title="invalid matric no or password" />}
+                    {showgoodtoast.show && <GoodMess title="login successful" />}
 
 
 

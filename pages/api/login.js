@@ -20,26 +20,27 @@ export default async function Login(req, res) {
         console.log('CONNECTED TO MONGO');
 
         const { matricno, password, _id } = JSON.parse(req.body)
-        
+
 
         const existingStudent = await StudentModel.findOne({ matricno })
 
         if (!existingStudent) return res.status(401).json({ message: "Invalid matric no or password" })
 
-        
-        const isStudent = await bcryptjs.compare(password, existingStudent.password)
+
+        // const isStudent = await bcryptjs.compare(password, existingStudent.password)
+        const isStudent = await StudentModel.findOne({ password })
 
         if (!isStudent) return res.status(401).json({ message: "Invalid matric no or password" })
 
 
-        
+
 
         const user = existingStudent._id
 
         console.log(user)
 
-        setCookie('user', existingStudent._id, { req, res })
-       
+        setCookie('user', existingStudent._id, { req, res , maxAge:86400})  //maxage in seconds
+
 
 
         return res.status(200).json({ message: "login successful", })
