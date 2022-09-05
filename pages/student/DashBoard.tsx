@@ -1,6 +1,6 @@
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import Header from "../../components/shared/Header";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, Key, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import StuLayout from "./Layout/StuLayout";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -15,11 +15,28 @@ type Student = {
     matricno: string
 }
 
+type Seller ={
+    _id: string
+    storename: string
+}
 
 
 
-function DashBoard() {
-    const [student, setStudent] = useState<Student>();
+export async function getServerSideProps(){
+    const res = await fetch("http://localhost:3000/api/fetchSeller", {method:"GET"}).then(res=>res.json())
+    console.log(res)
+return {
+    props: {
+sellers:res.sellers
+    }
+}
+
+}
+
+
+
+function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const [student, setStudent] = useState<Student | null>(null);
 
 
     //this works
@@ -38,21 +55,28 @@ function DashBoard() {
         const response = await fetch("http://localhost:3000/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Student
 
-        console.log(JSON.stringify(response, ['student', 'firstname']))
+        // console.log(JSON.stringify(response, ['student', 'firstname']))  //displays right information
 
 
         setStudent(response)
 
         const user = JSON.stringify(response, ['student', 'lastname'])
-        
-       console.log(user)
+
+        //    console.log(user) //displays right information
+
+       console.log(response, ['student', 'lastname'])
+
 
     }
 
     useEffect(() => {
         showinfo()
-       
+
     }, [])
+
+console.log(sellers[2])
+
+    
 
 
     return (
@@ -61,23 +85,38 @@ function DashBoard() {
 
 
 
-                {/* {students.map(student => (
 
-                    <div
-                        key={student._id}
-                    >
-                        {student.firstname}
-                    </div>
-
-                ))} */}
 
 
                 <Header
                     title="dashboard"
                 />
                 <div className="text-red-500 text-3xl">
-                    welcome {student?.firstname}
+                    welcome {JSON.stringify(student, ['student', 'lastname'])}
                 </div>
+
+
+                <div
+                    className="pt-5"
+                >
+                    <Header
+                        title="Available Stores"
+                    />
+                </div>
+
+
+
+{sellers.map((seller: { _id: Key | null | undefined; storename:string })=>{
+    <div key= {seller._id}>
+<div className="text-red-500">
+    {seller.storename}
+</div>
+
+    </div>
+})
+
+}
+
 
 
             </>
@@ -88,3 +127,19 @@ function DashBoard() {
 
 
 export default DashBoard;
+
+
+
+
+// export async function getServerSideProps(){
+//     const seller = await fetch("http://localhost:3000/api/fetchSeller", {method: "GET"}})
+//     .then(res=>res.json()) 
+// //    const tests = await Test.find();
+//    console.log(seller)
+   
+//     return {
+//         props: {
+//           sellers: sellers.seller ,
+//         },
+//       };
+// }

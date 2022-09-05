@@ -15,7 +15,7 @@ export default async function fetchtest(req,res) {
     console.log('FETCHING DOCUMENTS');
     // const tests = await Test.findById({_id: req.body._id});
 
-    const tests = await Student.find()
+    const tests = await Seller.find()
     
     console.log('FETCHED DOCUMENTS');
 
