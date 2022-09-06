@@ -7,6 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
+import AvailableStores from "../TESTPAGES/availableStores"
 
 type Student = {
     _id: string;
@@ -22,16 +23,16 @@ type Seller ={
 
 
 
-export async function getServerSideProps(){
-    const res = await fetch("http://localhost:3000/api/fetchSeller", {method:"GET"}).then(res=>res.json())
-    console.log(res)
-return {
-    props: {
-sellers:res.sellers
-    }
-}
+// export async function getServerSideProps(){
+//     const res = await fetch("http://localhost:3000/api/fetchSeller", {method:"GET"}).then(res=>res.json())
+//     console.log(res)
+// return {
+//     props: {
+// sellers:res.sellers
+//     }
+// }
 
-}
+// }
 
 
 
@@ -74,9 +75,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 
     }, [])
 
-console.log(sellers[2])
-
-    
+ 
 
 
     return (
@@ -105,17 +104,7 @@ console.log(sellers[2])
                 </div>
 
 
-
-{sellers.map((seller: { _id: Key | null | undefined; storename:string })=>{
-    <div key= {seller._id}>
-<div className="text-red-500">
-    {seller.storename}
-</div>
-
-    </div>
-})
-
-}
+<AvailableStores sellers={sellers}/>
 
 
 
@@ -128,7 +117,16 @@ console.log(sellers[2])
 
 export default DashBoard;
 
+export async function getServerSideProps() {
+    const res = await fetch("http://localhost:3000/api/fetchSeller", { method: "GET" }).then(res => res.json())
 
+    return {
+        props: {
+            sellers: res.sellers
+        }
+    }
+
+}
 
 
 // export async function getServerSideProps(){
