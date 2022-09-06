@@ -22,12 +22,12 @@ export default async function fetchStudent(req, res) {
         // const token = getCookies( { req, res, path:'/', domain:'localhost' })
         // console.log(token)
 
-        const student = await Student.findById(_id);
+        const student = await Student.findById(_id).select("lastname firstname ");
 
         console.log('FETCHED STUDENT');
         // console.log(student)
         return res.status(200).json({
-            student,
+            ...student._doc,
 
         })
     }

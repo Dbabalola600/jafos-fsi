@@ -65,7 +65,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 
         //    console.log(user) //displays right information
 
-       console.log(response, ['student', 'lastname'])
+       console.log(response)
 
 
     }
@@ -91,7 +91,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
                     title="dashboard"
                 />
                 <div className="text-red-500 text-3xl">
-                    welcome {JSON.stringify(student, ['student', 'lastname'])}
+                    welcome {student?.lastname}
                 </div>
 
 
