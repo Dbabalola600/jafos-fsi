@@ -23,18 +23,6 @@ type Seller ={
 
 
 
-// export async function getServerSideProps(){
-//     const res = await fetch("http://localhost:3000/api/fetchSeller", {method:"GET"}).then(res=>res.json())
-//     console.log(res)
-// return {
-//     props: {
-// sellers:res.sellers
-//     }
-// }
-
-// }
-
-
 
 function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [student, setStudent] = useState<Student | null>(null);

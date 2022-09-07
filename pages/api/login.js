@@ -32,9 +32,6 @@ export default async function Login(req, res) {
 
         if (!isStudent) return res.status(401).json({ message: "Invalid matric no or password" })
 
-
-
-
         const user = existingStudent._id
 
         console.log(user)
