@@ -25,7 +25,7 @@ function AvailableStores({ sellers }: storeProps) {
                     key={seller._id}
                 >
                     <Link
-                        href={`/seller/${seller.storename}`}
+                        href={`/stores/${seller.storename}`}
                     >
                         <a>
                         <Header

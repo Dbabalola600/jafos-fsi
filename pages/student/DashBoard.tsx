@@ -7,7 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
-import AvailableStores from "../TESTPAGES/availableStores"
+import AvailableStores from "./availableStores"
 
 type Student = {
     _id: string;
@@ -88,23 +88,26 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 
 
                 <Header
-                    title="dashboard"
+                    title="Dashboard"
                 />
-                <div className="text-red-500 text-3xl">
-                    welcome {student?.lastname}
+                <div className="text-primary text-3xl">
+                    Welcome {student?.firstname}
                 </div>
 
 
                 <div
                     className="pt-5"
                 >
-                    <Header
-                        title="Available Stores"
-                    />
+                    <div  
+                    className="text-primary  text-2xl font-bold  underline"
+                    >
+                        Available Stores
+                    </div>
+                    
                 </div>
 
 
-<AvailableStores sellers={sellers}/>
+                    <AvailableStores sellers={sellers}/>
 
 
 
