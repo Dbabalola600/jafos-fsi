@@ -16,13 +16,15 @@ type Seller = {
 
 function DashBoard() {
 
-    const [seller, setSeller] = useState<Seller | null>(null)
+    const [seller, setSeller] = useState<Seller | null>(null);
 
     const showinfo = async () => {
 
-        const user = getCookie("user")
+        const token = getCookie("user")
+        console.log(token)
+      
         const body = {
-            _id: user
+            _id: token
         }
 
         const response = await fetch("http://localhost:3000/api/seller/fetchSeller", { method: "POST", body: JSON.stringify(body) })

@@ -8,29 +8,39 @@ import Student from '../../../model/StudentModel';
 
 export default async function fetchSeller(req, res) {
 
-  if (req.mehod === "POST") {
+  if (req.method === "POST") {
     console.log('CONNECTING TO MONGO');
     await connectMongo();
     console.log('CONNECTED TO MONGO');
+
     const { _id } = JSON.parse(req.body)
+
     console.log('FETCHING DOCUMENTS');
 
-    const seller = await Seller.findById(_id).select("storename firstname lastname")
+
+    // const token = getCookies( { req, res, path:'/', domain:'localhost' })
+    // console.log(token)
+
+    const seller = await Seller.findById(_id).select("storename firstname ");
 
     console.log('FETCHED SELLER');
-
+    // console.log(student)
     return res.status(200).json({
-      ...seller._doc,
+        ...seller._doc,
+
     })
-
-
-
-  } else {
+}
+else {
 
     return res.status(400).json({
-      notFound: true,
+        notFound: true,
     });
-  }
+
+}
+
+
+
+
 };
 
 

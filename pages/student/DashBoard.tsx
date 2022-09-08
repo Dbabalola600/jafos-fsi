@@ -44,15 +44,13 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
         const response = await fetch("http://localhost:3000/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Student
 
-        // console.log(JSON.stringify(response, ['student', 'firstname']))  //displays right information
-
+       
 
         setStudent(response)
 
         const user = JSON.stringify(response, ['student', 'lastname'])
 
-        //    console.log(user) //displays right information
-
+       
        console.log(response)
 
 
@@ -109,7 +107,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 export default DashBoard;
 
 export async function getServerSideProps() {
-    const res = await fetch("http://localhost:3000/api/fetchSeller", { method: "GET" }).then(res => res.json())
+    const res = await fetch("http://localhost:3000/api/student/fetchSeller", { method: "GET" }).then(res => res.json())
 
     return {
         props: {

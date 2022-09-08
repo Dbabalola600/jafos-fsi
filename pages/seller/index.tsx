@@ -6,7 +6,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ErrMess from "../../components/shared/ErrMess"
 import { getCookie } from "cookies-next";
-
+import GoodMess from "../../components/shared/GoodMess"
 
 function Login() {
 
@@ -15,6 +15,7 @@ function Login() {
     const [isLoading, setLoading] = useState(false)
 
     const [showtoast, settoast] = useState({ message: "", show: false })
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
 
     useEffect(() => {
         if (showtoast.show) {
@@ -25,6 +26,16 @@ function Login() {
 
     }, [showtoast.show])
 
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
     const login: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -90,6 +101,7 @@ function Login() {
                     />
 
                     {showtoast.show && <ErrMess title="invalid login credentials" />}
+                    {showgoodtoast.show && <GoodMess title="login successful" />}
 
 
 

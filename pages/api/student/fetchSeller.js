@@ -1,0 +1,31 @@
+import connectMongo from "../../../utils/connectMongo";
+import Seller from "../../../model/Seller";
+
+
+
+export default async function fetchSeller(req, res) {
+    try {
+        console.log('CONNECTING TO MONGO');
+        await connectMongo();
+        console.log('CONNECTED TO MONGO');
+
+        console.log('FETCHING Sellers');
+        // const tests = await Test.findById({_id: req.body._id});
+
+        const sellers = await Seller.find()
+
+        console.log('FETCHED Sellers');
+
+        res.status(200).json({
+            sellers,
+        })
+
+        return
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            notFound: true,
+        });
+    }
+};

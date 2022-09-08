@@ -18,7 +18,7 @@ export default function NavBar2() {
 
         setLoading(true)
 
-        await fetch("api/logout", { method: "POST" })
+        await fetch("http://localhost:3000/api/logout", { method: "POST" })
             .then(res => {
                 if (res.status == 200) {
                     return res.json()
@@ -27,7 +27,7 @@ export default function NavBar2() {
                     console.log("error")
                 }
 
-            }).then((data) => {
+            }).then(() => {
                 // window.localStorage.getItem("token")
                 // window.localStorage.clear()
                 deleteCookie('user', {path:'/', domain:'localhost'})

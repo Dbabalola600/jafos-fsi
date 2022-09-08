@@ -16,7 +16,7 @@ import cookies from 'next-cookies'
  */
 export default async function Login(req, res) {
     try {
-        const JWT_SECRET = "ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
+        // const JWT_SECRET = "ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
         console.log('CONNECTING TO MONGO');
         await connectMongo();
         console.log('CONNECTED TO MONGO');
@@ -44,7 +44,7 @@ export default async function Login(req, res) {
 
 
         console.log(user)
-        return res.status(200).json({ message: "login successful", token })
+        return res.status(200).json({ message: "login successful" })
 
 
 
