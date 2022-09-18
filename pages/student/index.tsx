@@ -7,7 +7,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ErrMess from "../../components/shared/ErrMess";
 import GoodMess from "../../components/shared/GoodMess"
-import login from "../api/login"
+
 import { getCookie, setCookie, hasCookie, getCookies } from 'cookies-next'
 
 
@@ -62,7 +62,7 @@ function Login() {
 
 
 
-        const response = await fetch("/api/login", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/login", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {

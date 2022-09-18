@@ -7,12 +7,17 @@ import TextInput from "../../components/shared/TextInput";
 
 import CatLayout from "./Layout/CatLayout";
 
+import {getCookie} from 'cookies-next'
+
+
 
 function newOffer() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
+        const user = getCookie("user")
+        console.log(user)
         e.preventDefault()
         setLoading(true)
         const formElements = e.currentTarget.elements as typeof e.currentTarget.elements 
@@ -21,6 +26,7 @@ function newOffer() {
 
 
         const body = {
+            owner:user ,
             title: form.item(0).value,
             price: form.item(1).value,
             category: form.item(2).value,
@@ -28,7 +34,7 @@ function newOffer() {
 
         }
 
-        const response = await fetch("/api/test/newproduct", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/seller/newproduct", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {

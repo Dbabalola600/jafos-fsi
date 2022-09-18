@@ -21,7 +21,7 @@ export default function NavBar2() {
 
         setLoading(true)
 
-        await fetch("http://localhost:3000/api/logout", { method: "POST" })
+        await fetch("/api/logout", { method: "POST" })
             .then(res => {
                 if (res.status == 200) {
                     return res.json()

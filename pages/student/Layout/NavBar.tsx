@@ -18,9 +18,13 @@ export default function NavBar2() {
 
         setLoading(true)
 
-        await fetch("http://localhost:3000/api/logout", { method: "POST" })
+        await fetch("/api/student/logout", { method: "POST" })
             .then(res => {
                 if (res.status == 200) {
+
+                    deleteCookie('user', {path:'/', domain:'localhost'})
+
+                    router.push('/')
                     return res.json()
                 }
                 if (res.status == 400) {
@@ -30,10 +34,7 @@ export default function NavBar2() {
             }).then(() => {
                 // window.localStorage.getItem("token")
                 // window.localStorage.clear()
-                deleteCookie('user', {path:'/', domain:'localhost'})
-
-
-                router.push('/')
+              
             }).catch(err => {
                 console.log(err)
             })

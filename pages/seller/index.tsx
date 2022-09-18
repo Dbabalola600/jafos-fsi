@@ -55,7 +55,7 @@ function Login() {
 
 
 
-        const response = await fetch("/api/loginSell", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/seller/loginSell", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {

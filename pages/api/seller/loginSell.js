@@ -1,10 +1,10 @@
-import connectMongo from '../../utils/connectMongo';
-import StudentModel from '../../model/StudentModel';
+import connectMongo from '../../../utils/connectMongo';
+import StudentModel from '../../../model/StudentModel';
 import { error } from 'console';
 import bcryptjs from 'bcryptjs';
 import JWT from 'jsonwebtoken';
-import Student from '../../model/StudentModel';
-import Seller from '../../model/Seller'
+
+import Seller from '../../../model/Seller/Seller';
 
 import { setCookie, getCookie, getCookies } from 'cookies-next'
 import cookies from 'next-cookies'

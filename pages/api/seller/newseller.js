@@ -1,6 +1,6 @@
 import connectMongo from '../../../utils/connectMongo';
 
-import Seller from '../../../model/Seller';
+import Seller from '../../../model/Seller/Seller';
 
 /**
  * @param {import('next').NextApiRequest} req

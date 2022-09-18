@@ -27,7 +27,7 @@ function DashBoard() {
             _id: token
         }
 
-        const response = await fetch("http://localhost:3000/api/seller/fetchSeller", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/seller/fetchSeller", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Seller
 
 

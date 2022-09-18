@@ -41,7 +41,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
             _id: token
         }
 
-        const response = await fetch("http://localhost:3000/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Student
 
        

@@ -1,6 +1,6 @@
 import connectMongo from '../../../utils/connectMongo';
 import Test from '../../../model/testModel';
-import Seller from '../../../model/Seller'
+import Seller from '../../../model/Seller/Seller'
 import Student from '../../../model/StudentModel';
 
 //export const getServerSideprops = async () =>
