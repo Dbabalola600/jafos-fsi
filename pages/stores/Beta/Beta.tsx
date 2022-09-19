@@ -1,5 +1,5 @@
-import Header from "../../components/shared/Header"
-import StuLayout from "../student/Layout/StuLayout"
+import Header from "../../../components/shared/Header"
+import StuLayout from "../../student/Layout/StuLayout"
 
 
 
@@ -9,7 +9,7 @@ function Alpha (){
 
         <StuLayout>
             <Header
-            title=" stuff"
+            title=" Beta"
             />
         </StuLayout>
     )

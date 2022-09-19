@@ -1,6 +1,6 @@
 import connectMongo from '../../../utils/connectMongo';
 import Test from '../../../model/testModel';
-import Seller from '../../../model/Seller'
+
 import Student from '../../../model/StudentModel';
 import { getCookie, getCookies, hasCookie } from 'cookies-next'
 import JWT from 'jsonwebtoken';

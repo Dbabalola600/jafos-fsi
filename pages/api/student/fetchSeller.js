@@ -1,5 +1,5 @@
 import connectMongo from "../../../utils/connectMongo";
-import Seller from "../../../model/Seller";
+import Seller from "../../../model/Seller/Seller";
 
 
 
@@ -24,8 +24,6 @@ export default async function fetchSeller(req, res) {
 
     } catch (error) {
         console.log(error);
-        return res.status(400).json({
-            notFound: true,
-        });
+       res.json({error})
     }
 };
