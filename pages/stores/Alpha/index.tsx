@@ -20,24 +20,24 @@ function Alpha() {
 
     const showOffer = async () => {
 
-        const response = await fetch("/api/student/offers/fetchAlphaOffer", { method: "GET" })
+        const body = {
+            name: "Alpha"
+        }
+
+        const Offerresponse = await fetch("/api/seller/fetchOffer", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Offers[]
 
 
-        SetOffers(response)
-        console.log(response)
+        SetOffers(Offerresponse)
+        console.log(Offerresponse)
 
 
-        return {
-            props: {
-                offers: response
-            }
-        }
     }
 
     useEffect(() => {
         showOffer()
-    }, [])
+    }, []
+    )
 
 
     return (
@@ -48,7 +48,7 @@ function Alpha() {
                     title=" Alpha"
                 />
 
-               
+
                 {offers.map((offer: {
                     description: string
                     price: number

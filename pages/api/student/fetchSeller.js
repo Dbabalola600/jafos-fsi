@@ -16,9 +16,7 @@ export default async function fetchSeller(req, res) {
 
         console.log('FETCHED Sellers');
 
-        res.status(200).json({
-            sellers,
-        })
+        res.status(200).json(sellers)
 
         return
 

@@ -108,6 +108,7 @@ function newOffer() {
                                     <option>Food</option>
                                     <option>Drinks</option>
                                     <option>Sauce</option>
+                                    <option>Special</option>
                                 </select>
 
                             </div>

@@ -8,6 +8,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
 import AvailableStores from "./availableStores"
+import Link from "next/link";
 
 type Student = {
     _id: string;
@@ -16,16 +17,20 @@ type Student = {
     matricno: string
 }
 
-type Seller ={
+type Sellers = {
     _id: string
-    storename: string
+    storename: string;
+    firstname: string
+    lastname: string
 }
 
 
 
 
-function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSideProps>) {
+
+function DashBoard() {
     const [student, setStudent] = useState<Student | null>(null);
+    const [sellers, SetSellers] = useState<Sellers[]>([])
 
 
     //this works
@@ -52,6 +57,16 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 
        
        console.log(response)
+
+
+
+
+
+       const SellerResponse = await fetch("/api/student/fetchSeller", { method: "GET" })
+       .then(res => res.json()) as Sellers[]
+
+       SetSellers(SellerResponse)
+
 
 
     }
@@ -93,8 +108,23 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
                 </div>
 
 
-                    <AvailableStores sellers={sellers}/>
+                {sellers.map((seller: { _id: Key | null | undefined; storename: string; }) =>
+                    <div
+                        key={seller._id}
+                    >
+                        <Link
+                            href={`/stores/${seller.storename}`}
+                        >
+                            <a>
+                                <Header
+                                    title={seller.storename}
+                                />
+                            </a>
 
+                        </Link>
+
+                    </div>
+                )}
 
 
             </>
@@ -106,16 +136,7 @@ function DashBoard({sellers}:InferGetServerSidePropsType<typeof getServerSidePro
 
 export default DashBoard;
 
-export async function getServerSideProps() {
-    const res = await fetch("http://localhost:3000/api/student/fetchSeller", { method: "GET" }).then(res => res.json())
 
-    return {
-        props: {
-            sellers: res.sellers
-        }
-    }
-
-}
 
 
 // export async function getServerSideProps(){
