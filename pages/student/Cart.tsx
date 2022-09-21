@@ -5,6 +5,7 @@ import StuLayout from "./Layout/StuLayout";
 
 import { FormEventHandler, Key, useEffect, useState } from "react"
 import { getCookie } from "cookies-next";
+import CartInput from "../../components/shared/CartInput";
 type Cart = {
     _id: string
     user: string
@@ -17,6 +18,12 @@ type Cart = {
 
 function Cart() {
     const [carts, setCarts] = useState<Cart[]>([])
+   
+
+
+
+
+   
 
 
 
@@ -34,6 +41,8 @@ function Cart() {
 
         setCarts(response)
 
+        
+
     }
 
 
@@ -42,6 +51,10 @@ function Cart() {
     }, [])
 
 
+
+
+   
+   
 
     return (
         <StuLayout>
@@ -62,16 +75,21 @@ function Cart() {
                         key={cart._id}
                     >
 
-                        <Header
-                            title={cart.title}
-                            desc={cart.price}
-                        />
+                       <CartInput 
+                       product={cart.title}
+                       price={cart.price}
+                       />
+                       
+
+
 
 
                     </div>
 
 
                 ))}
+
+
 
 
             </>

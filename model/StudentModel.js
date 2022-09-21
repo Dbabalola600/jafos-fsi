@@ -7,12 +7,12 @@ const StudentSchema = new Schema({
   firstname: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   lastname: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   matricno: {
     type: Number,
