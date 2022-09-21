@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 type HeaderProps = {
     title: string;
-    desc?: string;
+    desc?: string|any;
 }
 
 

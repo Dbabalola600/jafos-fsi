@@ -1,4 +1,6 @@
-import { Key, useEffect, useState } from "react"
+import { getCookie } from "cookies-next"
+import { useRouter } from "next/router"
+import { FormEventHandler, Key, useEffect, useState } from "react"
 import Header from "../../../components/shared/Header"
 import StuLayout from "../../student/Layout/StuLayout"
 
@@ -22,7 +24,7 @@ type Seller = {
 
 
 function Gama() {
-
+    const router = useRouter()
 
     const [offers, SetOffers] = useState<Offers[]>([]);
 
@@ -41,6 +43,32 @@ function Gama() {
         console.log(Offerresponse)
 
 
+    }
+
+
+
+    const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
+        const user = getCookie("user")
+        console.log(user)
+        const form = e.currentTarget.elements as any
+
+        const body = {
+            user: user,
+            title: form.item(0).value,
+            category: form.item(1).value,
+            price: form.item(2).value,
+
+        }
+
+        const reponse = await fetch("/api/student/newCart", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+
+                if (res.status == 200) {
+                    router.push("/student/Cart")
+                }
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
     useEffect(() => {
@@ -64,24 +92,52 @@ function Gama() {
 
                 <div>
 
-                    {offers.map((offer: {
-                        description: string
-                        price: number
-                        title: string;
+                {offers.map((offer: {
+                    category: string
+                    description: string
+                    price: number
+                    title: string;
 
-                        _id: Key | null | undefined
+                    _id: Key | null | undefined
 
-                    }) => (
-                        <div
-                            key={offer._id}
+                }) => (
+                    <div
+                        key={offer._id}
+                    >
+                        <form className=" bg-primary"
+                            onSubmit={
+                                addCart
+                            }
                         >
-                            <div className="text-red-500">
-                                {offer.title} {" "}
-                                {offer.price}{" "}
-                                {offer.description}
-                            </div>
-                        </div>
-                    ))}
+                            <input
+                                defaultValue={offer.title}
+                                
+                            />
+
+
+
+                            <input
+                                
+                                defaultValue={offer.category}
+                            />
+
+
+
+                            <input
+
+                                defaultValue={offer.price}
+                                
+                            />
+
+
+                            <button
+
+                                type="submit"
+                                className="btn bg-black"
+                            > click</button>
+                        </form>
+                    </div>
+                ))}
                 </div>
 
             </>
