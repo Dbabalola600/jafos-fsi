@@ -2,12 +2,13 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 
 
-import { cartListType } from "../../pages/student/Cart";
+import { cartListType } from "../../pages/student/Cart2";
 
 
 type CartInputProps = {
     product: string,
     price: number,
+    tot?: number,
     setCartList: Dispatch<SetStateAction<cartListType>>
     cartList: cartListType,
     id: string;
@@ -16,7 +17,11 @@ type CartInputProps = {
 }
 
 
-export default function CartInput(props: CartInputProps){
+
+
+
+export default function CartInput(props: CartInputProps) {
+
     const [quantity, setQuantity] = useState<number>(1);
 
     const handleQuantityChange = (changeType: "increment" | "decrement") => {
@@ -42,7 +47,6 @@ export default function CartInput(props: CartInputProps){
         if(!existingCart){
             props.setCartList((prev) => {
                 prev[props.index] = {
-                    product: props.product,
                     _id: props.id,
                     amount,
                     storename: props.storename,
@@ -119,6 +123,4 @@ export default function CartInput(props: CartInputProps){
 
         </div>
     )
-
-
 }

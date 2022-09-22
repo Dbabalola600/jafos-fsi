@@ -23,11 +23,12 @@ export default async function fetchCart(req, res) {
         const { id } = JSON.parse(req.body)
 
         console.log('FETCHING DOCUMENTS');
-        const CartItems = await Cart.find({ user: id }).select("title category price   ")
+        const CartItems = await Cart.find({ user: id }).select("title category price storename  ")
         console.log(...CartItems)
 
+        console.log("ITEMS GOTTEN")
         return res.json(CartItems)
-        consol.log("ITEMS GOTTEN")
+       
     } else {
 
         return res.status(400).json({

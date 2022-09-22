@@ -108,12 +108,14 @@ function Beta() {
 
 
     const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault()
         const user = getCookie("user")
         console.log(user)
         const form = e.currentTarget.elements as any
 
         const body = {
             user: user,
+            storename: "Beta",
             title: form.item(0).value,
             category: form.item(1).value,
             price: form.item(2).value,

@@ -14,10 +14,12 @@ export default async function newCart(req, res) {
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { user, title, category, price } = JSON.parse(req.body)
+        const { user, storename, title, category, price } = JSON.parse(req.body)
 
         const cartPro = await Cart.create({
+            
             user,
+            storename,
             title,
             category,
             price

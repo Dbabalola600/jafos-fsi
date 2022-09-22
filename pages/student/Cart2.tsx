@@ -3,16 +3,10 @@ import Header from "../../components/shared/Header";
 
 import StuLayout from "./Layout/StuLayout";
 
-
 import { FormEventHandler, Key, useEffect, useState } from "react"
-
-import CartInput from "../../components/shared/CartInput";
-import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
-
-
-
-
+import CartInput from "../../components/shared/CartInput2";
+import { useRouter } from "next/router";
 type Cart = {
     _id: string
     user: string
@@ -21,13 +15,6 @@ type Cart = {
     price: number
     storename: string
 }
-type Student = {
-    _id: string;
-    firstname: string
-    lastname: string
-    matricno: string
-}
-
 
 export type cartListType = {
     _id: string;
@@ -36,44 +23,22 @@ export type cartListType = {
     quantity: number;
     title: string;
     storename: string;
-    product: string
+   
 }[]
 
 
 
+type Order = {
+    user: string;
+    orderList: String;
+}
 
-
-
-
-
-export default function Cart() {
+function Cart() {
     const router = useRouter()
     const [carts, setCarts] = useState<Cart[]>([])
-    const [student, setStudent] = useState<Student | null>(null);
-    
+
     const [cartList, setCartList] = useState<cartListType>([]);
 
-    
-    const showinfo = async () => {
-
-
-        const token = getCookie("user")
-        const body = {
-            _id: token
-        }
-
-        const response = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as Student
-
-       
-
-        setStudent(response)
-
-        
-       
-       console.log(response)
-
-    }
 
 
     const showCart = async () => {
@@ -97,52 +62,43 @@ export default function Cart() {
         showCart()
     }, [])
 
-    useEffect(() => {
-        showinfo()
 
-    }, [])
-
-
-
-    const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
+    const addOrder: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
         const user = getCookie("user")
         console.log(user)
-
         const form = e.currentTarget.elements as any
-
 
         const body = {
             user: user,
-            cartList
-
+            orderList: cartList
         }
-
-
-        const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/order/newOrder", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 console.log(res.status)
                 if (res.status == 200) {
-                    // router.push("/student/DashBoard/")
+                    router.push("/student/DashBoard/")
                 } if (res.status == 401) {
                     console.log("ERROR")
                 }
             })
             .catch(err => {
                 console.log(err)
-            })
-
+            }) 
 
 
     }
-
-    // console.log(cartList[0].product)
+    useEffect(()=>{
+        console.log(cartList)
+    },[
+        cartList
+    ])
 
 
     return (
-
         <StuLayout>
             <>
+
                 <div
                     className=" bg-black md:w-60">
                     <Header
@@ -150,10 +106,9 @@ export default function Cart() {
                     />
                 </div>
 
-
                 <form
                     onSubmit={
-                        addOrderItem
+                        addOrder
                     }
                 >
                     {carts.map((cart: {
@@ -170,14 +125,12 @@ export default function Cart() {
 
                             <CartInput
                                 id={cart._id || ""}
+                                index = {index}
+                                product={cart.title}
+                                price={cart.price}
                                 cartList={cartList}
                                 setCartList={setCartList}
-                                product={cart.title}
                                 storename={cart.storename}
-                                price={cart.price}
-                                index={index}
-                               
-                               
                             />
 
 
@@ -192,27 +145,16 @@ export default function Cart() {
 
                     <button
                         className="btn btn-primary w-full"
-                        onClick={() => addOrderItem}
+                        onClick={() => addOrder}
                         type="submit"
                     >
                         SUBMIT
                     </button>
                 </form>
 
-
             </>
-
         </StuLayout>
     )
-
-
-
-
 }
 
-
-
-
-
-
-
+export default Cart;
