@@ -4,17 +4,37 @@ import Header from "../../components/shared/Header";
 import StuLayout from "../student/Layout/StuLayout";
 import Test from '../../model/testModel';
 import { InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
-import { Key } from "react";
+import { Key, useEffect, useState } from "react";
+import Link from "next/link";
 
 
-type Test ={
-    _id : string;
-    name: string
+type Sellers = {
+    _id: string
+    storename: string;
+    firstname: string
+    lastname: string
 }
 
-function DashBoard({ tests }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function test() {
 
-   
+    const [sellers, SetSellers] = useState<Sellers[]>([])
+
+    const showinfo = async () => {
+        const SellerResponse = await fetch("/api/test/testfetch", { method: "GET" })
+            .then(res => res.json()) as Sellers[]
+
+        SetSellers(SellerResponse)
+
+
+    }
+
+
+    useEffect(() => {
+        showinfo()
+
+    }, [])
+
+
     return (
         <StuLayout>
             <>
@@ -25,20 +45,29 @@ function DashBoard({ tests }: InferGetServerSidePropsType<typeof getServerSidePr
                         title="test displaying users"
                     />
 
-                    {tests.map((test: { _id: Key | null | undefined; name: string; }) =>
-                    (
-                        <div
-                            key={test._id}
-                        >
-                            <Header
-                                title={test.name}
-                            />
-                        </div>
-                    )
-                    )}
 
 
                 </div>
+
+
+
+                {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
+                    <div
+                        key={seller._id}
+                    >
+                        <Link
+                            href={`/stores/${seller.storename}`}
+                        >
+                            <a>
+                                <Header
+                                    title={seller.storename}
+                                />
+                            </a>
+
+                        </Link>
+
+                    </div>
+                )}
 
 
 
@@ -47,17 +76,7 @@ function DashBoard({ tests }: InferGetServerSidePropsType<typeof getServerSidePr
     )
 }
 
-export async function getServerSideProps(){
-    const res = await fetch("http://localhost:3000/api/test/testfetch", {method: "GET", headers:{"Authorization": window.localStorage.getItem("token") || ""}}).then(res=>res.json()) 
-//    const tests = await Test.find();
-   console.log(res)
-   
-    return {
-        props: {
-          tests: res.tests ,
-        },
-      };
-}
 
 
-export default DashBoard;
+
+export default test;

@@ -6,7 +6,7 @@ import { Fragment, useState } from "react";
 
 import { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
-import {deleteCookie } from "cookies-next"
+import { deleteCookie } from "cookies-next"
 
 
 
@@ -31,8 +31,8 @@ export default function NavBar2() {
                 }
 
             }).then(() => {
-                
-                deleteCookie('user', {path:'/', domain:'localhost'})
+
+                deleteCookie('user', { path: '/', domain: 'localhost' })
 
                 router.push('/')
             }).catch(err => {
@@ -93,6 +93,15 @@ export default function NavBar2() {
                 >
                     <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
 
+
+                        <Link href='/seller/DashBoard'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Home
+                            </a>
+                        </Link>
+
+
+
                         <Link href='/seller/Offerings'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Offerings
@@ -100,7 +109,7 @@ export default function NavBar2() {
                         </Link>
 
 
-                        <Link href='/seller/Orders'>
+                        <Link href='/seller/Orders/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Orders
                             </a>

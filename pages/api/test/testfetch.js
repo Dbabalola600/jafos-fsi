@@ -1,7 +1,7 @@
 import connectMongo from '../../../utils/connectMongo';
-import Test from '../../../model/testModel';
-import Seller from '../../../model/Seller'
-import Student from '../../../model/StudentModel';
+
+import Seller from '../../../model/Seller/Seller';
+import OrderItem from '../../../model/Student/orderItem';
 
 //export const getServerSideprops = async () =>
 //export default async function fetchtest(getServerSideprops)
@@ -9,21 +9,23 @@ import Student from '../../../model/StudentModel';
 export default async function fetchtest(req,res) {
   try {
     console.log('CONNECTING TO MONGO');
-    await connectMongo();
-    console.log('CONNECTED TO MONGO');
+        await connectMongo();
+        console.log('CONNECTED TO MONGO');
 
-    console.log('FETCHING DOCUMENTS');
-    // const tests = await Test.findById({_id: req.body._id});
+        console.log('FETCHING Sellers');
+        // const tests = await Test.findById({_id: req.body._id});
 
-    const tests = await Seller.find()
-    
-    console.log('FETCHED DOCUMENTS');
+        const sellers = await Seller.find().sort({createdAt: 1})
+// const order = await OrderItem.find()
+        console.log('FETCHED Sellers');
 
-    res.status(200).json({
-        tests,
-      })
 
-    return 
+        // console.log(sellers[0].createdAt)
+        res.status(200).json(sellers)
+
+        return
+
+   
 
   } catch (error) {
     console.log(error);

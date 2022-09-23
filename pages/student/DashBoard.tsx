@@ -31,7 +31,7 @@ type Sellers = {
 function DashBoard() {
     const [student, setStudent] = useState<Student | null>(null);
     const [sellers, SetSellers] = useState<Sellers[]>([])
-
+const router = useRouter()
 
     //this works
     // console.log(getCookie("user"))
@@ -47,9 +47,12 @@ function DashBoard() {
         }
 
         const response = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as Student
+        .then(res => res.json()) as Student
+        
+      
+      
 
-       
+     
 
         setStudent(response)
 
@@ -113,7 +116,7 @@ function DashBoard() {
                         key={seller._id}
                     >
                         <Link
-                            href={`/stores/${seller.storename}`}
+                            href={`/stores/${seller._id}`}
                         >
                             <a>
                                 <Header
@@ -125,7 +128,6 @@ function DashBoard() {
 
                     </div>
                 )}
-
 
             </>
         </StuLayout>

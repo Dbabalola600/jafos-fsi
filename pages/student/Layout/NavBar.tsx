@@ -111,6 +111,15 @@ export default function NavBar2() {
                             </a>
                         </Link>
 
+
+
+                        <Link href='/student/Orders'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Order
+                            </a>
+                        </Link>
+
+                        
                         <button
                             onClick={logout}
                             className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>

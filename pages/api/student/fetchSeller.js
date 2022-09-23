@@ -13,7 +13,6 @@ export default async function fetchSeller(req, res) {
         // const tests = await Test.findById({_id: req.body._id});
 
         const sellers = await Seller.find()
-
         console.log('FETCHED Sellers');
 
         res.status(200).json(sellers)

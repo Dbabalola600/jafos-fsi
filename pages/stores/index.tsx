@@ -58,7 +58,7 @@ function index() {
                         key={seller._id}
                     >
                         <Link
-                            href={`/stores/${seller.storename}`}
+                            href={`/stores/${seller._id}`}
                         >
                             <a>
                                 <Header

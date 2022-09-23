@@ -1,8 +1,33 @@
 import Head from "next/head";
 import Link from "next/link";
 import NavBar from "./NavBar";
+import { getCookie, hasCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 
 export default function CatLayout({ children }: { children?: JSX.Element }) {
+
+    const router = useRouter()
+
+
+    function checkUser() {
+        const userCheck = hasCookie("user")
+
+        console.log(userCheck)
+
+        if (userCheck == false) {
+            router.push("/")
+        }
+    }
+
+
+
+    useEffect(() => {
+        checkUser()
+    }, [])
+
+
     return (
 
         <div className="bg-primaryColour md:space-y-20  min-h-screen">

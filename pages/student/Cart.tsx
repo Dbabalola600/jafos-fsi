@@ -123,7 +123,7 @@ export default function Cart() {
             .then(res => {
                 console.log(res.status)
                 if (res.status == 200) {
-                    // router.push("/student/DashBoard/")
+                    router.push("/student/DashBoard/")
                 } if (res.status == 401) {
                     console.log("ERROR")
                 }
@@ -131,12 +131,9 @@ export default function Cart() {
             .catch(err => {
                 console.log(err)
             })
-
-
-
     }
 
-    // console.log(cartList[0].product)
+
 
 
     return (

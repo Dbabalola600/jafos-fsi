@@ -1,8 +1,32 @@
+import { hasCookie } from "cookies-next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import NavBar from "./NavBar";
 
 export default function StuLayout({ children }: { children?: JSX.Element }) {
+
+
+    const router = useRouter()
+
+
+    function checkUser() {
+        const userCheck = hasCookie("user")
+
+        console.log(userCheck)
+
+        if (userCheck == false) {
+            router.push("/")
+        }
+    }
+
+
+
+    useEffect(() => {
+        checkUser()
+    }, [])
+
     return (
 
         <div className="bg-primaryColour md:space-y-20  min-h-screen">

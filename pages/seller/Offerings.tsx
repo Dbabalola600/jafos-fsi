@@ -109,7 +109,7 @@ function Offerings() {
                     price: number
                     title: string;
 
-                    _id: Key | null | undefined
+                    _id: string | null | undefined
 
                 }) => (
                     <div

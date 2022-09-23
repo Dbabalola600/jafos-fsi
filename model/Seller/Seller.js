@@ -27,7 +27,9 @@ const SellerSchema = new Schema({
     enum: ['student', 'seller'  ],
     default: 'seller'
   }
-});
+},
+{timestamps: true}
+);
 
 const Seller = models.Seller || model('Seller', SellerSchema);
 

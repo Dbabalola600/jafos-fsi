@@ -1,20 +1,18 @@
+import Header from "../../../components/shared/Header";
+import CatLayout from "../Layout/CatLayout";
 
 
-import CatLayout from "./Layout/CatLayout";
-import Header from "../../components/shared/Header";
 
 
 
-function Orders() {
+
+export default function index() {
     return (
         <CatLayout>
             <>
                 <Header
-                    title="ORDERS"
+                    title="show order history"
                 />
-
-
-
 
 
                 <div className="collapse">
@@ -26,9 +24,9 @@ function Orders() {
                         <p>hell</p>
                     </div>
                 </div>
+
+                
             </>
         </CatLayout>
     )
 }
-
-export default Orders;
