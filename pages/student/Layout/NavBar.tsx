@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import {deleteCookie } from "cookies-next"
+import { deleteCookie, hasCookie } from "cookies-next"
 
 
 import { InferGetStaticPropsType } from "next";
@@ -18,26 +18,15 @@ export default function NavBar2() {
 
         setLoading(true)
 
-        await fetch("/api/student/logout", { method: "POST" })
-            .then(res => {
-                if (res.status == 200) {
+        const userCheck = hasCookie("Normuser")
 
-                    deleteCookie('user', {path:'/', domain:'localhost'})
+        if (userCheck == true) {
+            deleteCookie('Normuser', { path: '/', domain: 'localhost' })
 
-                    router.push('/')
-                    return res.json()
-                }
-                if (res.status == 400) {
-                    console.log("error")
-                }
+            router.push('/')
 
-            }).then(() => {
-                // window.localStorage.getItem("token")
-                // window.localStorage.clear()
-              
-            }).catch(err => {
-                console.log(err)
-            })
+        }
+
         setLoading(false)
     }
 
@@ -119,7 +108,7 @@ export default function NavBar2() {
                             </a>
                         </Link>
 
-                        
+
                         <button
                             onClick={logout}
                             className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded text-white font-bold items-center justify-center hover:bg-primaryColour hover:text-black bg-red-600'>

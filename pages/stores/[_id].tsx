@@ -13,6 +13,7 @@ type Offers = {
     category: string
     price: number
     description: string
+    storename:string
 }
 
 type Seller = {
@@ -59,7 +60,7 @@ export default function stores() {
 
 
         SetOffers(Offerresponse)
-        console.log(Offerresponse)
+        // console.log(Offerresponse[0].description)
 
 
 
@@ -71,13 +72,13 @@ export default function stores() {
 
     const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
-        const user = getCookie("user")
+        const user = getCookie("Normuser")
         console.log(user)
         const form = e.currentTarget.elements as any
 
         const body = {
             user: user,
-            storename: "Gama",
+            storename: seller?.storename,
             title: form.item(0).value,
             category: form.item(1).value,
             price: form.item(2).value,
@@ -118,27 +119,27 @@ export default function stores() {
                         description: string
                         price: number
                         title: string;
-
+storename: string
                         _id: string | null | undefined
 
                     }) => (
                         <div
                             key={offer._id}
                         >
-                            <form className=" bg-primary"
+                            <form className=" bg-primary text-red-500"
                                 onSubmit={
                                     addCart
                                 }
                             >
                                 <input
                                     defaultValue={offer.title}
-
+                                    readOnly
                                 />
 
 
 
                                 <input
-
+                                    readOnly
                                     defaultValue={offer.category}
                                 />
 
@@ -147,15 +148,22 @@ export default function stores() {
                                 <input
 
                                     defaultValue={offer.price}
-
+                                    readOnly
+                                />
+                                <input
+                                    readOnly
+                                    defaultValue={offer.description}
                                 />
 
+                              
 
                                 <button
 
                                     type="submit"
                                     className="btn bg-black"
-                                > click</button>
+                                > Add to Cart</button>
+
+
                             </form>
                         </div>
                     ))}

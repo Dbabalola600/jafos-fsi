@@ -14,7 +14,7 @@ import Student from '../../model/StudentModel';
  */
 export default async function Logout(req, res, data) {
     try {
-        const JWT_SECRET ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
+        // const JWT_SECRET ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
         console.log('CONNECTING TO MONGO');
         await connectMongo();
         console.log('CONNECTED TO MONGO');

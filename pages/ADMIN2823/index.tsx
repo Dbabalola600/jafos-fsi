@@ -51,18 +51,18 @@ function Login() {
         const form = e.currentTarget.elements as any
 
         const body = {
-            storename: form.item(0).value,
+            AdminId: form.item(0).value,
             password: form.item(1).value,
         }
 
 
 
 
-        const response = await fetch("/api/seller/loginSell", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/admin/login", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {
-                    router.push("/seller/DashBoard")
+                    router.push("/ADMIN2823/DashBoard")
                     return res.json()
 
                 }
@@ -72,7 +72,7 @@ function Login() {
                 }
             }).then((data) => {
                 // window.localStorage.setItem("token", data.token);
-                console.log( getCookie("Selluser"))
+                console.log( getCookie("Adminuser"))
                
                 
             }).catch(err => {
@@ -113,8 +113,8 @@ function Login() {
 
                     <div className="mx-auto  w-full ">
                         <TextInput
-                            placeholder=" Store Name"
-                            name="storename"
+                            placeholder=" Admin Id"
+                            name="Admin Id"
                             type='text'
 
                         />
@@ -124,7 +124,7 @@ function Login() {
                     <div className="mx-auto w-full ">
                         <TextInput
                             placeholder=" Password"
-                            name="password"
+                            name="Password"
                             type='password'
                         />
                     </div>
@@ -142,6 +142,8 @@ function Login() {
 
 
 
+
+
                     </div>
 
 
@@ -156,3 +158,5 @@ function Login() {
 
 
 export default Login;
+
+

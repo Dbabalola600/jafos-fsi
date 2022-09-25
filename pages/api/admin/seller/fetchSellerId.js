@@ -1,16 +1,21 @@
-import connectMongo from "../../../utils/connectMongo";
-
-
-
-import Student from '../../../model/StudentModel';
+import connectMongo from "../../../../utils/connectMongo";
+import Seller from "../../../../model/Seller/Seller"
 
 
 
 
-export default async function fetchStudent(req, res) {
+
+/**
+ * @param {import('next').NextApiRequest} req
+ * @param {import('next').NextApiResponse} res
+ */
 
 
-    // const JWT_SECRET = "ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
+
+
+
+export default async function fetchSellerId(req, res) {
+
     if (req.method === "POST") {
         console.log('CONNECTING TO MONGO');
         await connectMongo();
@@ -24,16 +29,15 @@ export default async function fetchStudent(req, res) {
         // const token = getCookies( { req, res, path:'/', domain:'localhost' })
         // console.log(token)
 
-        const student = await Student.findById(_id);
+        const seller = await Seller.findById(_id).select("storename firstname ");
 
-        console.log('FETCHED STUDENT');
-        // console.log(student)
+        console.log('FETCHED SELLER');
+        //   console.log(seller)
         return res.status(200).json(
-            student,
+            seller
 
         )
-    }
-    else {
+    } else {
 
         return res.status(400).json({
             notFound: true,
@@ -44,5 +48,4 @@ export default async function fetchStudent(req, res) {
 
 
 
-};
-
+}

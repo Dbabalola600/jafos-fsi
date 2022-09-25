@@ -2,10 +2,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEventHandler, useState } from "react";
 
-import Header from "../../components/shared/Header";
-import TextInput from "../../components/shared/TextInput";
+import Header from "../../../components/shared/Header";
+import TextInput from "../../../components/shared/TextInput";
 
-import CatLayout from "./Layout/CatLayout";
+import CatLayout from "../Layout/CatLayout";
 
 import {getCookie} from 'cookies-next'
 
@@ -16,7 +16,7 @@ function newOffer() {
     const [isLoading, setLoading] = useState(false)
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
-        const user = getCookie("user")
+        const user = getCookie("Selluser")
         console.log(user)
         e.preventDefault()
         setLoading(true)
@@ -38,7 +38,7 @@ function newOffer() {
             .then(res => {
 
                 if (res.status == 200) {
-                    router.push("/seller/Offerings")
+                    router.push("/seller/Products")
                 }
             }).catch(err => {
                 console.log(err)
@@ -61,7 +61,7 @@ function newOffer() {
 
                 <Header
                     title="ADD PRODUCT"
-                    desc=" please provide necessary details for account creation" />
+                    desc=" please provide necessary details for Product Creation " />
 
                 <div className="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-12 md:gap-y-28">
 
@@ -70,10 +70,9 @@ function newOffer() {
                         <TextInput
                             // errorMessage={errors.firstName?.message}
                             placeholder="Title"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                           
                             type="text"
-                            name="title"
+                            name="Title"
                             id="title"
                         />
                     </div>
@@ -92,7 +91,7 @@ function newOffer() {
                             // register={register("firstName")}
                             type="number"
 
-                            name="price"
+                            name="Price"
                             id="price"
 
                         />
@@ -101,9 +100,9 @@ function newOffer() {
                     {/* category */}
 
                     <div className="col-span-12  md:col-span-6 ">
-                        <div className="form-control">
+                        <div className="form-control ">
                             <div className="input-group">
-                                <select className="select select-bordered">
+                                <select className="select select-bordered select-primary">
                                     <option disabled selected>Pick category</option>
                                     <option>Food</option>
                                     <option>Drinks</option>

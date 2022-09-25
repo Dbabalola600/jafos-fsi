@@ -41,7 +41,7 @@ function DashBoard() {
 
     const showinfo = async () => {
 
-        const token = getCookie("user")
+        const token = getCookie("Selluser")
         console.log(token)
 
         const body = {
@@ -70,7 +70,7 @@ function DashBoard() {
             .then(res => res.json()) as OrderItems[]
 
         setOrderItems(OrderResponse)
-        console.log(OrderResponse[0])
+        console.log(OrderResponse[0]._doc._id)
 
     }
 
@@ -114,7 +114,7 @@ function DashBoard() {
 
                 {orderItems.map((orderItem: {
                     _doc: any;
-                    _id: Key | null | undefined;
+                    _id: string;
                     storename: string
                     product: string
                     user: string
@@ -127,7 +127,7 @@ function DashBoard() {
                         key={orderItem._id}
                     >
                         <Link
-                            href={`/seller/Orders/Details/${orderItem.userObj._id}`}
+                            href={`/seller/Orders/Details/${orderItem._doc._id}`}
                         >
                             <a>
                             <Header

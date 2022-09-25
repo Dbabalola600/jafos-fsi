@@ -37,6 +37,7 @@ export type cartListType = {
     title: string;
     storename: string;
     product: string
+    total?: number
 }[]
 
 
@@ -50,14 +51,15 @@ export default function Cart() {
     const router = useRouter()
     const [carts, setCarts] = useState<Cart[]>([])
     const [student, setStudent] = useState<Student | null>(null);
-    
+    const [isLoading, setLoading] = useState(false)
+
     const [cartList, setCartList] = useState<cartListType>([]);
 
-    
+
     const showinfo = async () => {
 
 
-        const token = getCookie("user")
+        const token = getCookie("Normuser")
         const body = {
             _id: token
         }
@@ -65,19 +67,19 @@ export default function Cart() {
         const response = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Student
 
-       
+
 
         setStudent(response)
 
-        
-       
-       console.log(response)
+
+
+        console.log(response)
 
     }
 
 
     const showCart = async () => {
-        const user = getCookie("user")
+        const user = getCookie("Normuser")
         const body = {
             id: user
         }
@@ -106,7 +108,9 @@ export default function Cart() {
 
     const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
-        const user = getCookie("user")
+        const user = getCookie("Normuser")
+
+        setLoading(true)
         console.log(user)
 
         const form = e.currentTarget.elements as any
@@ -131,11 +135,17 @@ export default function Cart() {
             .catch(err => {
                 console.log(err)
             })
+
+
+
+            setLoading(false)
     }
 
 
 
+// console.log(cartList[0].total)
 
+// let grande = cartList[0].total
     return (
 
         <StuLayout>
@@ -158,6 +168,7 @@ export default function Cart() {
                         title: string
                         price: number
                         storename: string
+                       
                     }, index) => (
                         <div
                             key={cart._id}
@@ -173,26 +184,23 @@ export default function Cart() {
                                 storename={cart.storename}
                                 price={cart.price}
                                 index={index}
-                               
-                               
+                              
+
                             />
-
-
-
-
 
                         </div>
 
 
+
                     ))}
 
-
+                   
                     <button
-                        className="btn btn-primary w-full"
+                        className="btn btn-primary w-full mt-10"
                         onClick={() => addOrderItem}
                         type="submit"
                     >
-                        SUBMIT
+                        {isLoading ? "Loading..." : "SUBMIT"}
                     </button>
                 </form>
 

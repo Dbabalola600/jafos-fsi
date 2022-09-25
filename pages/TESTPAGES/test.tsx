@@ -6,6 +6,8 @@ import Test from '../../model/testModel';
 import { InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
 import { Key, useEffect, useState } from "react";
 import Link from "next/link";
+import CusModal from "../../components/shared/modal";
+import { useRouter } from "next/router";
 
 
 type Sellers = {
@@ -16,7 +18,7 @@ type Sellers = {
 }
 
 function test() {
-
+    const router = useRouter()
     const [sellers, SetSellers] = useState<Sellers[]>([])
 
     const showinfo = async () => {
@@ -29,6 +31,11 @@ function test() {
     }
 
 
+    function test() {
+        router.push("/")
+    }
+
+
     useEffect(() => {
         showinfo()
 
@@ -36,43 +43,48 @@ function test() {
 
 
     return (
-        <StuLayout>
-            <>
 
+        <>
+
+            <div
+                className=" bg-black md:w-60">
+                <Header
+                    title="test displaying users"
+                />
+
+
+
+            </div>
+
+
+
+            {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
                 <div
-                    className=" bg-black md:w-60">
-                    <Header
-                        title="test displaying users"
-                    />
+                    key={seller._id}
+                >
+                    {/* <Link
+                        href={`/stores/${seller.storename}`}
+                    > */}
+                    <a>
+                        <Header
+                            title={seller.storename}
+                        />
+                    </a>
 
-
+                    {/* </Link> */}
 
                 </div>
+            )}
 
+            <CusModal
+                mainButtonTitle="main button"
+                modalInfo=" information goes in here"
+                smButtonTitle="click this"
+                clickButton={()=> {test()}}
+            />
 
+        </>
 
-                {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
-                    <div
-                        key={seller._id}
-                    >
-                        <Link
-                            href={`/stores/${seller.storename}`}
-                        >
-                            <a>
-                                <Header
-                                    title={seller.storename}
-                                />
-                            </a>
-
-                        </Link>
-
-                    </div>
-                )}
-
-
-
-            </>
-        </StuLayout>
     )
 }
 

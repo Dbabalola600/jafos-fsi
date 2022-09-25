@@ -30,7 +30,8 @@ export default async function newOrderItem(req, res) {
                     storename: cart.storename,
                     price: cart.price,
                     quantity: cart.quantity,
-                    amount: cart.amount
+                    amount: cart.amount,
+                    status: "Pending"
 
                 })
             })))

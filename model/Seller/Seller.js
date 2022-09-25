@@ -24,7 +24,7 @@ const SellerSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'seller'  ],
+    enum: ['student', 'seller','Admin'  ],
     default: 'seller'
   }
 },

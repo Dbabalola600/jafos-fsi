@@ -12,7 +12,7 @@ export default function StuLayout({ children }: { children?: JSX.Element }) {
 
 
     function checkUser() {
-        const userCheck = hasCookie("user")
+        const userCheck = hasCookie("Normuser")
 
         console.log(userCheck)
 

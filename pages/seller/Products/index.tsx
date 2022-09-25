@@ -1,10 +1,10 @@
 import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { Key, useEffect, useState } from "react";
-import DefaultLayout from "../../components/layouts/DefaultLayout";
-import Header from "../../components/shared/Header";
+import DefaultLayout from "../../../components/layouts/DefaultLayout";
+import Header from "../../../components/shared/Header";
 
-import CatLayout from "./Layout/CatLayout";
+import CatLayout from "../Layout/CatLayout";
 
 
 
@@ -32,7 +32,7 @@ function Offerings() {
 
     const showinfo = async () => {
 
-        const token = getCookie("user")
+        const token = getCookie("Selluser")
         console.log(token)
       
         const body = {
@@ -80,7 +80,7 @@ function Offerings() {
                         className=" bg-black  ">
                         <div
                             className="text-center text-primaryColour font-bold mx-auto text-2xl">
-                            VIEW OFFERINGS
+                            VIEW PRODUCTS
                         </div>
                     </div>
 
@@ -89,9 +89,9 @@ function Offerings() {
 
                     <div className='  mx-auto'>
                         <Link
-                            href="/seller/newOffer">
+                            href="/seller/Products/newProduct">
                             <button className="btn btn-lg btn-primary btn-block">
-                                Add Offering
+                                Add Product
                             </button>
                         </Link>
                     </div>

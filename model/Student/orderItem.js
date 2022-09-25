@@ -32,10 +32,16 @@ const OrderItemSchema = new Schema({
         unique: false
     },
 
+
     amount: {
         type: Number,
         required: true,
         unique: false
+    },
+    status:{
+        type: String,
+        enum: ['Pending', 'Completed', 'Delivered'],
+        default: 'Pending'
     }
 
 },

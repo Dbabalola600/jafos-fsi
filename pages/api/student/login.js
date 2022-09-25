@@ -36,7 +36,7 @@ export default async function Login(req, res) {
 
         console.log(user)
 
-        setCookie('user', existingStudent._id, { req, res , maxAge:86400})  //maxage in seconds
+        setCookie('Normuser', existingStudent._id, { req, res , maxAge:86400})  //maxage in seconds
 
 
 

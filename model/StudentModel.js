@@ -31,10 +31,12 @@ const StudentSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'seller'  ],
+    enum: ['student', 'seller','Admin'  ],
     default: 'student'
-  }
-});
+  },
+},
+{timestamps: true}
+);
 
 
 

@@ -9,6 +9,7 @@ import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
 import AvailableStores from "./availableStores"
 import Link from "next/link";
+import HeadButton from "../../components/shared/HeadButton";
 
 type Student = {
     _id: string;
@@ -41,7 +42,7 @@ const router = useRouter()
     const showinfo = async () => {
 
 
-        const token = getCookie("user")
+        const token = getCookie("Normuser")
         const body = {
             _id: token
         }
@@ -103,31 +104,50 @@ const router = useRouter()
                     className="pt-5"
                 >
                     <div  
-                    className="text-primary  text-2xl font-bold  underline"
+                    className="text-primary  text-2xl font-bold text-center  underline"
                     >
                         Available Stores
                     </div>
                     
                 </div>
 
+                <div
+                        className="grid grid-cols-2 space-x-5 mx-auto"
+                        >
 
-                {sellers.map((seller: { _id: Key | null | undefined; storename: string; }) =>
+
+{sellers.map((seller: { _id: Key | null | undefined; storename: string; }) =>
                     <div
                         key={seller._id}
                     >
-                        <Link
-                            href={`/stores/${seller._id}`}
-                        >
-                            <a>
-                                <Header
-                                    title={seller.storename}
-                                />
-                            </a>
 
-                        </Link>
+                      
+
+
+                           
+
+<Link
+                            href={`/stores/${seller._id}`}
+                           >
+                            <a>
+                            <HeadButton
+                            title={seller.storename}
+                            />
+                            </a>
+                           
+
+                            </Link>
+                          
+                           
+
+                       
+                      
 
                     </div>
                 )}
+                            
+                        </div>
+               
 
             </>
         </StuLayout>

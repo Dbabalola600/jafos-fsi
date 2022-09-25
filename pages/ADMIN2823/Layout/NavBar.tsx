@@ -51,10 +51,10 @@ export default function NavBar2() {
 
 
 
-        const userCheck = hasCookie("Selluser")
+        const userCheck = hasCookie("Adminuser")
 
         if (userCheck == true) {
-            deleteCookie('Selluser', { path: '/', domain: 'localhost' })
+            deleteCookie('Adminuser', { path: '/', domain: 'localhost' })
 
             router.push('/')
 
@@ -72,7 +72,7 @@ export default function NavBar2() {
     return (
         <>
             <nav className='flex items-center flex-wrap bg-black p-3 sticky top-0 z-50 '>
-                <Link href='/seller/DashBoard'>
+                <Link href='/ADMIN2823/DashBoard'>
                     <a className='inline-flex items-center p-2 mr-4 '>
 
 
@@ -126,16 +126,16 @@ export default function NavBar2() {
 
 
 
-                        <Link href='/seller/Products'>
+                        <Link href='/ADMIN2823/Students'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Products
+                                Students
                             </a>
                         </Link>
 
 
-                        <Link href='/seller/Orders/'>
+                        <Link href='/Admin2823/Sellers/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Orders
+                                Sellers
                             </a>
                         </Link>
 

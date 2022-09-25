@@ -39,7 +39,7 @@ export default async function Login(req, res) {
         // const token = JWT.sign({ id: Seller._id }, JWT_SECRET);
 
         const user = existingSeller._id
-        setCookie('user', existingSeller._id, { req, res, maxAge:86400 })
+        setCookie('Selluser', existingSeller._id, { req, res, maxAge:86400 })
 
 
 

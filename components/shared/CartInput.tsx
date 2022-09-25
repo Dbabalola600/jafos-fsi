@@ -13,10 +13,11 @@ type CartInputProps = {
     id: string;
     storename: string
     index: number
+    total?: number
 }
 
 
-export default function CartInput(props: CartInputProps){
+export default function CartInput(props: CartInputProps) {
     const [quantity, setQuantity] = useState<number>(1);
 
     const handleQuantityChange = (changeType: "increment" | "decrement") => {
@@ -36,10 +37,17 @@ export default function CartInput(props: CartInputProps){
 
     let amount = quantity * props.price;
 
-    useEffect(()=>{
+
+   
+
+    useEffect(() => {
         const existingCart = props.cartList[props.index]
 
-        if(!existingCart){
+
+
+
+console.log(props.total)
+        if (!existingCart) {
             props.setCartList((prev) => {
                 prev[props.index] = {
                     product: props.product,
@@ -48,11 +56,12 @@ export default function CartInput(props: CartInputProps){
                     storename: props.storename,
                     price: props.price,
                     quantity,
-                    title: props.product
+                    title: props.product,
+                    total: props.total
                 }
-                
+
                 return prev
-                
+
             })
         }
 
@@ -65,7 +74,17 @@ export default function CartInput(props: CartInputProps){
             existingCart.amount = amount;
         }
 
+
+
+
+       
     }, [quantity, amount])
+
+
+
+
+
+
 
     return (
         <div
@@ -116,7 +135,11 @@ export default function CartInput(props: CartInputProps){
             >
                 Clacky
             </div>
-
+            <div
+                className="btn btn-primary"
+            >
+                Delete button
+            </div>
         </div>
     )
 
