@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction, useEffect, useState } from "react";
 
 
 
@@ -14,6 +14,7 @@ type CartInputProps = {
     storename: string
     index: number
     total?: number
+    clickButton?:MouseEventHandler<HTMLDivElement>| any
 }
 
 
@@ -38,7 +39,7 @@ export default function CartInput(props: CartInputProps) {
     let amount = quantity * props.price;
 
 
-   
+
 
     useEffect(() => {
         const existingCart = props.cartList[props.index]
@@ -46,7 +47,7 @@ export default function CartInput(props: CartInputProps) {
 
 
 
-console.log(props.total)
+        console.log(props.total)
         if (!existingCart) {
             props.setCartList((prev) => {
                 prev[props.index] = {
@@ -77,7 +78,7 @@ console.log(props.total)
 
 
 
-       
+
     }, [quantity, amount])
 
 
@@ -136,6 +137,7 @@ console.log(props.total)
                 Clacky
             </div>
             <div
+            onClick={ props.clickButton}
                 className="btn btn-primary"
             >
                 Delete button

@@ -13,7 +13,7 @@ type Offers = {
     category: string
     price: number
     description: string
-    storename:string
+    storename: string
 }
 
 type Seller = {
@@ -85,7 +85,7 @@ export default function stores() {
 
         }
 
-        const reponse = await fetch("/api/student/newCart", { method: "POST", body: JSON.stringify(body) })
+        const reponse = await fetch("/api/student/cart/newCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {
@@ -119,7 +119,7 @@ export default function stores() {
                         description: string
                         price: number
                         title: string;
-storename: string
+                        storename: string
                         _id: string | null | undefined
 
                     }) => (
@@ -155,7 +155,7 @@ storename: string
                                     defaultValue={offer.description}
                                 />
 
-                              
+
 
                                 <button
 

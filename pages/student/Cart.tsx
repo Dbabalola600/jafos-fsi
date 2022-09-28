@@ -78,19 +78,37 @@ export default function Cart() {
     }
 
 
+
+
+
+    // fetch cart
     const showCart = async () => {
         const user = getCookie("Normuser")
         const body = {
             id: user
         }
 
-        const response = await fetch("/api/student/fetchCart", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/cart/fetchCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Cart[]
 
         console.log({ response })
         setCarts(response)
 
 
+
+    }
+
+
+
+    const delOne = async (id: any) => {
+
+
+        const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
+            .then(res => {
+                if (res.status == 200) {
+                    console.log("DELETED")
+                }
+            })
 
     }
 
@@ -105,6 +123,7 @@ export default function Cart() {
     }, [])
 
 
+    // add item to order
 
     const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -124,11 +143,23 @@ export default function Cart() {
 
 
         const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
-            .then(res => {
+            .then(async res => {
                 console.log(res.status)
+
                 if (res.status == 200) {
-                    router.push("/student/DashBoard/")
-                } if (res.status == 401) {
+
+                    //delete entire cart
+                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                        .then(res => {
+                            if (res.status == 200) {
+                                router.push("/student/DashBoard/")
+                                console.log("SUCCESS")
+                            }
+                        })
+                }
+
+
+                if (res.status == 401) {
                     console.log("ERROR")
                 }
             })
@@ -138,14 +169,24 @@ export default function Cart() {
 
 
 
-            setLoading(false)
+
+
+
+
+        setLoading(false)
     }
 
 
 
-// console.log(cartList[0].total)
 
-// let grande = cartList[0].total
+
+
+   
+
+
+    // console.log(cartList[0].total)
+
+    // let grande = cartList[0].total
     return (
 
         <StuLayout>
@@ -168,7 +209,7 @@ export default function Cart() {
                         title: string
                         price: number
                         storename: string
-                       
+
                     }, index) => (
                         <div
                             key={cart._id}
@@ -184,7 +225,7 @@ export default function Cart() {
                                 storename={cart.storename}
                                 price={cart.price}
                                 index={index}
-                              
+                                clickButton={()=> delOne(cart._id)}
 
                             />
 
@@ -194,7 +235,7 @@ export default function Cart() {
 
                     ))}
 
-                   
+
                     <button
                         className="btn btn-primary w-full mt-10"
                         onClick={() => addOrderItem}

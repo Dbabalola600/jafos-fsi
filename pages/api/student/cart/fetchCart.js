@@ -1,5 +1,5 @@
-import connectMongo from "../../../utils/connectMongo";
-import Cart from "../../../model/Cart";
+import connectMongo from "../../../../utils/connectMongo";
+import Cart from "../../../../model/Cart";
 
 
 
