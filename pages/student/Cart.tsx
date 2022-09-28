@@ -106,6 +106,7 @@ export default function Cart() {
         const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
             .then(res => {
                 if (res.status == 200) {
+                    router.reload()
                     console.log("DELETED")
                 }
             })
