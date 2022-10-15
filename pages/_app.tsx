@@ -18,6 +18,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     router.events.on('routeChangeError', () => NProgress.done());
   }, []);
   return <Component {...pageProps} />
+
+  
 }
 
 export default MyApp

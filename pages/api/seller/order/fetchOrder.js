@@ -26,7 +26,7 @@ export default async function fetchOrder(req, res) {
 
 
         const newOrderStuct = await Promise.all(orders.map(async (oriOrder) => {
-            const existingUser = await Student.findById(oriOrder.user).select("firstname ")
+            const existingUser = await Student.findById(oriOrder.user).select("firstname lastname matricno ")
             // console.log(existingUser)
 
             // console.log(existingUser)

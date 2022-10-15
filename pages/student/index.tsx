@@ -78,7 +78,7 @@ function Login() {
                 }
             }).then((data) => {
                 // window.localStorage.setItem("token", data.token);
-                console.log(getCookie("token"))
+                console.log(getCookie("Normuser"))
 
 
 
