@@ -28,11 +28,11 @@ export default function newSeller() {
         const form = e.currentTarget.elements as any
 
         const body = {
-            firstname: form.item(0).value,
-            lastname: form.item(1).value,
-            storename: form.item(2).value,
+            store_desc: form.item(0).value,
+          
+            storename: form.item(1).value,
 
-            password: form.item(3).value,
+            password: form.item(2).value,
         }
 
 
@@ -70,29 +70,19 @@ export default function newSeller() {
 
                     <div className="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-12 md:gap-y-28">
 
-                        {/* first name */}
+                        {/* store description */}
                         <div className="col-span-12  md:col-span-6 ">
                             <TextInput
 
-                                placeholder="First Name"
+                                placeholder="Store Description"
 
                                 type="text"
-                                name="firstname"
-                                id="firstname"
+                                name="store desciption"
+                                id="storedescription"
                             />
                         </div>
 
-                        {/* lastname */}
-                        <div className="col-span-12  md:col-span-6 ">
-                            <TextInput
-
-                                placeholder="Last Name"
-
-                                type="text"
-                                name="lastname"
-                                id="lastname"
-                            />
-                        </div>
+                        
 
                         {/* Storename */}
                         <div className="col-span-12  md:col-span-6 ">
@@ -139,12 +129,7 @@ export default function newSeller() {
 
                         </button>
 
-                        <h6 className="text-center md:text-xl w-full">
-                            already have an account?{" "}
-                            <span className=" hover:underline">
-                                <Link href="/student/">Login</Link>
-                            </span>
-                        </h6>
+                      
                     </div>
 
                 </form>

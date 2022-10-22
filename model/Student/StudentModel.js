@@ -3,7 +3,7 @@ import bycrpt from 'bcryptjs'
 
 
 const StudentSchema = new Schema({
-  
+
   firstname: {
     type: String,
     required: true,
@@ -15,7 +15,7 @@ const StudentSchema = new Schema({
     unique: false,
   },
   matricno: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
@@ -29,13 +29,22 @@ const StudentSchema = new Schema({
     required: true,
     unique: false,
   },
+  account_bal: {
+    type: Number,
+    default: 400.50
+  },
+  pin: {
+    type: String,
+    default: "1234",
+    length: 4
+  },
   role: {
     type: String,
-    enum: ['student', 'seller','Admin'  ],
+    enum: ['student', 'seller', 'Admin','creder'],
     default: 'student'
   },
 },
-{timestamps: true}
+  { timestamps: true }
 );
 
 

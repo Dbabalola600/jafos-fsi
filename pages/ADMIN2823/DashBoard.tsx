@@ -88,6 +88,28 @@ export default function DashBoard() {
                 </div>
 
 
+
+                
+                <div className='  mx-auto'>
+                    <Link
+                        href="/ADMIN2823/Creder">
+                        <button className="btn btn-lg btn-primary btn-block">
+                            Creder
+                        </button>
+                    </Link>
+                </div>
+
+
+                <div className='  mx-auto'>
+                    <Link
+                        href="/ADMIN2823/Tokens">
+                        <button className="btn btn-lg btn-primary btn-block">
+                            Tokens
+                        </button>
+                    </Link>
+                </div>
+
+
             </div>
         </AdminLayout>
     )

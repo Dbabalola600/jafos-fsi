@@ -1,5 +1,5 @@
 import connectMongo from '../../../utils/connectMongo';
-import StudentModel from '../../../model/StudentModel';
+
 import { error } from 'console';
 import bcryptjs from 'bcryptjs';
 import JWT from 'jsonwebtoken';

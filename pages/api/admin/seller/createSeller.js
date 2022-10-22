@@ -20,13 +20,13 @@ export default async function addSeller(req, res){
         console.log('CONNECTED TO MONGO');
         
         console.log('CREATING DOCUMENT');
-        const {firstname, lastname, storename, password} = JSON.parse(req.body)
+        const { storename, password, store_desc} = JSON.parse(req.body)
         // const hashpassword = await bcrypt.hash(password, 10)
         const seller = await Seller.create({
-          firstname,
-          lastname,
+         
           storename,
-          password
+          password,
+          store_desc
           
         });
         console.log('CREATED Seller');

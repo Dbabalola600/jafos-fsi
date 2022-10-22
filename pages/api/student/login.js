@@ -1,9 +1,9 @@
 import connectMongo from '../../../utils/connectMongo';
-import StudentModel from '../../../model/StudentModel';
+
 import { error } from 'console';
 import bcryptjs from 'bcryptjs';
 import JWT from 'jsonwebtoken';
-import Student from '../../../model/StudentModel';
+import Student from '../../../model/Student/StudentModel';
 
 import { setCookie, getCookie, getCookies } from 'cookies-next'
 import cookies from 'next-cookies'
@@ -22,13 +22,13 @@ export default async function Login(req, res) {
         const { matricno, password, _id } = JSON.parse(req.body)
 
 
-        const existingStudent = await StudentModel.findOne({ matricno })
+        const existingStudent = await Student.findOne({ matricno })
 
         if (!existingStudent) return res.status(401).json({ message: "Invalid matric no or password" })
 
 
         // const isStudent = await bcryptjs.compare(password, existingStudent.password)
-        const isStudent = await StudentModel.findOne({ password })
+        const isStudent = await Student.findOne({ password })
 
         if (!isStudent) return res.status(401).json({ message: "Invalid matric no or password" })
 

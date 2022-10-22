@@ -1,6 +1,6 @@
 import connectMongo from '../../../utils/connectMongo';
 import bcrypt from 'bcryptjs'
-import Student from '../../../model/StudentModel';
+import Student from '../../../model/Student/StudentModel';
 
 /**
  * @param {import('next').NextApiRequest} req

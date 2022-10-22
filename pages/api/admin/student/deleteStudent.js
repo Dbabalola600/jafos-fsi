@@ -1,5 +1,5 @@
 import connectMongo from "../../../../utils/connectMongo";
-import Student from "../../../../model/StudentModel";
+import Student from "../../../../model/Student/StudentModel";
 
 export default async function deleteStudent(req, res) {
 

@@ -43,6 +43,10 @@ function CreateAccount() {
                 if (res.status == 200) {
                     router.push("/student/")
                 }
+                if (res.status == 401) {
+                    router.push("/student/CreateAccount")
+                }
+
             }).catch(err => {
                 console.log(err)
             })
@@ -133,8 +137,8 @@ function CreateAccount() {
                             // registerName="fistName"
                             // register={register("firstName")}
                             type="password"
-                            name="password"
-                            id="password"
+                            name="Password"
+                          
 
                         />
                     </div>

@@ -87,6 +87,20 @@ export default function NavBar2() {
                             </a>
                         </Link>
 
+
+                        <Link href='/student/Profile'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Profile
+                            </a>
+                        </Link>
+
+                        
+                        <Link href='/student/Transactions'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Transactions
+                            </a>
+                        </Link>
+
                         <Link href='/stores/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Stores

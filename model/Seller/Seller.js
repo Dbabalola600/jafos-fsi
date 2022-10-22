@@ -1,17 +1,6 @@
 import { Schema, model, models } from 'mongoose';
 
 const SellerSchema = new Schema({
-  
-  firstname: {
-    type: String,
-    required: true,
-    unique: false,
-  },
-  lastname: {
-    type: String,
-    required: true,
-    unique: false,
-  },
   storename: {
     type: String,
     required: true,
@@ -22,13 +11,32 @@ const SellerSchema = new Schema({
     required: true,
     unique: false,
   },
+  store_desc: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  account_bal: {
+    type: Number,
+    default: 0
+  },
+  pin: {
+    type: String,
+    default: "1234",
+    length: 4
+  },
   role: {
     type: String,
-    enum: ['student', 'seller','Admin'  ],
+    enum: ['student', 'seller', 'Admin','creder'],
     default: 'seller'
+  },
+  status: {
+    type: String,
+    enum: ["Open", "Closed"],
+    default: "Closed"
   }
 },
-{timestamps: true}
+  { timestamps: true }
 );
 
 const Seller = models.Seller || model('Seller', SellerSchema);

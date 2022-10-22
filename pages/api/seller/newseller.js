@@ -14,10 +14,14 @@ export default async function addSeller(req, res) {
     
     console.log('CREATING DOCUMENT');
     
-    const seller = await Seller.create(
-    req.body
-      
-    );
+
+
+    const { storename, password, store_desc} = req.body
+    const seller = await Seller.create({
+      storename,
+      password,
+      store_desc
+    });
     console.log('CREATED SELLER');
 
     res.json({ seller });

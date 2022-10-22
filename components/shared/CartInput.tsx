@@ -115,7 +115,7 @@ export default function CartInput(props: CartInputProps) {
                 onClick={() => handleQuantityChange("decrement")}
 
                 className="btn btn-primary" >
-                Clicky
+                -
             </div>
 
             <input
@@ -134,7 +134,7 @@ export default function CartInput(props: CartInputProps) {
                 className="btn btn-primary"
 
             >
-                Clacky
+                +
             </div>
             <div
             onClick={ props.clickButton}

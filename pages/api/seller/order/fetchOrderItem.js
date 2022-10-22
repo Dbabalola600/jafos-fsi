@@ -3,7 +3,7 @@
 
 import connectMongo from "../../../../utils/connectMongo";
 import OrderItem from "../../../../model/Student/orderItem";
-import Student from "../../../../model/StudentModel"
+import Student from "../../../../model/Student/StudentModel"
 
 /**
  * @param {import('next').NextApiRequest} req

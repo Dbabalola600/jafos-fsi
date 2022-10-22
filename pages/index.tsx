@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <Header
           title='WELCOME'
           desc='please select one' />
-      
+
 
         <div className='  mx-auto'>
           <Link
@@ -35,6 +35,16 @@ const Home: NextPage = () => {
             href="/seller">
             <button className="btn btn-lg btn-primary btn-block">
               Seller
+            </button>
+          </Link>
+        </div>
+
+
+        <div className='  mx-auto'>
+          <Link
+            href="/creder">
+            <button className="btn btn-lg btn-primary btn-block">
+              Creder
             </button>
           </Link>
         </div>

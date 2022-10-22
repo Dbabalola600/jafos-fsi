@@ -118,7 +118,7 @@ export default function NavBar2() {
                     <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
 
 
-                        <Link href='/seller/DashBoard'>
+                        <Link href='/ADMIN2823/DashBoard'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Home
                             </a>
@@ -133,9 +133,16 @@ export default function NavBar2() {
                         </Link>
 
 
-                        <Link href='/Admin2823/Sellers/'>
+                        <Link href='/ADMIN2823/Sellers'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Sellers
+                            </a>
+                        </Link>
+
+
+                        <Link href='/ADMIN2823/Creder'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Creders
                             </a>
                         </Link>
 

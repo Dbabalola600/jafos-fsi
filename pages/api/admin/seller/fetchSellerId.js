@@ -29,7 +29,7 @@ export default async function fetchSellerId(req, res) {
         // const token = getCookies( { req, res, path:'/', domain:'localhost' })
         // console.log(token)
 
-        const seller = await Seller.findById(_id).select("storename firstname ");
+        const seller = await Seller.findById(_id).select("storename");
 
         console.log('FETCHED SELLER');
         //   console.log(seller)

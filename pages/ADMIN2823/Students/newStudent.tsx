@@ -31,7 +31,7 @@ export default function newStudent() {
 
 
 
-        const response = await fetch("/api/admin/student/createStudent", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
+        const response = await fetch("/api/admin/student/createtudent", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
             .then(res => {
 
                 if (res.status == 200) {

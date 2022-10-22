@@ -16,6 +16,7 @@ type Student = {
     firstname: string
     lastname: string
     matricno: string
+    account_bal: number
 }
 
 type Sellers = {
@@ -60,9 +61,7 @@ const router = useRouter()
         const user = JSON.stringify(response, ['student', 'lastname'])
 
        
-       console.log(response)
-
-
+     
 
 
 
@@ -96,7 +95,8 @@ const router = useRouter()
                     title="Dashboard"
                 />
                 <div className="text-primary text-3xl">
-                    Welcome {student?.firstname}
+                    Welcome {student?.firstname} {"  "}
+                    {student?.account_bal} Credits
                 </div>
 
 
@@ -132,6 +132,7 @@ const router = useRouter()
                             <a>
                             <HeadButton
                             title={seller.storename}
+                            
                             />
                             </a>
                            

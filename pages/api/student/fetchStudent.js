@@ -1,7 +1,7 @@
 import connectMongo from '../../../utils/connectMongo';
 import Test from '../../../model/testModel';
 
-import Student from '../../../model/StudentModel';
+import Student from '../../../model/Student/StudentModel';
 import { getCookie, getCookies, hasCookie } from 'cookies-next'
 import JWT from 'jsonwebtoken';
 
@@ -22,7 +22,7 @@ export default async function fetchStudent(req, res) {
         // const token = getCookies( { req, res, path:'/', domain:'localhost' })
         // console.log(token)
 
-        const student = await Student.findById(_id).select("lastname firstname ");
+        const student = await Student.findById(_id);
 
         console.log('FETCHED STUDENT');
         // console.log(student)

@@ -16,7 +16,7 @@ const AdminSchema = new Schema ({
         unique: false,
       },
       AdminId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
       },
@@ -27,7 +27,7 @@ const AdminSchema = new Schema ({
       },
       role: {
         type: String,
-        enum: ['student', 'seller', "Admin"  ],
+        enum: ['student', 'seller', "Admin",'creder'  ],
         default: 'Admin'
       },
 },
