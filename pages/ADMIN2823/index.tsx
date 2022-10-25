@@ -113,7 +113,7 @@ function Login() {
 
                     <div className="mx-auto  w-full ">
                         <TextInput
-                            placeholder=" Admin Id"
+                            placeholder="Admin Id"
                             name="Admin Id"
                             type='text'
 
@@ -123,7 +123,7 @@ function Login() {
 
                     <div className="mx-auto w-full ">
                         <TextInput
-                            placeholder=" Password"
+                            placeholder="Password"
                             name="Password"
                             type='password'
                         />

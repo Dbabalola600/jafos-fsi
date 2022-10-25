@@ -19,29 +19,37 @@ const OrderItemSchema = new Schema({
         required: true,
         unique: false,
     },
-
     price: {
         type: Number,
         required: true,
         unique: false
     },
-
     quantity: {
         type: Number,
         required: true,
         unique: false
     },
-
-
     amount: {
         type: Number,
         required: true,
         unique: false
     },
-    status:{
+    status: {
         type: String,
-        enum: ['Pending', 'Completed', 'Delivered'],
+        enum: ['Pending', 'Completed', 'Delivered', 'Cancelled'],
         default: 'Pending'
+    },
+    p_status: {
+        type: String,
+        required: true,
+        enum: ["Paid", "Unpaid"],
+        default: "Unpaid"
+    },
+    mod:{
+        type: String,
+        required: true,
+        enum:["PickUp", "NDH","D1", "NEH","ADMIN", "E1", "E2" ],
+        default: "PickUp"
     }
 
 },

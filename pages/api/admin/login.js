@@ -28,12 +28,12 @@ import { setCookie, getCookie, getCookies } from 'cookies-next'
 
         const existingAdmin = await Admin.findOne({ AdminId })
 
-        if (!existingAdmin) return res.status(401).json({ message: "invalid " })
+        if (!existingAdmin) return res.status(401).json({ message: "invalid id " })
 
         //console.log(existingSeller)
 
         const isAdmin = await Admin.findOne({ password })
-        if (!isAdmin) return res.status(401).json({ message: "Invalid matric no or password" })
+        if (!isAdmin) return res.status(401).json({ message: "Invalid password" })
 
         console.log(isAdmin)
 

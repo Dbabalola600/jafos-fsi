@@ -18,8 +18,8 @@ export default async function updateOrderStat(req, res) {
 
 
 
-        const updateItem = await OrderItem.findById(id).updateOne({ status: "Delivered" })
-        const paidItem = await OrderItem.findById(id).updateOne({ p_status: "Paid" })
+        const updateItem = await OrderItem.findById(id).updateOne({status: "Cancelled"})
+
         console.log(updateItem)
 
         return res.status(200).json({ message: "Status Changed" })

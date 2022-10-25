@@ -10,7 +10,6 @@ const CartSchema = new Schema({
     ref: 'Student',
     required: true,
     unique: false
-
   },
 
   storename: {
@@ -32,7 +31,7 @@ const CartSchema = new Schema({
     type: Number,
     required: true,
     unique: false,
-  },
+  }
 
 },
   { timestamps: true }

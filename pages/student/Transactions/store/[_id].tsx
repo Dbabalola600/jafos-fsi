@@ -1,40 +1,68 @@
-import { getCookie } from "cookies-next";
-import Link from "next/link";
+
+
 import { useRouter } from "next/router";
-import { FormEventHandler, Key, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import HeadButton from "../../../components/shared/HeadButton";
-import Header from "../../../components/shared/Header";
-import TextInput from "../../../components/shared/TextInput";
-import StuLayout from "../Layout/StuLayout";
+import { FormEventHandler, useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
+import Header from "../../../../components/shared/Header";
+import StuLayout from "../../Layout/StuLayout";
+import TextInput from "../../../../components/shared/TextInput";
+import ErrMess from "../../../../components/shared/ErrMess";
 
 
-export default function Withdraw(){
 
+
+
+type Seller = {
+    _id: string
+    storename: string;
+    firstname: string
+    lastname: string
+}
+
+
+
+
+
+
+export default function stores() {
     const router = useRouter()
+
+    const [seller, setSeller] = useState<Seller | null>(null);
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
 
-    useEffect(() => {
-        if (showtoast.show) {
-            setTimeout(() => {
-                settoast({ message: "", show: false })
-            }, 5000)
+
+
+    let ssd = router.query
+
+
+
+    const showinfo = async () => {
+
+        const body = {
+            _id: ssd._id
         }
 
-    }, [showtoast.show])
+        const response = await fetch("/api/store/fetchSeller", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as Seller
+
+
+        setSeller(response)
+
+        console.log(response["storename"])
+
+
+
+
+    }
+
 
 
     useEffect(() => {
-        if (showtoast.show) {
-            setTimeout(() => {
-                settoast2({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast2.show])
-
+        showinfo()
+    }, []
+    )
 
 
 
@@ -51,14 +79,14 @@ export default function Withdraw(){
 
         const body = {
             sen: info,
-            rec: form.item(0).value,
-            amt: form.item(1).value,
-            pin: form.item(2).value
+            rec: ssd._id,
+            amt: form.item(0).value,
+            pin: form.item(1).value
         }
 
 
 
-        const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
+        const respone = await fetch("/api/student/transactions/TransStore", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     router.push("/student/DashBoard")
@@ -76,23 +104,15 @@ export default function Withdraw(){
     }
 
 
-
-
-
-
-
-
-
-
     return (
         <StuLayout>
             <>
-            <Header
-            title="WithDraw"
-            />
-            
+                <Header
+                    title={seller?.storename}
+                />
 
-            <form
+
+                <form
                     onSubmit={trans}
                     className="w-full py-20 space-y-12  text-black text-base md:text-xl"
                 >
@@ -102,14 +122,7 @@ export default function Withdraw(){
 
 
 
-                    <div className="mx-auto  w-full ">
-                        <TextInput
-                            placeholder="Creder ID"
-                            name="CREDER ID"
-                            type='text'
 
-                        />
-                    </div>
 
                     <div className="mx-auto  w-full ">
                         <TextInput
@@ -149,6 +162,10 @@ export default function Withdraw(){
 
 
             </>
+
         </StuLayout>
     )
 }
+
+
+

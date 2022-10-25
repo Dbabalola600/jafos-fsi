@@ -31,8 +31,9 @@ export default async function newOrderItem(req, res) {
                     price: cart.price,
                     quantity: cart.quantity,
                     amount: cart.amount,
-                    status: "Pending"
-
+                    status: "Pending",
+                    p_status: "Unpaid",
+                    mod: "PickUp"
                 })
             })))
 

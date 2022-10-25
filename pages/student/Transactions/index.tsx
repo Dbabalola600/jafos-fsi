@@ -58,7 +58,7 @@ export default function index() {
 
                     <div className='mx-auto'>
                         <Link
-                            href="/student/Transactions/Withdraw">
+                            href="/student/Transactions/WithDraw">
                             <button className="btn btn-lg btn-primary btn-block">
                               Withdraw
                             </button>

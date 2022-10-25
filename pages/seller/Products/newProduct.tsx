@@ -100,18 +100,17 @@ function newOffer() {
                     {/* category */}
 
                     <div className="col-span-12  md:col-span-6 ">
-                        <div className="form-control ">
-                            <div className="input-group">
-                                <select className="select select-bordered select-primary">
-                                    <option disabled selected>Pick category</option>
-                                    <option>Food</option>
-                                    <option>Drinks</option>
-                                    <option>Sauce</option>
-                                    <option>Special</option>
-                                </select>
+                        <TextInput
+                            // errorMessage={errors.firstName?.message}
+                            placeholder="Category"
+                            // registerName="fistName"
+                            // register={register("firstName")}
+                            type="text"
 
-                            </div>
-                        </div>
+                            name="Category (eg. drinks, food, etc.)"
+                            id="description"
+
+                        />
                     </div>
 
 

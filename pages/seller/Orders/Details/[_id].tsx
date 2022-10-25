@@ -134,7 +134,11 @@ export default function index() {
 
     }, [])
 
-    async function CompleteStat  () {
+
+
+    //change status to complete
+
+    async function CompleteStat() {
         setLoading(true)
 
 
@@ -145,12 +149,12 @@ export default function index() {
 
         const StatResponse = await fetch("/api/seller/order/compOrderStat", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
-                if (res.status == 200){
+                if (res.status == 200) {
                     router.push("/seller/Orders")
                 }
             })
 
-            setLoading(false)
+        setLoading(false)
 
     }
 
@@ -158,26 +162,47 @@ export default function index() {
 
 
 
+    //change status to deliverd
 
 
-
-    async function DeliveredStat  () {
+    async function DeliveredStat() {
         setLoading(true)
 
-        
+
 
         const body = {
-            id:ssd._id
+            id: ssd._id
         }
 
         const StatResponse = await fetch("/api/seller/order/deliOrderStat", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
-                if (res.status == 200){
+                if (res.status == 200) {
                     router.push("/seller/Orders")
                 }
             })
 
-            setLoading(false)
+        setLoading(false)
+
+    }
+
+
+    async function CancelStat() {
+        setLoading(true)
+
+
+
+        const body = {
+            id: ssd._id
+        }
+
+        const StatResponse = await fetch("/api/seller/order/cancelOrderStat", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+                    router.push("/seller/Orders")
+                }
+            })
+
+        setLoading(false)
 
     }
 
@@ -193,14 +218,14 @@ export default function index() {
                 />
 
 
-              
-                    <div
-                        key={orderItem?._id}
-                        className="text-red-500"
-                    >
-                        {orderItem?.amount} {" "} {orderItem?.status} {"  "} {orderItem?.quantity} {" "} {orderItem?.product}
-                    </div>
-              
+
+                <div
+                    key={orderItem?._id}
+                    className="text-red-500"
+                >
+                    {orderItem?.amount} {" "} {orderItem?.status} {"  "} {orderItem?.quantity} {" "} {orderItem?.product}
+                </div>
+
 
 
 
@@ -213,9 +238,9 @@ export default function index() {
                 <div
                     className="btn btn-primary"
                     onClick={CompleteStat}
-                    
+
                 >
-                      {isLoading ? "Loading..." : "Completed"}
+                    {isLoading ? "Loading..." : "Completed"}
                 </div>
 
 
@@ -223,9 +248,19 @@ export default function index() {
                 <div
                     className="btn btn-primary"
                     onClick={DeliveredStat}
-                    
+
                 >
-                      {isLoading ? "Loading..." : "Delivered"}
+                    {isLoading ? "Loading..." : "Delivered"}
+                </div>
+
+
+
+                <div
+                    className="btn btn-primary"
+                    onClick={CancelStat}
+
+                >
+                    {isLoading ? "Loading..." : "Cancel Order"}
                 </div>
 
             </>
