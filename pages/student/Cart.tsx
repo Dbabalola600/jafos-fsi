@@ -55,28 +55,7 @@ export default function Cart() {
 
     const [cartList, setCartList] = useState<cartListType>([]);
 
-
-    const showinfo = async () => {
-
-
-        const token = getCookie("Normuser")
-        const body = {
-            _id: token
-        }
-
-        const response = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as Student
-
-
-
-        setStudent(response)
-
-
-
-        console.log(response)
-
-    }
-
+    const [total, setTotal] = useState<number | null>()
 
 
 
@@ -91,7 +70,7 @@ export default function Cart() {
         const response = await fetch("/api/student/cart/fetchCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Cart[]
 
-        console.log({ response })
+        // console.log({ response })
         setCarts(response)
 
 
@@ -99,7 +78,7 @@ export default function Cart() {
     }
 
 
-
+    //delete one item
     const delOne = async (id: any) => {
 
 
@@ -117,12 +96,6 @@ export default function Cart() {
     useEffect(() => {
         showCart()
     }, [])
-
-    useEffect(() => {
-        showinfo()
-
-    }, [])
-
 
     // add item to order
 
@@ -171,21 +144,20 @@ export default function Cart() {
 
 
 
-
-
+     
 
         setLoading(false)
     }
 
 
 
+    // console.log(cartList
+
+
 
 
 
    
-
-
-    // console.log(cartList[0].total)
 
     // let grande = cartList[0].total
     return (
@@ -226,7 +198,7 @@ export default function Cart() {
                                 storename={cart.storename}
                                 price={cart.price}
                                 index={index}
-                                clickButton={()=> delOne(cart._id)}
+                                clickButton={() => delOne(cart._id)}
 
                             />
 

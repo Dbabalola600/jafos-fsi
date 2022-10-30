@@ -14,12 +14,14 @@ type CartInputProps = {
     storename: string
     index: number
     total?: number
-    clickButton?:MouseEventHandler<HTMLDivElement>| any
+    clickButton?: MouseEventHandler<HTMLDivElement> | any
 }
 
 
 export default function CartInput(props: CartInputProps) {
     const [quantity, setQuantity] = useState<number>(1);
+    // const [total, setTotal] = useState<number | null>()
+
 
     const handleQuantityChange = (changeType: "increment" | "decrement") => {
         if (changeType === "increment") {
@@ -47,7 +49,7 @@ export default function CartInput(props: CartInputProps) {
 
 
 
-        console.log(props.total)
+        
         if (!existingCart) {
             props.setCartList((prev) => {
                 prev[props.index] = {
@@ -66,7 +68,14 @@ export default function CartInput(props: CartInputProps) {
             })
         }
 
+        
+        // let total = (props.cartList[0].amount) + (props.cartList[1].amount)
+       
+
     }, [])
+
+
+
     useEffect(() => {
         const existingCart = props.cartList.find(cart => cart._id === props.id)
 
@@ -78,14 +87,13 @@ export default function CartInput(props: CartInputProps) {
 
 
 
-
     }, [quantity, amount])
 
 
 
+    // console.log(props.cartList[0].amount)
 
-
-
+   
 
     return (
         <div
@@ -137,7 +145,7 @@ export default function CartInput(props: CartInputProps) {
                 +
             </div>
             <div
-            onClick={ props.clickButton}
+                onClick={props.clickButton}
                 className="btn btn-primary"
             >
                 Delete button

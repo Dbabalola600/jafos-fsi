@@ -1,17 +1,31 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import DefaultLayer from "../components/layouts/DefaultLayout"
 import Header from '../components/shared/Header'
+import NavButton from '../components/shared/NavButton'
 
 
 
 const Home: NextPage = () => {
+
+  const connect = async () => {
+    const response = await fetch("/api/connect", { method: "GET" })
+      .then(res => res.json())
+  }
+
+  useEffect(() => {
+    connect()
+  }, [])
+
+
+
   return (
 
     <DefaultLayer>
       <div
-        className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+        className="w-full py-20   text-black text-base md:text-xl"
 
       >
         <Header
@@ -20,33 +34,33 @@ const Home: NextPage = () => {
 
 
         <div className='  mx-auto'>
-          <Link
-            href="/student">
-            <button className="btn btn-lg btn-primary btn-block">
-              Student
-            </button>
-          </Link>
+
+          <NavButton
+            title="Student"
+            uLink='/student'
+          />
+
         </div>
 
 
 
         <div className='  mx-auto'>
-          <Link
-            href="/seller">
-            <button className="btn btn-lg btn-primary btn-block">
-              Seller
-            </button>
-          </Link>
+        
+            <NavButton
+              uLink="/seller"
+              title="Seller"
+            />
+       
         </div>
 
 
         <div className='  mx-auto'>
-          <Link
-            href="/creder">
-            <button className="btn btn-lg btn-primary btn-block">
-              Creder
-            </button>
-          </Link>
+         
+            <NavButton
+              uLink="/creder"
+              title="Creders"
+            />
+         
         </div>
 
 

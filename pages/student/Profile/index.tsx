@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
+import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
 
 
@@ -40,7 +41,7 @@ export default function index() {
 
         setStudent(response)
 
-        
+
 
     }
 
@@ -54,38 +55,39 @@ export default function index() {
 
     return (
         <StuLayout>
-            <>
+            <div
+                className="w-full py-20 text-black text-base md:text-xl"
+            >
                 <Header
                     title="PROFILE PAGE"
                 />
 
 
-                <Link href='/student/Transactions/creditAccount'>
-
-                    <a>
-                        Credit Account
-                    </a>
-
-                </Link>
-
-                <Link href='/student/Profile/updatePin'>
-
-                    <a>
-                        Update Pin
-                    </a>
-
-                </Link>
+                <NavButton
+                    uLink="/student/Transactions/creditAccount"
+                    title=" Credit Account"
+                />
 
 
 
-                <Link href='/student/Profile/updatePassword'>
 
-                    <a>
-                        Update Password
-                    </a>
 
-                </Link>
+                <NavButton
+                    uLink="/student/Profile/updatePin"
+                    title="Update Pin"
+                />
 
+
+
+
+
+
+
+
+                <NavButton
+                    uLink="/student/Profile/updatePassword"
+                    title=" Update Password"
+                />
 
 
                 <div className=" text-primary mt-10 space-y-5 bg-black w-full ">
@@ -93,26 +95,26 @@ export default function index() {
                     <div>
                         NAME
                         <p>
-                        {student?.firstname} {" "} {student?.lastname}
+                            {student?.firstname} {" "} {student?.lastname}
                         </p>
-                       
+
                     </div>
 
                     <div>
                         Matric No
                         <p>
-                        {student?.matricno}
+                            {student?.matricno}
                         </p>
-                      
+
                     </div>
 
 
                     <div>
                         Email
                         <p>
-                        {student?.email}
+                            {student?.email}
                         </p>
-                      
+
                     </div>
 
 
@@ -123,7 +125,7 @@ export default function index() {
 
 
 
-            </>
+            </div >
         </StuLayout>
     )
 }

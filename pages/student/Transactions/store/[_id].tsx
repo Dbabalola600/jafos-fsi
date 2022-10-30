@@ -31,6 +31,38 @@ export default function stores() {
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
+    const [showtoast3, settoast3] = useState({ message: "", show: false })
+
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast2({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast2.show])
+
 
 
 
@@ -97,6 +129,9 @@ export default function stores() {
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
                 }
+                if (res.status == 247) {
+                    settoast3({ message: " message", show: true })
+                }
             })
 
 
@@ -118,6 +153,7 @@ export default function stores() {
                 >
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
+                    {showtoast3.show && <ErrMess title="store not open" />}
 
 
 

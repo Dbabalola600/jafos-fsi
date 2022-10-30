@@ -2,7 +2,7 @@ import connectMongo from "../../../../utils/connectMongo";
 import Token from "../../../../model/Creder/token";
 import Student from "../../../../model/Student/StudentModel";
 import AdminToken from "../../../../model/Admin/AdminToken"
-
+import TransferHistory from "../../../../model/Transactions/TransferHistory";
 
 
 
@@ -25,7 +25,7 @@ export default async function TokenCredit(req,res){
 
         // console.log(tok_val)
 
-        if(tok_val=== "") return res.status(408).json({message:"nope"})
+        // if(tok_val=== "") return res.status(408).json({message:"nope"})
 
         if (tok_val[0].status === "available") {
             //credit account with token 
@@ -35,9 +35,27 @@ export default async function TokenCredit(req,res){
             //update token details 
             const tok_update = await Token.findById(tok_val[0]._id).updateOne({ status: "used", usedBy: user.matricno })
 
+            const history = await TransferHistory.create({
+                sender: tok_val[0].madeBy,
+                reciever: user.firstname + user.lastname,
+                amount: tok_val[0].amount,
+                trans_type:"TOKEN CREDIT",
+                send_id: tok_val[0]._id,
+                rec_id: id
+            })
+
+            console.log(history)
+
+
+
+
             return res.status(200).json({
                 message: "transfer done",
             })
+
+            
+
+
 
         } 
 
@@ -49,6 +67,24 @@ export default async function TokenCredit(req,res){
 
             //update token details 
             const tok_update = await Token.findById(tok_val[0]._id).updateOne({  usedBy: user.matricno })
+
+
+            const history = await TransferHistory.create({
+                sender: tok_val[0].madeBy,
+                reciever: user.firstname + user.lastname,
+                amount: tok_val[0].amount,
+                trans_type:"MASTER TOKEN CREDIT",
+                send_id: tok_val[0]._id,
+                rec_id: id
+            })
+
+
+            
+            console.log(history)
+
+
+
+
 
             return res.status(200).json({
                 message: "transfer done",

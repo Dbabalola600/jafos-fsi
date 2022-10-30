@@ -1,6 +1,6 @@
 import connectMongo from "../../../../utils/connectMongo";
 import Student from "../../../../model/Student/StudentModel";
-
+import TransferHistory from "../../../../model/Transactions/TransferHistory";
 
 export default async function TransUser(req, res) {
     if (req.method === "POST") {
@@ -15,21 +15,43 @@ export default async function TransUser(req, res) {
 
 
         const sender = await Student.findById(sen)
-        const reciever = await Student.find({matricno: rec})
+        const reciever = await Student.find({ matricno: rec })
 
-        // console.log(sender.account_bal)
+        console.log(reciever[0].id)
 
+
+      
+       
 
         if (pin === sender.pin) {
             if (sender.account_bal > amt) {
                 const new_sender_bal = sender.account_bal - amt
                 const sender_bal = await Student.findById(sen).updateOne({ account_bal: new_sender_bal })
 
+                const sen_history = await TransferHistory.create({
+                    sender: sender.firstname + sender.lastname,
+                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    amount: amt,
+                    trans_type:"DEBIT",
+                    send_id: sen,
+                    rec_id: reciever[0].id
+                })
+
                 const new_reciever_bal = reciever[0].account_bal + amt
                 const reciever_bal = await Student.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
 
+                const rec_history = await TransferHistory.create({
+                    sender: sender.firstname + sender.lastname,
+                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    amount: amt,
+                    trans_type:"CREDIT",
+                    send_id: sen,
+                    rec_id: reciever[0].id
+                })
+                
                 return res.status(200).json({
-                  message:"successful"}
+                    message: "successful"
+                }
                 )
             } else {
                 return res.status(256).json({

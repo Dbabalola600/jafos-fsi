@@ -186,22 +186,53 @@ export default function index() {
     }
 
 
+    //change status to cancelled
+
     async function CancelStat() {
         setLoading(true)
 
 
-
+        //order id 
         const body = {
             id: ssd._id
         }
 
+
+
+
+
+
+        //fetch the order item to get the amount and the user id 
+        const Ordresponse = await fetch("/api/seller/order/fetchOrderItem", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as OrderItems
+
+
+
+        const body2 = {
+            sen: ssd._id,
+            amt: orderItem?.amount,   // Ordresponse.amount,
+            rec: orderItem?.user               //Ordresponse.user
+        }
+
+
+        // change status to cancelled
         const StatResponse = await fetch("/api/seller/order/cancelOrderStat", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
+            .then(async res => {
                 if (res.status == 200) {
+                    //refund the order
+                    const refund = await fetch("/api/seller/order/refund", { method: "POST", body: JSON.stringify(body2) })
                     router.push("/seller/Orders")
                 }
-            })
 
+
+
+                if (res.status == 401) {
+                    console.log("ERROR")
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
         setLoading(false)
 
     }

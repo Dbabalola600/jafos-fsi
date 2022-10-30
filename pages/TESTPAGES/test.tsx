@@ -1,8 +1,7 @@
 
 import Header from "../../components/shared/Header";
 
-import StuLayout from "../student/Layout/StuLayout";
-import Test from '../../model/testModel';
+
 import { InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
 import { Key, useEffect, useState } from "react";
 import Link from "next/link";
@@ -18,28 +17,8 @@ type Sellers = {
 }
 
 function test() {
-    const router = useRouter()
-    const [sellers, SetSellers] = useState<Sellers[]>([])
-
-    const showinfo = async () => {
-        const SellerResponse = await fetch("/api/test/testfetch", { method: "GET" })
-            .then(res => res.json()) as Sellers[]
-
-        SetSellers(SellerResponse)
 
 
-    }
-
-
-    function test() {
-        router.push("/")
-    }
-
-
-    useEffect(() => {
-        showinfo()
-
-    }, [])
 
 
     return (
@@ -57,30 +36,46 @@ function test() {
             </div>
 
 
+            <div className="bg-primary rounded-lg btn-block mt-10 mb-5 pt-5 text-white ">
 
-            {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
                 <div
-                    key={seller._id}
+                    className="relative"
                 >
-                    {/* <Link
-                        href={`/stores/${seller.storename}`}
-                    > */}
-                    <a>
-                        <Header
-                            title={seller.storename}
-                        />
-                    </a>
+                    <div
+                        className="rounded-xl text-center text-sm float-right px-5 mx-2  bg-black text-white"
+                    >
+                        status
+                    </div>
 
-                    {/* </Link> */}
+                    <div
+                        className=" mx-5"
+                    >
+                        Seller
+                    </div>
 
+
+
+
+                    <div
+                        className=" mx-5"
+                    >
+                        description
+                    </div>
                 </div>
-            )}
+
+            </div>
+
+
+
+
+
+
 
             <CusModal
                 mainButtonTitle="main button"
                 modalInfo=" information goes in here"
                 smButtonTitle="click this"
-                clickButton={()=> {test()}}
+                clickButton={() => { }}
             />
 
         </>

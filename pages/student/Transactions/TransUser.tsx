@@ -16,6 +16,7 @@ export default function TransferBtwUser() {
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
+    const [showtoast3, settoast3] = useState({ message: "", show: false })
 
 
 
@@ -28,6 +29,15 @@ export default function TransferBtwUser() {
 
     }, [showtoast.show])
 
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
     useEffect(() => {
         if (showtoast.show) {
@@ -70,6 +80,9 @@ export default function TransferBtwUser() {
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
                 }
+                if(res.status == 500){
+                    settoast3({ message: " message", show: true })
+                }
             })
 
 
@@ -91,6 +104,7 @@ export default function TransferBtwUser() {
                 >
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
+                    {showtoast3.show && <ErrMess title="invalid USER" />}
 
 
 

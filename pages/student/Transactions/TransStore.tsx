@@ -5,6 +5,7 @@ import { FormEventHandler, Key, useEffect, useState } from "react";
 import ErrMess from "../../../components/shared/ErrMess";
 import HeadButton from "../../../components/shared/HeadButton";
 import Header from "../../../components/shared/Header";
+import NavButton from "../../../components/shared/NavButton";
 import TextInput from "../../../components/shared/TextInput";
 import StuLayout from "../Layout/StuLayout";
 
@@ -67,19 +68,11 @@ export default function TransStore() {
                     <div
                         key={seller._id}
                     >
-                        <Link
-                            href={`/student/Transactions/store/${seller._id}`}
-                        >
-                            <a>
-                                <HeadButton
-                                    title={seller.storename}
-
-                                />
-                            </a>
-
-
-                        </Link>
-
+                      
+                        <NavButton
+                        uLink={`/student/Transactions/store/${seller._id}`}
+                        title={seller.storename}
+                    />
                     </div>
                 )}
 

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Key, useEffect, useState } from "react";
 import Header from "../../components/shared/Header";
+import NavButton from "../../components/shared/NavButton";
+import StoreButton from "../../components/shared/storeButt";
 import StuLayout from "../student/Layout/StuLayout";
 
 
@@ -13,6 +15,7 @@ type Sellers = {
     storename: string;
     firstname: string
     lastname: string
+    status:string
 }
 
 
@@ -53,20 +56,22 @@ function index() {
                     title="Avaialable stores"
                 />
 
-                {sellers.map((seller: { _id: Key | null | undefined; storename: string; }) =>
+                {sellers.map((seller: {
+                     _id: Key | null | undefined; 
+                status:string;
+                storename: string; }) =>
                     <div
                         key={seller._id}
                     >
-                        <Link
-                            href={`/stores/${seller._id}`}
-                        >
-                            <a>
-                                <Header
-                                    title={seller.storename}
-                                />
-                            </a>
 
-                        </Link>
+
+
+                        <StoreButton
+                            ulink={`/stores/${seller._id}`}
+                            name={seller.storename}
+                            status={seller.status}
+                            desc="description "
+                        />
 
                     </div>
                 )}

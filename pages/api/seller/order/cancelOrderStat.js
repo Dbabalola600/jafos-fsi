@@ -1,6 +1,5 @@
 import connectMongo from "../../../../utils/connectMongo";
 
-
 import OrderItem from "../../../../model/Student/orderItem";
 
 
@@ -15,8 +14,6 @@ export default async function updateOrderStat(req, res) {
 
 
         const { id } = JSON.parse(req.body)
-
-
 
         const updateItem = await OrderItem.findById(id).updateOne({status: "Cancelled"})
 

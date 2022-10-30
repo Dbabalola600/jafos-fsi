@@ -10,6 +10,12 @@ import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 import AvailableStores from "./availableStores"
 import Link from "next/link";
 import HeadButton from "../../components/shared/HeadButton";
+import NavButton from "../../components/shared/NavButton";
+import storeButton from "../../components/shared/storeButt";
+import StoreButton from "../../components/shared/storeButt";
+
+
+
 
 type Student = {
     _id: string;
@@ -24,6 +30,7 @@ type Sellers = {
     storename: string;
     firstname: string
     lastname: string
+    status:string
 }
 
 
@@ -116,7 +123,9 @@ const router = useRouter()
                         >
 
 
-{sellers.map((seller: { _id: Key | null | undefined; storename: string; }) =>
+{sellers.map((seller: { _id: Key | null | undefined;
+status: string;
+storename: string; }) =>
                     <div
                         key={seller._id}
                     >
@@ -126,18 +135,17 @@ const router = useRouter()
 
                            
 
-<Link
-                            href={`/stores/${seller._id}`}
-                           >
-                            <a>
-                            <HeadButton
-                            title={seller.storename}
-                            
+<StoreButton
+                             ulink={`/stores/${seller._id}`}
+                             name={seller.storename}
+                             status={seller.status}
+                             desc="description "
                             />
-                            </a>
-                           
 
-                            </Link>
+                          
+                            
+                            
+                         
                           
                            
 
@@ -146,6 +154,8 @@ const router = useRouter()
 
                     </div>
                 )}
+
+                
                             
                         </div>
                
