@@ -41,7 +41,7 @@ export default async function fetchTransHistory(req, res) {
         for (let i = 0; i < sen_hist.length; i++) {
             coolStruct.push(sen_hist[i])
         }
-        console.log("GOTTEN")
+       
 
         for (let i = 0; i < rec_hist.length; i++) {
             coolStruct.push(rec_hist[i])
@@ -64,7 +64,7 @@ export default async function fetchTransHistory(req, res) {
             }
         }
 
-
+        console.log("GOTTEN")
 
 
         return res.status(200).json(
