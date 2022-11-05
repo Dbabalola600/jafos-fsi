@@ -1,14 +1,11 @@
-
-import Header from "../../components/shared/Header";
-
-import StuLayout from "./Layout/StuLayout";
-
-
 import { FormEventHandler, useEffect, useState } from "react"
 
-import CartInput from "../../components/shared/CartInput";
+
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
+import CartInput from "../../components/shared/CartInput";
+import Header from "../../components/shared/Header";
+import StaffLay from "./Layout/StaffLay";
 
 
 
@@ -21,12 +18,7 @@ type Cart = {
     price: number
     storename: string
 }
-type Student = {
-    _id: string;
-    firstname: string
-    lastname: string
-    matricno: string
-}
+
 
 
 export type cartListType = {
@@ -50,7 +42,6 @@ export type cartListType = {
 export default function Cart() {
     const router = useRouter()
     const [carts, setCarts] = useState<Cart[]>([])
-    const [student, setStudent] = useState<Student | null>(null);
     const [isLoading, setLoading] = useState(false)
 
     const [cartList, setCartList] = useState<cartListType>([]);
@@ -60,12 +51,12 @@ export default function Cart() {
 
     // fetch cart
     const showCart = async () => {
-        const user = getCookie("Normuser")
+        const user = getCookie("Staffuser")
         const body = {
             id: user
         }
 
-        const response = await fetch("/api/student/cart/fetchCart", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/staff/cart/fetchCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Cart[]
 
         // console.log({ response })
@@ -80,7 +71,7 @@ export default function Cart() {
     const delOne = async (id: any) => {
 
 
-        const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
+        const reponse = await fetch("/api/staff/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
             .then(res => {
                 if (res.status == 200) {
                     router.reload()
@@ -99,7 +90,7 @@ export default function Cart() {
 
     const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
-        const user = getCookie("Normuser")
+        const user = getCookie("Staffuser")
 
         setLoading(true)
         console.log(user)
@@ -114,17 +105,17 @@ export default function Cart() {
         }
 
 
-        const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
+        const response = await fetch("/api/staff/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
 
                 if (res.status == 200) {
 
                     //delete entire cart
-                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                    const del = await fetch("/api/staff/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
                         .then(res => {
                             if (res.status == 200) {
-                                router.push("/student/DashBoard/")
+                                router.push("/staff/DashBoard/")
                                 console.log("SUCCESS")
                             }
                         })
@@ -160,7 +151,7 @@ export default function Cart() {
     // let grande = cartList[0].total
     return (
 
-        <StuLayout>
+        <StaffLay>
             <>
                 <div
                     className=" bg-black md:w-60">
@@ -209,17 +200,17 @@ export default function Cart() {
 
                     <button
                         className="btn btn-primary w-full mt-10"
-                        onClick={() => router.push("/student/checkout")}
+                        onClick={() => addOrderItem}
                         type="submit"
                     >
-                        {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
+                        {isLoading ? "Loading..." : "SUBMIT"}
                     </button>
                 </form>
 
 
             </>
 
-        </StuLayout>
+        </StaffLay>
     )
 
 

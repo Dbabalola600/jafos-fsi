@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
+
 import { useEffect } from 'react'
 import DefaultLayer from "../components/layouts/DefaultLayout"
 import Header from '../components/shared/Header'
@@ -45,22 +44,32 @@ const Home: NextPage = () => {
 
 
         <div className='  mx-auto'>
-        
-            <NavButton
-              uLink="/seller"
-              title="Seller"
-            />
-       
+
+          <NavButton
+            title="Staff"
+            uLink='/staff'
+          />
+
         </div>
 
 
         <div className='  mx-auto'>
-         
-            <NavButton
-              uLink="/creder"
-              title="Creders"
-            />
-         
+
+          <NavButton
+            uLink="/seller"
+            title="Seller"
+          />
+
+        </div>
+
+
+        <div className='  mx-auto'>
+
+          <NavButton
+            uLink="/creder"
+            title="Creders"
+          />
+
         </div>
 
 

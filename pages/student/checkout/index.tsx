@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
+import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
 
 
@@ -16,6 +17,8 @@ type Orders = {
     quantity: number
     amount: number
     status: string
+    p_status: string
+    mod: string
 }
 
 
@@ -36,9 +39,9 @@ export default function checkout() {
         }
 
 
+        /// fetches checkout items 
 
-
-        const response = await fetch("/api/student/order/fetchOrder", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/order/fetchCheckout", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Orders[]
 
 
@@ -46,18 +49,23 @@ export default function checkout() {
         console.log(response)
 
 
-        let tot = response[0].amount + response[1].amount
-       
+        // let tot = response[0].amount + response[1].amount
+
 
         let l_tot = response.length.valueOf()
         let sum = 0
         for (let i = 0; i < l_tot; i++) {
-          
+
             sum += response[i].amount
 
             console.log(sum)
             setTotal(sum)
         }
+
+        console.log(total)
+
+
+
 
 
     }
@@ -89,6 +97,8 @@ export default function checkout() {
                     quantity: number
                     amount: number
                     status: string
+                    p_status: string
+                    mod: string
                 }) =>
                     <div
                         key={order._id}
@@ -96,9 +106,12 @@ export default function checkout() {
 
 
                         <div
-                            className="text-red-500"
+                            className="text-red-500 mt-10"
                         >
-                            {order.status}  {"  "}  {order.quantity} {"  "}  {order.product}
+                            Order Status: {order.status}  {"  "} ,Quantity:  {order.quantity} {"  "} ,Product name:  {order.product}
+                            <p>
+                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
+                            </p>
                         </div>
 
 
@@ -112,9 +125,25 @@ export default function checkout() {
 
 
                 <div
-                className="text-slate-800"
+                    className="text-slate-800 mt-5 mb-5"
                 >
                     Total {total}
+                </div>
+
+                <NavButton
+                    title="Pay Now"
+                    uLink="/student/checkout/payment"
+                />
+
+                <NavButton
+                title=" Select Method of Delivery"
+                uLink="/student/checkout/deliveryMethod"
+                />
+
+              
+
+                <div>
+                    place order
                 </div>
             </>
         </StuLayout>

@@ -35,13 +35,13 @@ export default async function fetchTransHistory(req, res) {
 
 
 
-     
+
         const coolStruct = []
 
         for (let i = 0; i < sen_hist.length; i++) {
             coolStruct.push(sen_hist[i])
         }
-       
+
 
         for (let i = 0; i < rec_hist.length; i++) {
             coolStruct.push(rec_hist[i])
@@ -54,10 +54,10 @@ export default async function fetchTransHistory(req, res) {
 
         // console.log(coolStruct.length)
 
-        for (let i = 0; i < coolStruct.length; i++) {
-            for (let j = 0; j < coolStruct.length - i - 1; j++) {
-                if (coolStruct[j].createdAt < coolStruct[j + 1].createdAt) {
-                    let swap = coolStruct[j];
+        for (let i = 0; i < coolStruct.length; i++) {  //loop to access each array element
+            for (let j = 0; j < coolStruct.length - i - 1; j++) { // loop to compare array elements
+                if (coolStruct[j].createdAt < coolStruct[j + 1].createdAt) { // compares two adjacent elements
+                    let swap = coolStruct[j];  // swap operation
                     coolStruct[j] = coolStruct[j + 1];
                     coolStruct[j + 1] = swap
                 }

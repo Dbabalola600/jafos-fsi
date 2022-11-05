@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, models } from 'mongoose';
 
 
-const OrderItemSchema = new Schema({
+const CheckOutItemSchema = new Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'Student',
@@ -43,7 +43,7 @@ const OrderItemSchema = new Schema({
         type: String,
         required: true,
         enum: ["Paid", "Unpaid","Pay on Delivery"],
-        default: "Unpaid"
+        default: "Pay on Delivery"
     },
     mod:{
         type: String,
@@ -57,6 +57,6 @@ const OrderItemSchema = new Schema({
 )
 
 
-const OrderItem = models.OrderItem || model("OrderItem", OrderItemSchema)
+const CheckOutItem = models.CheckOutItem || model("CheckOutItem", CheckOutItemSchema)
 
-export default OrderItem
+export default CheckOutItem

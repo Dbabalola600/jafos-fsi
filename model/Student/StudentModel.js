@@ -40,7 +40,7 @@ const StudentSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'seller', 'Admin','creder'],
+    enum: ['student', 'seller', 'Admin','creder','staff'],
     default: 'student'
   },
 },

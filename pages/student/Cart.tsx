@@ -1,10 +1,10 @@
-import DefaultLayout from "../../components/layouts/DefaultLayout";
+
 import Header from "../../components/shared/Header";
 
 import StuLayout from "./Layout/StuLayout";
 
 
-import { FormEventHandler, Key, useEffect, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
 
 import CartInput from "../../components/shared/CartInput";
 import { useRouter } from "next/router";
@@ -55,8 +55,6 @@ export default function Cart() {
 
     const [cartList, setCartList] = useState<cartListType>([]);
 
-    const [total, setTotal] = useState<number | null>()
-
 
 
 
@@ -99,7 +97,7 @@ export default function Cart() {
 
     // add item to order
 
-    const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
+    const addCheckoutItem: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
         const user = getCookie("Normuser")
 
@@ -116,20 +114,25 @@ export default function Cart() {
         }
 
 
-        const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/order/newCheckOutItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
 
-                if (res.status == 200) {
+                // if (res.status == 200) {
 
-                    //delete entire cart
-                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
-                        .then(res => {
-                            if (res.status == 200) {
-                                router.push("/student/DashBoard/")
-                                console.log("SUCCESS")
-                            }
-                        })
+                //     //delete entire cart
+                //     const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                //         .then(res => {
+                //             if (res.status == 200) {
+                //                 router.push("/student/DashBoard/")
+                //                 console.log("SUCCESS")
+                //             }
+                //         })
+                // }
+
+                if (res.status == 200) {
+                    router.push("/student/checkout/")
+                    console.log("SUCCESS")
                 }
 
 
@@ -144,22 +147,13 @@ export default function Cart() {
 
 
 
-     
+
 
         setLoading(false)
     }
 
 
 
-    // console.log(cartList
-
-
-
-
-
-   
-
-    // let grande = cartList[0].total
     return (
 
         <StuLayout>
@@ -174,7 +168,7 @@ export default function Cart() {
 
                 <form
                     onSubmit={
-                        addOrderItem
+                        addCheckoutItem
                     }
                 >
                     {carts.map((cart: {
@@ -211,10 +205,10 @@ export default function Cart() {
 
                     <button
                         className="btn btn-primary w-full mt-10"
-                        onClick={() => addOrderItem}
+                        onClick={() => addCheckoutItem}
                         type="submit"
                     >
-                        {isLoading ? "Loading..." : "SUBMIT"}
+                        {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
                     </button>
                 </form>
 
