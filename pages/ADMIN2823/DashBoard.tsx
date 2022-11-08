@@ -8,6 +8,7 @@ type Admin = {
     firstname: string
     AdminId: number
     lastname: string
+    account_bal: number
 }
 
 
@@ -48,9 +49,9 @@ export default function DashBoard() {
     return (
         <AdminLayout>
             <div
-             className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+                className="w-full py-20 space-y-12  text-black text-base md:text-xl"
 
-            
+
             >
 
 
@@ -59,8 +60,11 @@ export default function DashBoard() {
                     className=" bg-black md:w-60">
                     <div className="text-primary text-3xl">
                         Welcome {admin?.firstname}
+                        <p>
+                        Balance: {admin?.account_bal}
+                        </p>
                     </div>
-
+                  
                 </div>
 
 
@@ -89,7 +93,7 @@ export default function DashBoard() {
 
 
 
-                
+
                 <div className='  mx-auto'>
                     <Link
                         href="/ADMIN2823/Creder">

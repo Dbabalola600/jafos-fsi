@@ -2,6 +2,8 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
+import ErrMess from "../../../components/shared/ErrMess";
+import GoodMess from "../../../components/shared/GoodMess";
 import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import TextInput from "../../../components/shared/TextInput";
@@ -37,6 +39,34 @@ export default function deliveryMethod() {
     const [total, setTotal] = useState<number | null>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
+
+
+    const [showtoast, settoast] = useState({ message: "", show: false })
+
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
+
+
+
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
 
     const showOrder = async () => {
@@ -83,7 +113,12 @@ export default function deliveryMethod() {
         const response = await fetch("/api/student/order/updateDeliveryMethod", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
-                    router.push("/student/checkout")
+                    setgoodtoast({ message: " message", show: true })
+
+                    router.push("/student/checkout/payment")
+                }
+                else {
+                    settoast({ message: " message", show: true })
                 }
             }).catch(err => {
                 console.log(err)
@@ -113,6 +148,13 @@ export default function deliveryMethod() {
                 <Header
                     title="update Delivery Mehtod "
                 />
+
+
+
+
+                {showtoast.show && <ErrMess title="something when wrong, try again later" />}
+                {showgoodtoast.show && <GoodMess title="Delivery Address added" />}
+
 
 
 

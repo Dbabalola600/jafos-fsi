@@ -90,7 +90,7 @@ export default async function checkoutPayment(req, res) {
 
                     const sled = await Promise.all((
                         store_id.map(async (id) => {
-                            return await Seller.findById(id).updateOne({ account_bal: storeStruct[i][0].account_bal + new_store_bal[i] })
+                            return await Seller.findByIdAndUpdate(id, { account_bal: storeStruct[i][0].account_bal + new_store_bal[i] }, {new: true})
                         })
                     ))
 

@@ -1,8 +1,7 @@
 import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import GoodMess from "../../../components/shared/GoodMess";
+import { FormEventHandler, useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
@@ -27,28 +26,13 @@ type Orders = {
 
 
 
-export default function checkout() {
+export default function confirmOrder() {
 
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const router = useRouter()
-
-
-
     const [isLoading, setLoading] = useState(false)
-    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
-
-
-    useEffect(() => {
-        if (showgoodtoast.show) {
-            setTimeout(() => {
-                setgoodtoast({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showgoodtoast.show])
-
+    const router = useRouter()
 
     const showOrder = async () => {
         const token = getCookie("Normuser")
@@ -64,7 +48,7 @@ export default function checkout() {
 
 
         setOrders(response)
-        console.log(response)
+        // console.log(response)
 
 
         // let tot = response[0].amount + response[1].amount
@@ -91,20 +75,62 @@ export default function checkout() {
         showOrder()
     }, [])
 
+    console.log(orders)
 
 
 
-    //delete one item 
-    const delOne = async (id: any) => {
-        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(id) })
-            .then(res => {
+
+
+    const addOrderItem = async () => {
+      
+        const user = getCookie("Normuser")
+
+        setLoading(true)
+        console.log(user)
+
+    
+
+
+        const body = {
+            user: user,
+            orders
+
+        }
+
+
+        const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
+            .then(async res => {
+                console.log(res.status)
+
                 if (res.status == 200) {
-                    setgoodtoast({ message: " message", show: true })
 
-                    router.reload()
-                    console.log("DELETED")
+                    //delete entire cart
+                    const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(user) })
+                        .then(res => {
+                            if (res.status == 200) {
+                                router.push("/student/Orders/")
+                                console.log("SUCCESS")
+                            }
+                        })
+                }
+
+             
+
+
+                if (res.status == 401) {
+                    console.log("ERROR")
                 }
             })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+
+
+
+
+        setLoading(false)
     }
 
 
@@ -118,7 +144,6 @@ export default function checkout() {
                 <Header
                     title="Checkout"
                 />
-                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
                 {orders.map((order: {
                     _id: string | null
@@ -142,15 +167,10 @@ export default function checkout() {
                         >
                             Order Status: {order.status}  {"  "} ,Quantity:  {order.quantity} {"  "} ,Product name:  {order.product}
                             <p>
-                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod} {""} price: {order.amount}
+                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
                             </p>
                         </div>
-                        <button className="w-full btn-primary btn "
-                            onClick={() => delOne(order._id)}
-                        >
-                            Delete Item
 
-                        </button>
 
 
 
@@ -169,10 +189,14 @@ export default function checkout() {
 
 
 
-                <NavButton
-                    title=" Proceed"
-                    uLink="/student/checkout/deliveryMethod"
-                />
+                <button className="w-full btn-primary btn "
+                onClick={ addOrderItem}
+
+
+                >
+                    {isLoading ? "Loading..." : "Confirm Order"}
+                   
+                </button>
 
 
             </>

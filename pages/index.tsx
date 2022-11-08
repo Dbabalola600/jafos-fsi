@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import DefaultLayer from "../components/layouts/DefaultLayout"
 import Header from '../components/shared/Header'
 import NavButton from '../components/shared/NavButton'
@@ -9,9 +9,19 @@ import NavButton from '../components/shared/NavButton'
 
 const Home: NextPage = () => {
 
+
+  const [isLoading, setLoading] = useState(false)
+
+
   const connect = async () => {
+
+    
+    setLoading(true)
     const response = await fetch("/api/connect", { method: "GET" })
       .then(res => res.json())
+
+
+      setLoading(false)
   }
 
   useEffect(() => {
@@ -27,6 +37,8 @@ const Home: NextPage = () => {
         className="w-full py-20   text-black text-base md:text-xl"
 
       >
+
+        
         <Header
           title='WELCOME'
           desc='please select one' />
@@ -35,7 +47,7 @@ const Home: NextPage = () => {
         <div className='  mx-auto'>
 
           <NavButton
-            title="Student"
+            title={isLoading? "Loading...": "Student"}
             uLink='/student'
           />
 
@@ -46,7 +58,7 @@ const Home: NextPage = () => {
         <div className='  mx-auto'>
 
           <NavButton
-            title="Staff"
+            title={isLoading? "Loading...": "Staff"}
             uLink='/staff'
           />
 
@@ -57,7 +69,7 @@ const Home: NextPage = () => {
 
           <NavButton
             uLink="/seller"
-            title="Seller"
+            title={isLoading? "Loading...": "Seller"}
           />
 
         </div>
@@ -67,7 +79,7 @@ const Home: NextPage = () => {
 
           <NavButton
             uLink="/creder"
-            title="Creders"
+            title={isLoading? "Loading...": "Creder"}
           />
 
         </div>

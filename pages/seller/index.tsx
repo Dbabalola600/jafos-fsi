@@ -62,6 +62,8 @@ function Login() {
             .then(res => {
 
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+                   
                     router.push("/seller/DashBoard")
                     return res.json()
 

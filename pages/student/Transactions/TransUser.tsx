@@ -2,6 +2,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
 import ErrMess from "../../../components/shared/ErrMess";
+import GoodMess from "../../../components/shared/GoodMess";
 import Header from "../../../components/shared/Header";
 import TextInput from "../../../components/shared/TextInput";
 import StuLayout from "../Layout/StuLayout";
@@ -18,6 +19,20 @@ export default function TransferBtwUser() {
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showtoast3, settoast3] = useState({ message: "", show: false })
 
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+
+
+
+
+    
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
 
     useEffect(() => {
@@ -31,7 +46,7 @@ export default function TransferBtwUser() {
 
 
     useEffect(() => {
-        if (showtoast.show) {
+        if (showtoast3.show) {
             setTimeout(() => {
                 settoast3({ message: "", show: false })
             }, 5000)
@@ -40,7 +55,7 @@ export default function TransferBtwUser() {
     }, [showtoast.show])
 
     useEffect(() => {
-        if (showtoast.show) {
+        if (showtoast2.show) {
             setTimeout(() => {
                 settoast2({ message: "", show: false })
             }, 5000)
@@ -72,6 +87,8 @@ export default function TransferBtwUser() {
         const respone = await fetch("/api/student/transactions/TransUser", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+                   
                     router.push("/student/DashBoard")
                 }
                 if (res.status == 256) {
@@ -105,6 +122,8 @@ export default function TransferBtwUser() {
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showtoast3.show && <ErrMess title="invalid USER" />}
+                    {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
+
 
 
 

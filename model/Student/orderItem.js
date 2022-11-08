@@ -43,13 +43,13 @@ const OrderItemSchema = new Schema({
         type: String,
         required: true,
         enum: ["Paid", "Unpaid","Pay on Delivery"],
-        default: "Unpaid"
+      
     },
     mod:{
         type: String,
         required: true,
         enum:["PickUp", "NDH","D1", "NEH","ADMIN", "E1", "E2" ],
-        default: "PickUp"
+       
     }
 
 },

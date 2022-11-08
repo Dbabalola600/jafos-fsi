@@ -20,17 +20,20 @@ export default async function newOrderItem(req, res) {
 
 
 
-        const { user, cartList } = JSON.parse(req.body)
+        const { user, orders } = JSON.parse(req.body)
 
         const item = await Promise.all( (
-            cartList.map( async (cart) => {
+            orders.map( async (cart) => {
                 return  await OrderItem.create({
                     product: cart.product,
                     user: user,
                     storename: cart.storename,
                     price: cart.price,
                     quantity: cart.quantity,
-                    amount: cart.amount
+                    amount: cart.amount,
+                    status: cart.status,
+                    p_status: cart.p_status,
+                    mod: cart.mod
                 })
             })))
 

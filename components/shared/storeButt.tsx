@@ -17,7 +17,7 @@ export default function StoreButton(props: StoreProps) {
                 href={props.ulink}
             >
 
-                <div className="bg-primary rounded-lg btn-block mt-10 mb-5 pt-5 pb-2 text-white ">
+                <div className="bg-primary rounded-lg btn-block mt-10 mb-5 pt-5 pb-2 text-white cursor-pointer">
 
                     <div
                         className="relative"

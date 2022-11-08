@@ -9,6 +9,7 @@ import { FormEventHandler, useEffect, useState } from "react"
 import CartInput from "../../components/shared/CartInput";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
+import GoodMess from "../../components/shared/GoodMess";
 
 
 
@@ -55,8 +56,16 @@ export default function Cart() {
 
     const [cartList, setCartList] = useState<cartListType>([]);
 
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
 
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
 
+    }, [showgoodtoast.show])
 
     // fetch cart
     const showCart = async () => {
@@ -83,6 +92,8 @@ export default function Cart() {
         const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
             .then(res => {
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+
                     router.reload()
                     console.log("DELETED")
                 }
@@ -118,22 +129,19 @@ export default function Cart() {
             .then(async res => {
                 console.log(res.status)
 
-                // if (res.status == 200) {
-
-                //     //delete entire cart
-                //     const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
-                //         .then(res => {
-                //             if (res.status == 200) {
-                //                 router.push("/student/DashBoard/")
-                //                 console.log("SUCCESS")
-                //             }
-                //         })
-                // }
-
                 if (res.status == 200) {
-                    router.push("/student/checkout/")
-                    console.log("SUCCESS")
+
+                    //delete entire cart
+                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                        .then(res => {
+                            if (res.status == 200) {
+                                router.push("/student/checkout/")
+                                console.log("SUCCESS")
+                            }
+                        })
                 }
+
+             
 
 
                 if (res.status == 401) {
@@ -165,6 +173,7 @@ export default function Cart() {
                     />
                 </div>
 
+                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
                 <form
                     onSubmit={

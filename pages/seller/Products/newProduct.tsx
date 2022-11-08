@@ -34,7 +34,7 @@ function newOffer() {
 
         }
 
-        const response = await fetch("/api/seller/newproduct", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/seller/product/newproduct", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
 
                 if (res.status == 200) {

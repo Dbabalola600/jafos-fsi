@@ -31,6 +31,8 @@ export default async function fetchTransHistory(req, res) {
 
 
 
+
+
         const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist]
 
 
@@ -49,6 +51,9 @@ export default async function fetchTransHistory(req, res) {
         for (let i = 0; i < cred_hist.length; i++) {
             coolStruct.push(cred_hist[i])
         }
+        for (let i = 0; i < tok_hist.length; i++) {
+            coolStruct.push(tok_hist[i])
+        }
 
 
 
@@ -66,10 +71,13 @@ export default async function fetchTransHistory(req, res) {
 
         console.log("GOTTEN")
 
-
+        console.log(tok_hist[0])
         return res.status(200).json(
             coolStruct
         )
+
+
+     
     } else {
 
         return res.status(400).json({

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
 import ErrMess from "../../../components/shared/ErrMess";
+import GoodMess from "../../../components/shared/GoodMess";
 import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import TextInput from "../../../components/shared/TextInput";
@@ -36,12 +37,15 @@ export default function payPortal() {
     const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
+    const [devfee, setDevfee] = useState<number | null>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showtoast3, settoast3] = useState({ message: "", show: false })
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
+    const [showtoastp, settoastp] = useState({ message: "", show: false })
 
 
     useEffect(() => {
@@ -53,9 +57,27 @@ export default function payPortal() {
 
     }, [showtoast.show])
 
+    useEffect(() => {
+        if (showtoastp.show) {
+            setTimeout(() => {
+                settoastp({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
     useEffect(() => {
-        if (showtoast.show) {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast3.show) {
             setTimeout(() => {
                 settoast3({ message: "", show: false })
             }, 5000)
@@ -64,7 +86,7 @@ export default function payPortal() {
     }, [showtoast.show])
 
     useEffect(() => {
-        if (showtoast.show) {
+        if (showtoast2.show) {
             setTimeout(() => {
                 settoast2({ message: "", show: false })
             }, 5000)
@@ -94,12 +116,28 @@ export default function payPortal() {
 
         let l_tot = response.length.valueOf()
         let sum = 0
+
+
+
+        let dev = 50
+
+        console.log(response[0].mod)
+
         for (let i = 0; i < l_tot; i++) {
+
+            if (response[i].mod === "PickUp") {
+                dev = 0;
+                setDevfee(dev)
+            }else{
+                dev = 50;
+                setDevfee(dev)
+            }
+
 
             sum += response[i].amount
 
             console.log(sum)
-            setTotal(sum)
+            setTotal(sum+dev)
         }
 
 
@@ -117,7 +155,7 @@ export default function payPortal() {
     }, [])
 
 
-
+    //orderid
     const massId: string[] = []
 
     for (let i = 0; i < orders.length; i++) {
@@ -127,7 +165,7 @@ export default function payPortal() {
     // console.log(massId)
 
 
-
+    //store name
     const massStore: string[] = []
 
     for (let i = 0; i < orders.length; i++) {
@@ -153,6 +191,7 @@ export default function payPortal() {
             sen: token,
             amt: total,
             massCheck_id: massId,
+
             pin: form.item(0).value
 
         }
@@ -160,6 +199,8 @@ export default function payPortal() {
         const reponse = await fetch("/api/student/transactions/checkoutPayment", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+
                     console.log("hell yeah")
                 } if (res.status == 256) {
                     settoast({ message: " message", show: true })
@@ -168,6 +209,56 @@ export default function payPortal() {
                     settoast2({ message: " message", show: true })
                 }
                 if (res.status == 500) {
+                    settoast3({ message: " message", show: true })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+
+
+
+        setLoading(false)
+    }
+
+
+
+
+
+    const Pay2 = async (amount: any, _id: string) => {
+
+        setLoading(true)
+
+
+
+
+        const token = getCookie("Normuser")
+        const body = {
+            sen: token,
+            amt: amount,
+            or_id: _id,
+            devf: devfee
+
+
+        }
+
+
+
+        const reponse = await fetch("/api/student/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+
+                    router.reload()
+                } if (res.status == 256) {
+                    settoast({ message: " message", show: true })
+                }
+                if (res.status == 245) {
+                    settoast2({ message: " message", show: true })
+                }
+                if (res.status == 259) {
+                    settoastp({ message: " message", show: true })
+                }
+                else {
                     settoast3({ message: " message", show: true })
                 }
             }).catch(err => {
@@ -195,48 +286,83 @@ export default function payPortal() {
                     </div>
 
                     <div>
+                        Delivery Fee: {devfee}
+                    </div>
+
+                    <div>
                         available balance: {student?.account_bal}
                     </div>
                 </div>
 
 
+                {showtoast.show && <ErrMess title="insufficient funds" />}
+                {showtoast2.show && <ErrMess title="invalid pin" />}
+                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
+
+                {showgoodtoast.show && <GoodMess title="payment successful" />}
+                {showtoastp.show && <ErrMess title="Payment Already Made" />}
+
+
+
+                {orders.map((order: {
+                    _id: string
+                    user: string
+                    product: string
+                    storename: string
+                    price: number
+                    quantity: number
+                    amount: number
+                    status: string
+                    p_status: string
+                    mod: string
+                }) =>
+                    <div
+                        key={order._id}
+                    >
+
+
+                        <div
+                            className="text-red-500 mt-10"
+                        >
+                            Order Status: {order.status}  {"  "} Product name:  {order.product} {" "} ,Price:{order.price}
+                            <p>
+                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
+                            </p>
 
 
 
 
-                <form
-                    className="w-full py-20 space-y-12  text-black text-base md:text-xl"
-                    onSubmit={Pay}
-                >
-                    {showtoast.show && <ErrMess title="insufficient funds" />}
-                    {showtoast2.show && <ErrMess title="invalid pin" />}
-                    {showtoast3.show && <ErrMess title="invalid USER" />}
+                        </div>
 
 
-                    <div className="mx-auto  w-full ">
-                        <TextInput
-                            placeholder="Pin"
-                            name="Pin"
-                            type='text'
-
-                        />
-                    </div>
-
-
-
-                    <div className=" w-full  space-y-6">
 
                         <button className="w-full btn-primary btn "
-                            type="submit">
-                            {isLoading ? "Loading..." : "Proceed"}
+                            onClick={() => Pay2(order.amount, order._id)}>
+                            {isLoading ? "Loading..." : "Pay"}
 
                         </button>
 
 
-
                     </div>
+                )}
 
-                </form>
+
+
+                {/* <NavButton
+                    title="change delivery address"
+                    uLink="/student/checkout/deliveryMethod"
+                /> */}
+
+
+
+
+                <NavButton
+                    title="Confirm Order"
+                    uLink="/student/checkout/confirmOrder"
+                />
+
+
+
 
 
 
@@ -245,3 +371,46 @@ export default function payPortal() {
         </StuLayout>
     )
 }
+
+
+
+
+
+
+// <form
+// className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+// onSubmit={Pay}
+// >
+// {showtoast.show && <ErrMess title="insufficient funds" />}
+// {showtoast2.show && <ErrMess title="invalid pin" />}
+// {showtoast3.show && <ErrMess title="invalid USER" />}
+
+
+// <div className="mx-auto  w-full ">
+//     <TextInput
+//         placeholder="Pin"
+//         name="Pin"
+//         type='text'
+
+//     />
+// </div>
+
+
+
+
+
+
+
+// <div className=" w-full  space-y-6">
+
+//     <button className="w-full btn-primary btn "
+//         type="submit">
+//         {isLoading ? "Loading..." : "Pay"}
+
+//     </button>
+
+
+
+// </div>
+
+// </form>

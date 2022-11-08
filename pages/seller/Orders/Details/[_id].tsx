@@ -91,7 +91,7 @@ export default function index() {
 
 
         setSeller(response)
-        console.log(response.storename)
+        // console.log(response.storename)
 
 
 
@@ -109,7 +109,7 @@ export default function index() {
 
 
 
-        console.log(Ordresponse)
+        // console.log(Ordresponse)
 
         const body3 = {
             _id: Ordresponse.user
@@ -121,12 +121,16 @@ export default function index() {
             .then(res => res.json()) as Student
 
         setStudent(StuResponse)
-        console.log(StuResponse)
+        // console.log(StuResponse)
 
 
 
 
     }
+
+
+
+    console.log(orderItem?.storename)
 
 
     useEffect(() => {
@@ -194,7 +198,7 @@ export default function index() {
 
         //order id 
         const body = {
-            id: ssd._id
+            id: ssd._id  
         }
 
 
@@ -208,8 +212,10 @@ export default function index() {
 
 
 
+       
+
         const body2 = {
-            sen: ssd._id,
+            sen: orderItem?.storename,
             amt: orderItem?.amount,   // Ordresponse.amount,
             rec: orderItem?.user               //Ordresponse.user
         }

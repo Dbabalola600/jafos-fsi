@@ -1,10 +1,13 @@
-import CatLayout from "../seller/Layout/CatLayout";
-import { useRouter } from "next/router";
-import { FormEventHandler, useEffect, useState } from "react";
-import { getCookie } from "cookies-next";
-import StuLayout from "../student/Layout/StuLayout";
-import Header from "../../components/shared/Header";
-import GoodMess from "../../components/shared/GoodMess";
+import { getCookie } from "cookies-next"
+import { useRouter } from "next/router"
+import { useState, useEffect, FormEventHandler } from "react"
+import GoodMess from "../../../components/shared/GoodMess"
+import Header from "../../../components/shared/Header"
+import StuLayout from "../Layout/StuLayout"
+
+
+
+
 
 
 
@@ -32,6 +35,7 @@ export default function stores() {
     const [seller, setSeller] = useState<Seller | null>(null);
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
+    const [isLoading, setLoading] = useState(false)
 
 
 
@@ -82,6 +86,8 @@ export default function stores() {
 
     const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
+
+        setLoading(true)
         const user = getCookie("Normuser")
         // console.log(user)
         const form = e.currentTarget.elements as any
@@ -108,6 +114,9 @@ export default function stores() {
             }).catch(err => {
                 console.log(err)
             })
+
+
+            setLoading(false)
     }
 
 
@@ -176,7 +185,7 @@ export default function stores() {
 
                                     type="submit"
                                     className="btn bg-black"
-                                > Add to Cart</button>
+                                > {isLoading? "ADDING...":"ADD TO CART" }</button>
 
 
                             </form>

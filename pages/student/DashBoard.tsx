@@ -136,7 +136,7 @@ storename: string; }) =>
                            
 
 <StoreButton
-                             ulink={`/stores/${seller._id}`}
+                             ulink={`/student/stores/${seller._id}`}
                              name={seller.storename}
                              status={seller.status}
                              desc="description "
