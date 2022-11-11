@@ -7,6 +7,8 @@ import Header from "../../../components/shared/Header";
 import CatLayout from "../Layout/CatLayout";
 
 
+import { useRouter } from "next/router"
+
 
 type Offers = {
     _id: string
@@ -25,7 +27,7 @@ type Seller = {
 }
 
 function Offerings() {
-
+    const router = useRouter()
 
     const [offers, SetOffers] = useState<Offers[]>([]);
 
@@ -34,7 +36,7 @@ function Offerings() {
 
         const token = getCookie("Selluser")
         console.log(token)
-      
+
         const body = {
             _id: token
         }
@@ -43,20 +45,20 @@ function Offerings() {
             .then(res => res.json()) as Seller
 
 
-      
+
 
         console.log(response.storename)
 
 
 
 
-        const body2 ={
+        const body2 = {
             name: response.storename
         }
 
 
-        const Offerresponse = await fetch("/api/seller/fetchOffer", {method: "POST", body: JSON.stringify(body2)})
-        .then(res=> res.json()) as Offers[]
+        const Offerresponse = await fetch("/api/seller/fetchOffer", { method: "POST", body: JSON.stringify(body2) })
+            .then(res => res.json()) as Offers[]
 
 
         SetOffers(Offerresponse)
@@ -67,6 +69,22 @@ function Offerings() {
         showinfo()
     }, []
     )
+
+
+    const del = async (_id: any) => {
+        const response = await fetch("/api/seller/product/delProduct", { method: "POST", body: JSON.stringify(_id) })
+            .then(res => {
+                if (res.status === 200) {
+                    router.reload()
+                }
+            })
+
+
+
+    }
+
+
+
 
     return (
         <CatLayout>
@@ -103,25 +121,61 @@ function Offerings() {
                 </div>
 
                 <div>
-                    
-                {offers.map((offer: {
-                    description: string
-                    price: number
-                    title: string;
 
-                    _id: string | null | undefined
+                    {offers.map((offer: {
+                        description: string
+                        price: number
+                        title: string;
 
-                }) => (
-                    <div
-                        key={offer._id}
-                    >
-                        <div className="text-red-500">
-                            {offer.title} {" "}
-                            {offer.price}{" "}
-                            {offer.description}
+                        _id: string | null | undefined
+
+                    }) => (
+                        <div
+                            key={offer._id}
+                            className="pt-5"
+                        >
+
+
+                            <div className="text-red-500">
+                                {offer.title} {" "}
+                                {offer.price}{" "}
+                                {offer.description}
+                            </div>
+
+
+
+
+
+
+                            <div className="grid grid-cols-2 space-x-10">
+
+                                <button className="btn btn-lg btn-primary btn-block"
+                                    onClick={() => del(offer._id)}
+                                >
+                                    delete
+                                </button>
+
+
+
+
+                                <div className='mx-auto'>
+                                    <Link
+                                        href={`Products/Edit/${offer._id}`}
+                                    >
+                                        <button className="btn btn-lg btn-primary btn-block">
+                                            Edit
+                                        </button>
+                                    </Link>
+                                </div>
+
+
+
+
+
+                            </div>
+
                         </div>
-                    </div>
-                ))}
+                    ))}
                 </div>
 
             </>

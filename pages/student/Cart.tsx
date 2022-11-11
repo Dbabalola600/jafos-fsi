@@ -86,10 +86,15 @@ export default function Cart() {
 
 
     //delete one item
-    const delOne = async (id: any) => {
+    const delOne = async (_id: any) => {
 
 
-        const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
+        const body={
+            id: _id
+        }
+        console.log(_id)
+
+        const reponse = await fetch("/api/student/cart/deleteFromCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
@@ -125,6 +130,11 @@ export default function Cart() {
         }
 
 
+
+        const body2={
+            user: user
+        }
+
         const response = await fetch("/api/student/order/newCheckOutItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
@@ -132,7 +142,7 @@ export default function Cart() {
                 if (res.status == 200) {
 
                     //delete entire cart
-                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                    const del = await fetch("/api/student/cart/deleteCart", { method: "POST", body: JSON.stringify(body2) })
                         .then(res => {
                             if (res.status == 200) {
                                 router.push("/student/checkout/")

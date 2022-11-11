@@ -96,7 +96,13 @@ export default function checkout() {
 
     //delete one item 
     const delOne = async (id: any) => {
-        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(id) })
+
+
+        const body = {
+            id: id
+        }
+        
+        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
@@ -145,6 +151,7 @@ export default function checkout() {
                                 Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod} {""} price: {order.amount}
                             </p>
                         </div>
+
                         <button className="w-full btn-primary btn "
                             onClick={() => delOne(order._id)}
                         >

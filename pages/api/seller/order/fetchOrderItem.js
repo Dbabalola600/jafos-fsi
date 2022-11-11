@@ -21,14 +21,15 @@ export default async function fetchOrderItem(req, res) {
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { _id } = JSON.parse(req.body)
+        // const { _id } = JSON.parse(req.body)
         console.log("FETCHING DOCUMENTS")
 
 
-        const orders = await OrderItem.findById( _id)
+        const orders = await OrderItem.find()
         console.log("FETCHED ORDERS")
 
 
+        // console.log(orders[0].stores)
         return res.status(200).json(
 
              orders

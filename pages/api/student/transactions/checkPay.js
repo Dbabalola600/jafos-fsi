@@ -28,8 +28,8 @@ export default async function checkPay(req, res) {
 
         if (order.p_status === "Pay on Delivery") {
        
-            if (sender.account_bal > amt) {
-                const new_sender_bal = sender.account_bal - amt - devf
+            if (sender.account_bal > (amt+ devf)) {
+                const new_sender_bal = sender.account_bal - amt
                 const sender_bal = await Student.findById(sen).updateOne({ account_bal: new_sender_bal })
 
 
@@ -44,7 +44,8 @@ export default async function checkPay(req, res) {
 
 
 
-                const new_reciever_bal = reciever[0].account_bal + amt
+                let new_reciever_bal = JSON.parse(amt) +reciever[0].account_bal
+
                 const reciever_bal = await Seller.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
 
 
@@ -62,25 +63,7 @@ export default async function checkPay(req, res) {
 
 
 
-                if (devf > 0) {
-                    const MainAdmin = await Admin.find({ AdminId: "101" })
-                    
-                    const main_admin_bal = MainAdmin[0].account_bal + devf
-                    const new_main_admin_bal = await Admin.findById(MainAdmin[0]._id).updateOne({ account_bal: main_admin_bal })
-    
-                    const dev_history = await TransferHistory.create({
-                        sender: sender.firstname + sender.lastname,
-                        reciever: MainAdmin[0].firstname,
-                        amount: devf,
-                        trans_type: "DELIVERY FEE",
-                        send_id: sen,
-                        rec_id: MainAdmin[0]._id
-                    })
-                    return res.status(200).json({
-                        message: "successful"
-                    }
-                    )
-                }
+               
 
                
 

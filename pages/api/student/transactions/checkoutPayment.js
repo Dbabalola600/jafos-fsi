@@ -69,7 +69,7 @@ export default async function checkoutPayment(req, res) {
                     if (storeStruct[i][0].storename === orders[i].storename) {
 
 
-                        new_store_bal.push(storeStruct[i][0].account_bal + orders[i].amount)
+                        new_store_bal.push(storeStruct[i][0].account_bal + JSON.parse(orders[i].amount))
                     }
 
                 }
@@ -83,18 +83,18 @@ export default async function checkoutPayment(req, res) {
 
 
                 for (let i = 0; i < storeStruct.length; i++) {
-                    console.log(storeStruct[i][0].account_bal + new_store_bal[i])
+                    console.log(storeStruct[i][0].account_bal + JSON.parse( new_store_bal[i]))
 
 
                     // supposed to credit the sellers accounts
 
                     const sled = await Promise.all((
                         store_id.map(async (id) => {
-                            return await Seller.findByIdAndUpdate(id, { account_bal: storeStruct[i][0].account_bal + new_store_bal[i] }, {new: true})
+                            return await Seller.findByIdAndUpdate(id, { account_bal: storeStruct[i][0].account_bal + JSON.parse(new_store_bal[i]) }, { new: true })
                         })
                     ))
 
-                  
+
 
                     //creates history of transactions
                     const rec_history = await TransferHistory.create({

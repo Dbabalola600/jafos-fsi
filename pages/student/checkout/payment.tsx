@@ -128,7 +128,7 @@ export default function payPortal() {
             if (response[i].mod === "PickUp") {
                 dev = 0;
                 setDevfee(dev)
-            }else{
+            } else {
                 dev = 50;
                 setDevfee(dev)
             }
@@ -137,7 +137,7 @@ export default function payPortal() {
             sum += response[i].amount
 
             console.log(sum)
-            setTotal(sum+dev)
+            setTotal(sum + dev)
         }
 
 
@@ -270,6 +270,21 @@ export default function payPortal() {
         setLoading(false)
     }
 
+
+
+
+    //delete one item 
+    const delOne = async (id: any) => {
+        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(id) })
+            .then(res => {
+                if (res.status == 200) {
+
+                    router.reload()
+                    console.log("DELETED")
+                }
+            })
+    }
+
     return (
         <StuLayout>
             <>
@@ -295,14 +310,7 @@ export default function payPortal() {
                 </div>
 
 
-                {showtoast.show && <ErrMess title="insufficient funds" />}
-                {showtoast2.show && <ErrMess title="invalid pin" />}
-                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
-
-                {showgoodtoast.show && <GoodMess title="payment successful" />}
-                {showtoastp.show && <ErrMess title="Payment Already Made" />}
-
-
+               
 
                 {orders.map((order: {
                     _id: string
@@ -334,13 +342,27 @@ export default function payPortal() {
 
                         </div>
 
+                        
+                            <button className="w-full btn-primary btn "
+                                onClick={() => delOne(order._id)}
+                            >
+                                Delete Item
+
+                            </button>
 
 
-                        <button className="w-full btn-primary btn "
-                            onClick={() => Pay2(order.amount, order._id)}>
-                            {isLoading ? "Loading..." : "Pay"}
 
-                        </button>
+                            {/* <button className="w-full btn-primary btn "
+                                onClick={() => Pay2(order.amount, order._id)}>
+                                {isLoading ? "Loading..." : "Pay"}
+
+                            </button> */}
+
+
+
+                       
+
+
 
 
                     </div>
@@ -348,10 +370,26 @@ export default function payPortal() {
 
 
 
-                {/* <NavButton
-                    title="change delivery address"
-                    uLink="/student/checkout/deliveryMethod"
-                /> */}
+                <button className="w-full btn-primary btn mt-5 "
+                    onClick={() => {
+                        orders.map((order: any) => {
+                            Pay2(order.amount, order._id)
+                        }
+                        )
+                    }}>
+                    {isLoading ? "Loading..." : "Pay"}
+
+                </button>
+
+
+                {showtoast.show && <ErrMess title="insufficient funds" />}
+                {showtoast2.show && <ErrMess title="invalid pin" />}
+                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
+
+                {showgoodtoast.show && <GoodMess title="payment successful" />}
+                {showtoastp.show && <ErrMess title="Payment Already Made" />}
+
+
 
 
 
@@ -374,26 +412,23 @@ export default function payPortal() {
 
 
 
+{/* <form
+className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+onSubmit={Pay}
+>
+{showtoast.show && <ErrMess title="insufficient funds" />}
+{showtoast2.show && <ErrMess title="invalid pin" />}
+{showtoast3.show && <ErrMess title="invalid USER" />}
 
 
+<div className="mx-auto  w-full ">
+    <TextInput
+        placeholder="Pin"
+        name="Pin"
+        type='text'
 
-// <form
-// className="w-full py-20 space-y-12  text-black text-base md:text-xl"
-// onSubmit={Pay}
-// >
-// {showtoast.show && <ErrMess title="insufficient funds" />}
-// {showtoast2.show && <ErrMess title="invalid pin" />}
-// {showtoast3.show && <ErrMess title="invalid USER" />}
-
-
-// <div className="mx-auto  w-full ">
-//     <TextInput
-//         placeholder="Pin"
-//         name="Pin"
-//         type='text'
-
-//     />
-// </div>
+    />
+</div>
 
 
 
@@ -401,16 +436,18 @@ export default function payPortal() {
 
 
 
-// <div className=" w-full  space-y-6">
+<div className=" w-full  space-y-6">
 
-//     <button className="w-full btn-primary btn "
-//         type="submit">
-//         {isLoading ? "Loading..." : "Pay"}
+    <button className="w-full btn-primary btn "
+        type="submit">
+        {isLoading ? "Loading..." : "Pay"}
 
-//     </button>
+    </button>
 
 
 
-// </div>
+</div>
 
-// </form>
+</form> */}
+
+

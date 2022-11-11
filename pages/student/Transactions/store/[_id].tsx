@@ -109,6 +109,8 @@ export default function stores() {
         const info = getCookie("Normuser")
         console.log(info)
 
+        
+
         const body = {
             sen: info,
             rec: ssd._id,

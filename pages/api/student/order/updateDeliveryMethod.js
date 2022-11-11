@@ -18,11 +18,14 @@ export default async function updateDeliveryMethod(req, res) {
         console.log(methUp)
         for (let i = 0; i < massId.length; i++) {
             if (methUp === "") {
-                const update = await Promise.all((
-                    massId.map(async (id) => {
-                        await CheckOutItem.findById(id).updateOne({ mod: 'PickUp' })
-                    })
-                ))
+                // const update = await Promise.all((
+                //     massId.map(async (id) => {
+                //         await CheckOutItem.findById(id).updateOne({ mod: 'PickUp' })
+                //     })
+                // ))
+
+                return res.status(200).json({ message: "GOOD FREAKING JOB" })
+
             } else {
                 const update = await Promise.all((
                     massId.map(async (id) => {

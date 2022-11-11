@@ -10,7 +10,21 @@ export default async function deleteCheck(req,res){
         console.log('CONNECTED TO MONGO');
 
         const { user } = JSON.parse(req.body)
-        const del = await CheckOutItem.deleteMany(user)
+        const del = await CheckOutItem.find({user:user})
+
+
+        let massId = []
+        for (let i = 0; i < del.length; i++) {
+            massId.push(del[i]._id)
+        }
+
+        const delAll = await Promise.all((
+            massId.map(async (id) => {
+                await CheckOutItem.findByIdAndDelete({ _id: id })
+            })
+
+        ))
+
 
         console.log("Deleted Cart")
 

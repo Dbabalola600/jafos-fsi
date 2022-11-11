@@ -16,6 +16,17 @@ const OrderSchema = new Schema({
         unique: false
 
     },
+    orderNum: {
+        type: Number,
+        required: true,
+        unique: false
+    },
+
+    stores: {
+        type: Array,
+        required: true,
+        unique: false
+    },
 
     orderList: {
         type: Array,

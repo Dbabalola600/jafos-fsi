@@ -34,6 +34,11 @@ export default function confirmOrder() {
 
     const router = useRouter()
 
+
+
+    const [devfee, setDevfee] = useState<number | null>()
+
+
     const showOrder = async () => {
         const token = getCookie("Normuser")
         const body = {
@@ -56,7 +61,20 @@ export default function confirmOrder() {
 
         let l_tot = response.length.valueOf()
         let sum = 0
+
+        let dev = 50
+
         for (let i = 0; i < l_tot; i++) {
+
+
+            if (response[i].mod === "PickUp") {
+                dev = 0;
+                setDevfee(dev)
+            } else {
+                dev = 50;
+                setDevfee(dev)
+            }
+
 
             sum += response[i].amount
 
@@ -70,25 +88,26 @@ export default function confirmOrder() {
 
 
 
+       
+
+
+
     }
     useEffect(() => {
         showOrder()
     }, [])
 
-    console.log(orders)
-
-
-
+   
 
 
     const addOrderItem = async () => {
-      
+
         const user = getCookie("Normuser")
 
         setLoading(true)
         console.log(user)
 
-    
+
 
 
         const body = {
@@ -98,23 +117,41 @@ export default function confirmOrder() {
         }
 
 
+
+        const body2 = {
+            sen: user,
+            devf: devfee
+        }
+
+        const body3={
+            user:user
+        }
+
         const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
 
                 if (res.status == 200) {
 
-                    //delete entire cart
-                    const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(user) })
-                        .then(res => {
-                            if (res.status == 200) {
-                                router.push("/student/Orders/")
-                                console.log("SUCCESS")
+                    //subtract delivery fee
+                    const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body2) })
+                        .then(async res => {
+                            if (res.status === 200) {
+                                //delete entire cart
+                                const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
+                                    .then(res => {
+                                        if (res.status == 200) {
+                                            router.push("/student/Orders/")
+                                            console.log("SUCCESS")
+                                        }
+                                    })
                             }
                         })
+
+
                 }
 
-             
+
 
 
                 if (res.status == 401) {
@@ -132,6 +169,11 @@ export default function confirmOrder() {
 
         setLoading(false)
     }
+
+
+
+   
+
 
 
 
@@ -190,12 +232,12 @@ export default function confirmOrder() {
 
 
                 <button className="w-full btn-primary btn "
-                onClick={ addOrderItem}
+                    onClick={addOrderItem}
 
 
                 >
                     {isLoading ? "Loading..." : "Confirm Order"}
-                   
+
                 </button>
 
 

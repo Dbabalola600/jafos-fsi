@@ -13,6 +13,8 @@ export default async function TransStore(req, res) {
 
         const { sen, amt, rec, pin } = JSON.parse(req.body)
 
+
+
         const sender = await Student.findById(sen)
         const reciever = await Seller.findById(rec)
 
@@ -34,9 +36,12 @@ export default async function TransStore(req, res) {
                         rec_id: rec
                     })
 
+                    console.log(reciever.account_bal)
+                  
+                    let new_reciever_bal = JSON.parse(amt) + reciever.account_bal
+                
+                    console.log(new_reciever_bal )
 
-
-                    const new_reciever_bal = reciever.account_bal + amt
                     const reciever_bal = await Seller.findById(reciever._id).updateOne({ account_bal: new_reciever_bal })
 
                     const rec_history = await TransferHistory.create({

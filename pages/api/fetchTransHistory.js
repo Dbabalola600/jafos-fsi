@@ -71,7 +71,7 @@ export default async function fetchTransHistory(req, res) {
 
         console.log("GOTTEN")
 
-        console.log(tok_hist[0])
+        // console.log(tok_hist[0])
         return res.status(200).json(
             coolStruct
         )

@@ -10,18 +10,18 @@ export default async function TransUser(req, res) {
         console.log('CONNECTED TO MONGO');
 
 
-        const { sen, amt, rec, pin } = JSON.parse(req.body)
+        const { sen, amt, rec, pin } =JSON.parse(req.body)
 
 
 
         const sender = await Student.findById(sen)
         const reciever = await Student.find({ matricno: rec })
 
-        console.log(reciever[0].id)
+        // console.log(reciever[0]._id)
 
 
-      
-       
+
+
 
         if (pin === sender.pin) {
             if (sender.account_bal > amt) {
@@ -32,23 +32,34 @@ export default async function TransUser(req, res) {
                     sender: sender.firstname + sender.lastname,
                     reciever: reciever[0].firstname + reciever[0].lastname,
                     amount: amt,
-                    trans_type:"DEBIT",
+                    trans_type: "DEBIT",
                     send_id: sen,
                     rec_id: reciever[0].id
                 })
 
-                const new_reciever_bal = reciever[0].account_bal + amt
+
+                console.log(reciever[0])
+
+                let new_reciever_bal = amt
+
+
+                for (let i = 0; i < reciever.length; i++) {
+                    new_reciever_bal += reciever[i].account_bal
+                }
+
+                console.log(new_reciever_bal)
+
                 const reciever_bal = await Student.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
 
                 const rec_history = await TransferHistory.create({
                     sender: sender.firstname + sender.lastname,
                     reciever: reciever[0].firstname + reciever[0].lastname,
                     amount: amt,
-                    trans_type:"CREDIT",
+                    trans_type: "CREDIT",
                     send_id: sen,
                     rec_id: reciever[0].id
                 })
-                
+
                 return res.status(200).json({
                     message: "successful"
                 }

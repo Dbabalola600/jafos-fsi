@@ -9,8 +9,10 @@ export default async function deleteCheck(req,res){
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { _id } = JSON.parse(req.body)
-        const del = await CheckOutItem.deleteOne(_id)
+        const { id } = JSON.parse(req.body)
+
+        console.log(id)
+        const del = await CheckOutItem.findByIdAndDelete({ _id: id })
 
         console.log("Deleted item")
 

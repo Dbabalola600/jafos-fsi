@@ -9,6 +9,11 @@ const OrderItemSchema = new Schema({
         unique: false
 
     },
+    orderNum: {
+        type: Number,
+        required: true,
+        unique: false
+    },
     product: {
         type: String,
         required: true,
@@ -42,14 +47,14 @@ const OrderItemSchema = new Schema({
     p_status: {
         type: String,
         required: true,
-        enum: ["Paid", "Unpaid","Pay on Delivery"],
-      
+        enum: ["Paid", "Unpaid", "Pay on Delivery"],
+
     },
-    mod:{
+    mod: {
         type: String,
         required: true,
-        enum:["PickUp", "NDH","D1", "NEH","ADMIN", "E1", "E2" ],
-       
+        enum: ["PickUp", "NDH", "D1", "NEH", "ADMIN", "E1", "E2"],
+
     }
 
 },

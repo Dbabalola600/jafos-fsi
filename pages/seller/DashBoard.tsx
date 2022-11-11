@@ -35,12 +35,25 @@ type OrderItems = {
     }
 }
 
+
+
+type SpecOrder = {
+    _id: string;
+    user: string;
+    stores: string
+    orderList: OrderItems
+    orderNum: number
+  
+}
+
 function DashBoard() {
     const router = useRouter()
     const [seller, setSeller] = useState<Seller | null>(null);
 
     const [orderItems, setOrderItems] = useState<OrderItems[]>([]);
+    const [orderNum, setorderNum] = useState<number>()
 
+    const [orders, setOrders] = useState<SpecOrder[]>([])
     const showinfo = async () => {
 
         const token = getCookie("Selluser")
@@ -74,12 +87,34 @@ function DashBoard() {
         setOrderItems(OrderResponse)
         // console.log(OrderResponse[0]._doc._id)
 
+
+        const body3 = {
+            Sname: response.storename
+        }
+
+
+
+
+        const specOrder = await fetch("/api/seller/order/fetchSpecOrder", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json()) as SpecOrder[]
+
+
+        console.log(specOrder)
+        setOrders(specOrder)
+
+        // console.log(specOrder[0].stores)
+
+
+        
+
     }
 
     useEffect(() => {
         showinfo()
     }, []
     )
+
+
 
 
 
@@ -181,12 +216,37 @@ function DashBoard() {
 
 
 
+                {orders.map((order: {
+                    _id: string;
+                    user: string
+                    stores: string
+                    orderNum: number
+                }, index) => (
+                    <div
+                        key={order._id}
+                    >
+
+
+
+                        <Link
+                            href={`/seller/Orders/Details/${order._id}`}
+                        >
+                            <a>
+                                <Header
+                                    title=   "order" 
+                                    desc={order.orderNum}
+                                />
+                            </a>
+
+                        </Link>
+
+                    </div>
+                ))}
 
 
 
 
-
-                {orderItems.map((orderItem: {
+                {/* {orderItems.map((orderItem: {
                     _doc: any;
                     _id: string;
                     storename: string
@@ -214,7 +274,7 @@ function DashBoard() {
 
 
                     </div>
-                ))}
+                ))} */}
 
 
             </>

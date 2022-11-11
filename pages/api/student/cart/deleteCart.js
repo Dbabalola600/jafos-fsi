@@ -19,12 +19,31 @@ export default async function deleteCart(req, res) {
         console.log('CONNECTED TO MONGO');
 
         const { user } = JSON.parse(req.body)
-        const del = await Cart.deleteMany(user)
+
+        console.log(user)
+        const del = await Cart.find({ user: user })
 
         console.log("Deleted Cart")
 
+
+        // console.log(del[0]._id)
+
+
+        let massId = []
+        for (let i = 0; i < del.length; i++) {
+            massId.push(del[i]._id)
+        }
+
+        const delAll = await Promise.all((
+            massId.map(async (id) => {
+                await Cart.findByIdAndDelete({ _id: id })
+            })
+
+        ))
+
+
         return res.status(200).json(
-            del
+            delAll
         )
 
 

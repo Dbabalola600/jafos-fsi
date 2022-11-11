@@ -7,7 +7,7 @@ import HeadButton from "../../../components/shared/HeadButton";
 import Header from "../../../components/shared/Header";
 import TextInput from "../../../components/shared/TextInput";
 import StuLayout from "../Layout/StuLayout";
-
+import GoodMess from "../../../components/shared/GoodMess";
 
 export default function Withdraw(){
 
@@ -15,6 +15,21 @@ export default function Withdraw(){
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
+
+
+
+
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
 
     useEffect(() => {
         if (showtoast.show) {
@@ -61,6 +76,8 @@ export default function Withdraw(){
         const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+                   
                     router.push("/student/DashBoard")
                 }
                 if (res.status == 256) {
@@ -98,6 +115,7 @@ export default function Withdraw(){
                 >
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
+                    {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
 
 
 

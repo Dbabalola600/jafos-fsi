@@ -1,7 +1,7 @@
 import connectMongo from "../../../../utils/connectMongo";
 import OrderItem from "../../../../model/Student/orderItem";
 import Order from "../../../../model/Student/order";
-
+import Seller from "../../../../model/Seller/Seller"
 
 /**
  * @param {import('next').NextApiRequest} req
@@ -22,11 +22,36 @@ export default async function newOrderItem(req, res) {
 
         const { user, orders } = JSON.parse(req.body)
 
-        const item = await Promise.all( (
-            orders.map( async (cart) => {
-                return  await OrderItem.create({
+
+
+
+        console.log(orders[0].storename)
+
+
+
+        let massSName = []
+
+
+        for (let i = 0; i < orders.length; i++) {
+            massSName.push(orders[i].storename)
+        }
+
+        console.log(...massSName)
+
+        const ordNum = await Order.find()
+        let orNum = 0
+
+        orNum = ordNum.length +1
+
+
+        // console.log(orNum)
+
+        const item = await Promise.all((
+            orders.map(async (cart) => {
+                return await OrderItem.create({
                     product: cart.product,
                     user: user,
+                    orderNum: orNum,
                     storename: cart.storename,
                     price: cart.price,
                     quantity: cart.quantity,
@@ -37,16 +62,19 @@ export default async function newOrderItem(req, res) {
                 })
             })))
 
-            console.log([...item]);
+        // console.log([...item]);
 
         const order = await Order.create({
+            orderNum: orNum,
+            stores: [...massSName],
             user: user,
             orderList: [...item],
         });
 
         console.log("ORDER ITEM ADDED ")
 
-        res.json({ order })
+        res.json({ orders })
+        // res.json({message: "yuppp"})
     } else {
 
         return res.status(400).json({
