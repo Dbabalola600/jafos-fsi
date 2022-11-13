@@ -1,3 +1,6 @@
+
+
+import Order from "../../../../model/Student/order";
 import connectMongo from "../../../../utils/connectMongo";
 import OrderItem from "../../../../model/Student/orderItem";
 import Student from "../../../../model/Student/StudentModel"
@@ -12,41 +15,24 @@ import Student from "../../../../model/Student/StudentModel"
 
 
 
-export default async function fetchOrder(req, res) {
+export default async function fetchOrderItem(req, res) {
     if (req.method === "POST") {
         console.log('CONNECTING TO MONGO');
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { name } = JSON.parse(req.body)
+        const { id } = JSON.parse(req.body)
         console.log("FETCHING DOCUMENTS")
 
 
-        const orders = await OrderItem.find({ storename: name }).sort({createdAt: -1})
+        const orders = await Order.findById(id)
+        console.log("FETCHED ORDERS")
 
 
-        const newOrderStuct = await Promise.all(orders.map(async (oriOrder) => {
-            const existingUser = await Student.findById(oriOrder.user).select("firstname lastname matricno ")
-            // console.log(existingUser)
+        // console.log(orders[0].stores)
+        return res.status(200).json(
 
-            // console.log(existingUser)
-            if (!existingUser) {
-                return { ...oriOrder, userObj: null };
-            }
-            return ({
-                ...oriOrder,
-                userObj: existingUser
-            });
-
-
-        }))
-
-
-
-        // console.log(newOrderStuct)
-        return res.json(
-
-             newOrderStuct
+             orders
         )
 
 
@@ -57,3 +43,11 @@ export default async function fetchOrder(req, res) {
         });
     }
 }
+
+
+
+
+
+
+
+

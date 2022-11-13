@@ -29,8 +29,8 @@ const OrderSchema = new Schema({
     },
 
     orderList: {
-        type: Array,
-        ref: 'OrderItem',
+        type:  Array,
+       
         required: true,
         unique: false,
     }

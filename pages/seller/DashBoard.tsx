@@ -81,10 +81,10 @@ function DashBoard() {
 
 
 
-        const OrderResponse = await fetch("/api/seller/order/fetchOrder", { method: "POST", body: JSON.stringify(body2) })
-            .then(res => res.json()) as OrderItems[]
+        // const OrderResponse = await fetch("/api/seller/order/fetchOrder", { method: "POST", body: JSON.stringify(body2) })
+        //     .then(res => res.json()) as OrderItems[]
 
-        setOrderItems(OrderResponse)
+        // setOrderItems(OrderResponse)
         // console.log(OrderResponse[0]._doc._id)
 
 
@@ -229,7 +229,7 @@ function DashBoard() {
 
 
                         <Link
-                            href={`/seller/Orders/Details/${order._id}`}
+                            href={`Orders/Details/${order._id}`}
                         >
                             <a>
                                 <Header

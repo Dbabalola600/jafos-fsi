@@ -72,7 +72,11 @@ function Offerings() {
 
 
     const del = async (_id: any) => {
-        const response = await fetch("/api/seller/product/delProduct", { method: "POST", body: JSON.stringify(_id) })
+
+        const body = {
+            id: _id
+        }
+        const response = await fetch("/api/seller/product/delProduct", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status === 200) {
                     router.reload()

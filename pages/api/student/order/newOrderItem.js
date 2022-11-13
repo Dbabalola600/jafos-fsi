@@ -64,11 +64,20 @@ export default async function newOrderItem(req, res) {
 
         // console.log([...item]);
 
+        // console.log(item[0]._id)
+
+        const massID = []
+
+        for(let i = 0; i<item.length; i++){
+            massID.push(item[i]._id)
+        } 
+
+        // console.log(...massID)
         const order = await Order.create({
             orderNum: orNum,
             stores: [...massSName],
             user: user,
-            orderList: [...item],
+            orderList: [...massID],
         });
 
         console.log("ORDER ITEM ADDED ")

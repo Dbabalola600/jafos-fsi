@@ -4,6 +4,7 @@ import CatLayout from "../../Layout/CatLayout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import CusCollapse from "../../../../components/shared/CusCollapse";
 
 
 
@@ -30,16 +31,41 @@ type Seller = {
 
 
 
+
 type OrderItems = {
     _doc: any
+    oriOrder: {
+        _id: string;
+        product: string;
+        storename: string;
+        price: number;
+        quantity: number;
+        amount: number;
+        orderNum: number;
+        status: string;
+        p_status: string;
+        mod: string;
+        user: string;
+        createdAt: string
+    }
+
+    userObj: {
+        firstname: string
+        lastname: string
+        matricno: string
+        _id: string
+    }
+}
+
+
+
+
+type Order = {
     _id: string;
-    product: string;
-    storename: string;
-    price: number;
-    quantity: number;
-    amount: number;
     user: string;
-    status: string
+    stores: string
+    orderList: OrderItems
+    orderNum: number
 
 }
 
@@ -54,11 +80,11 @@ type OrderItems = {
 export default function index() {
     const [student, setStudent] = useState<Student | null>(null);
     const [seller, setSeller] = useState<Seller | null>(null);
-    const [orderItem, setOrderItem] = useState<OrderItems>()
+    const [orderItems, setOrderItem] = useState<OrderItems[]>([])
 
     const [isLoading, setLoading] = useState(false)
 
-
+    const [order, setOrder] = useState<Order[]>([])
 
 
 
@@ -66,12 +92,14 @@ export default function index() {
 
     const router = useRouter()
 
-    let pth = router.asPath.split("/")
+    // let pth = router.asPath.split("/")
 
 
 
     let ssd = router.query
-    console.log(ssd._id)
+
+
+    // console.log(ssd._id)
 
     const token = getCookie("Selluser")
     // console.log(token)
@@ -96,32 +124,44 @@ export default function index() {
 
 
         const body2 = {
-            _id: ssd._id,
+            id: ssd._id,
+            Sname: response.storename
 
         }
 
-        const Ordresponse = await fetch("/api/seller/order/fetchOrderItem", { method: "POST", body: JSON.stringify(body2) })
-            .then(res => res.json()) as OrderItems
+        const Ordresponse = await fetch("/api/seller/order/fetchOrderItems", { method: "POST", body: JSON.stringify(body2) })
+            .then(res => res.json()) as OrderItems[]
 
 
+
+        console.log(Ordresponse)
 
         setOrderItem(Ordresponse)
 
 
 
-        // console.log(Ordresponse)
 
         const body3 = {
-            _id: Ordresponse.user
+            id: ssd._id
         }
 
 
 
-        const StuResponse = await fetch("/api/seller/fetchStudent", { method: "POST", body: JSON.stringify(body3) })
+        const order = await fetch("/api/seller/order/fetchOrder", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json()) as Order
+
+
+        const body4 = {
+            id: order.user
+        }
+
+        const stuResponse = await fetch("/api/seller/fetchStudent", { method: "POST", body: JSON.stringify(body4) })
             .then(res => res.json()) as Student
 
-        setStudent(StuResponse)
-        // console.log(StuResponse)
+
+
+        console.log(stuResponse)
+        setStudent(stuResponse)
 
 
 
@@ -130,7 +170,7 @@ export default function index() {
 
 
 
-    console.log(orderItem?.storename)
+
 
 
     useEffect(() => {
@@ -142,13 +182,13 @@ export default function index() {
 
     //change status to complete
 
-    async function CompleteStat() {
+    async function CompleteStat(id: any) {
         setLoading(true)
 
 
 
         const body = {
-            id: ssd._id
+            id: id
         }
 
         const StatResponse = await fetch("/api/seller/order/compOrderStat", { method: "POST", body: JSON.stringify(body) })
@@ -169,13 +209,13 @@ export default function index() {
     //change status to deliverd
 
 
-    async function DeliveredStat() {
+    async function DeliveredStat(id: any) {
         setLoading(true)
 
 
 
         const body = {
-            id: ssd._id
+            id: id
         }
 
         const StatResponse = await fetch("/api/seller/order/deliOrderStat", { method: "POST", body: JSON.stringify(body) })
@@ -192,13 +232,19 @@ export default function index() {
 
     //change status to cancelled
 
-    async function CancelStat() {
+    const CancelStat = async (id: any,
+        rec_id: any,
+        stat: string,
+        amt: any,
+        sen_id: any
+    ) => {
+
         setLoading(true)
 
 
         //order id 
         const body = {
-            id: ssd._id  
+            id: id
         }
 
 
@@ -206,18 +252,16 @@ export default function index() {
 
 
 
-        //fetch the order item to get the amount and the user id 
-        const Ordresponse = await fetch("/api/seller/order/fetchOrderItem", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as OrderItems
 
 
 
-       
+
 
         const body2 = {
-            sen: orderItem?.storename,
-            amt: orderItem?.amount,   // Ordresponse.amount,
-            rec: orderItem?.user               //Ordresponse.user
+            sen: sen_id,
+            amt: amt,
+            rec: rec_id,
+            stat: stat
         }
 
 
@@ -256,12 +300,6 @@ export default function index() {
 
 
 
-                <div
-                    key={orderItem?._id}
-                    className="text-red-500"
-                >
-                    {orderItem?.amount} {" "} {orderItem?.status} {"  "} {orderItem?.quantity} {" "} {orderItem?.product}
-                </div>
 
 
 
@@ -271,20 +309,78 @@ export default function index() {
 
 
 
+                {orderItems.map((orderItem: {
+                    oriOrder: {
+                        _id: string;
+                        storename: string
+                        product: string
+                        orderNum: number
+                        user: string
+                        price: number;
+                        quantity: number;
+                        amount: number;
+                        status: string
+                    }
 
+                    userObj: {
+                        firstname: string
+                        _id: string
+                        lastname: string
+                        matricno: string
+                    }
+                }) => (
+                    <div
+                        key={orderItem.oriOrder._id}
+                    >
+                        <div
+                            className="text-red-500"
+                        >
+                            {orderItem.oriOrder.product} {" "} {orderItem.oriOrder.orderNum} {" "} {orderItem.userObj.firstname}
+                            <p>
+                                {orderItem.oriOrder.status}
+                            </p>
+
+                        </div>
+                    </div>
+                ))}
+
+
+
+
+
+                {/* completed order button */}
                 <div
                     className="btn btn-primary"
-                    onClick={CompleteStat}
+                    onClick={() => {
+                        orderItems.map((orderItem: {
+                            oriOrder: {
+                                _id: string;
+                            }
+
+
+                        }) => {
+                            CompleteStat(orderItem.oriOrder._id)
+                        })
+                    }}
 
                 >
                     {isLoading ? "Loading..." : "Completed"}
                 </div>
 
 
-
+                {/* delivered order button */}
                 <div
+
                     className="btn btn-primary"
-                    onClick={DeliveredStat}
+                    onClick={() => {
+                        orderItems.map((orderItem: {
+                            oriOrder: {
+                                _id: string;
+                            }
+                        }) => {
+                            DeliveredStat(orderItem.oriOrder._id)
+                        })
+                    }}
 
                 >
                     {isLoading ? "Loading..." : "Delivered"}
@@ -292,9 +388,38 @@ export default function index() {
 
 
 
+
+                {/* for cancel and refund */}
                 <div
                     className="btn btn-primary"
-                    onClick={CancelStat}
+                    onClick={() => {
+                        orderItems.map((orderItem: {
+                            oriOrder: {
+                                _id: string;
+                                storename: string
+                                product: string
+                                orderNum: number
+                                user: string
+                                price: number;
+                                quantity: number;
+                                amount: number;
+                                status: string
+                            }
+
+                            userObj: {
+                                firstname: string
+                                _id: string
+                                lastname: string
+                                matricno: string
+                            }
+                        }) => {
+                            CancelStat(orderItem.oriOrder._id,
+                                orderItem.userObj._id,
+                                orderItem.oriOrder.status,
+                                orderItem.oriOrder.amount,
+                                orderItem.oriOrder.storename)
+                        })
+                    }}
 
                 >
                     {isLoading ? "Loading..." : "Cancel Order"}

@@ -9,13 +9,13 @@ export default async function delProduct(req, res) {
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { _id } = JSON.parse(req.body)
+        const { id } = JSON.parse(req.body)
 
 
 
-        const del = await Product.deleteOne(_id)
+        // const del = await Product.deleteOne(_id)
 
-        // const del = await Product.findOneAndDelete({ id: _id })
+        const del = await Product.findOneAndDelete({ _id: id })
 
         // const fer = await Product.findById(_id).deleteOne()
 

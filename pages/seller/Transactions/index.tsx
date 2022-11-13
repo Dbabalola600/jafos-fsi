@@ -39,7 +39,7 @@ export default function index() {
 
 
                     <NavButton
-                        uLink="/seller/Transactions/Payment"
+                        uLink="/seller/Transactions/Payment/"
                         title="Recieve Payment"
                     />
 

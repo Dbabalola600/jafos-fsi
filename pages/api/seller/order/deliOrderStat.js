@@ -5,8 +5,7 @@ import OrderItem from "../../../../model/Student/orderItem";
 
 
 export default async function updateOrderStat(req, res) {
-    try {
-
+    if (req.method === "POST") {
 
 
         console.log('CONNECTING TO MONGO');
@@ -25,10 +24,10 @@ export default async function updateOrderStat(req, res) {
         return res.status(200).json({ message: "Status Changed" })
 
 
-    } catch (error) {
-
-        console.log(error);
-        res.json({ error });
+    } else {
+        return res.status(400).json({
+            message: "WRONG REQUEST"
+        })
     }
 }
 

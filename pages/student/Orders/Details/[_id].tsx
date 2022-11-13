@@ -2,8 +2,8 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Header from "../../../components/shared/Header";
-import StuLayout from "../Layout/StuLayout";
+import Header from "../../../../components/shared/Header";
+import StuLayout from "../../Layout/StuLayout";
 
 
 type Orders = {
@@ -26,6 +26,10 @@ type OrderItems = {
     storename: string;
     price: number;
     quantity: number;
+    orderNum: number
+    status: string;
+    p_status: string;
+    mod: string;
     amount: number;
     user: string;
     userObj: {
@@ -51,31 +55,36 @@ type SpecOrder = {
 
 export default function index() {
 
-    const [orders, setOrders] = useState<SpecOrder[]>([])
+    const [orderItems, setOrderItems] = useState<OrderItems[]>([])
     const router = useRouter()
+
+
+
+
+
+
+    let ssd = router.query
 
     const showOrder = async () => {
         const token = getCookie("Normuser")
+
+
+
+
+
         const body = {
-            stu: token
+            id: ssd._id,
         }
 
 
 
 
+        const response = await fetch("/api/student/order/fetchOrderItems", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as OrderItems[]
 
 
-
-
-        const response = await fetch("/api/student/order/fetchSpecOrder", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as SpecOrder[]
-
-
-        setOrders(response)
+        setOrderItems(response)
         console.log(response)
-
-
-
 
 
 
@@ -89,47 +98,52 @@ export default function index() {
         <StuLayout>
             <>
                 <Header
-                    title="Orders"
+                    title="Orders Details"
                     desc="Show recent orders i.e pending and what not"
                 />
 
 
-                <div>
-                    click to show all orders i.e from the orders api
-                </div>
 
 
 
 
-
-
-
-                {orders.map((order: {
+                {orderItems.map((orderItem: {
+                    _doc: any;
                     _id: string;
-                    user: string
-                    stores: string
+                    storename: string
+                    product: string
                     orderNum: number
+                    user: string
+                    price: number;
+                    status: string;
+                    p_status: string;
+                    mod: string;
+                    quantity: number;
+                    amount: number;
+                    userObj: {
+                        firstname: string
+                        _id: string
+                        lastname: string
+                        matricno: string
+                    }
                 }) => (
                     <div
-                        key={order._id}
+                        key={orderItem._id}
                     >
-
-
-
-                        <Link
-                            href={`Orders/Details/${order._id}`}
+                        <div
+                            className="text-green-500"
                         >
-                            <a>
-                                <Header
-                                    title="order"
-                                    desc={order.orderNum}
-                                />
-                            </a>
+                            {orderItem.product}  {" "}
 
-                        </Link>
+                            {orderItem.status}
 
+                        </div>
                     </div>
                 ))}
+
+
+
+
 
             </>
         </StuLayout>

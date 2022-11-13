@@ -133,7 +133,7 @@ export default function confirmOrder() {
 
                 if (res.status == 200) {
 
-                    //subtract delivery fee
+                    // subtract delivery fee
                     const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body2) })
                         .then(async res => {
                             if (res.status === 200) {

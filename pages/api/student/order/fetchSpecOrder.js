@@ -4,6 +4,7 @@ import Order from "../../../../model/Student/order";
 
 
 
+
 export default async function fetchSpecOrder(req, res) {
     if (req.method === "POST") {
 
@@ -13,21 +14,22 @@ export default async function fetchSpecOrder(req, res) {
 
 
 
-        const { Sname } = JSON.parse(req.body)
+        const { stu } = JSON.parse(req.body)
 
         // const ord = await Order.find()
 
-        console.log(Sname)
+        console.log(stu)
 
-        const sepc = await Order.find({ stores: Sname }).sort({createdAt: -1})
+        const sepc = await Order.find({ user: stu }).sort({ createdAt: -1 })
         console.log(sepc)
 
-        
-       
+        let num = []
 
 
-      
-     
+
+
+
+
 
         return res.status(200).json(
 
@@ -40,14 +42,6 @@ export default async function fetchSpecOrder(req, res) {
         })
     }
 }
-
-
-
-
-
-
-
-
 
 
 
