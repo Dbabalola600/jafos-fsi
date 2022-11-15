@@ -9,14 +9,22 @@ export default async function updatePassword(req, res) {
         console.log('CONNECTED TO MONGO');
 
 
-        const { id, n_pass } = JSON.parse(req.body)
+        const { id, n_pass, o_pass } = JSON.parse(req.body)
 
 
-        const updatepassword = await Student.findById(id).updateOne({ password: n_pass })
+        const curr_pass = await Student.findById(id)
 
-        return res.status(200).json({ message: "PASSWORD CHANGED SUCESSFULLY" })
+        if(curr_pass.password === o_pass){
+            const updatepassword = await Student.findById(id).updateOne({ password: n_pass })
 
+            return res.status(200).json({ message: "PASSWORD CHANGED SUCESSFULLY" })
+    
+    
+        }else {
+            return res.status(401).json({message:"incorrect password"})
+        }
 
+       
 
     } else {
         return res.status(400).json({

@@ -9,12 +9,18 @@ export default async function updatePin(req, res) {
         console.log('CONNECTED TO MONGO');
 
 
-        const { id, n_pin } = JSON.parse(req.body)
+        const { id, n_pin, o_pin } = JSON.parse(req.body)
 
+        const curr_pin = await Student.findById(id)
+        if (curr_pin === o_pin) {
+            const updatepin = await Student.findById(id).updateOne({ pin: n_pin })
 
-        const updatepin = await Student.findById(id).updateOne({ pin: n_pin })
+            return res.status(200).json({ message: "PIN CHANGED SUCESSFULLY" })
 
-        return res.status(200).json({ message: "PIN CHANGED SUCESSFULLY" })
+        } else {
+            return res.status(401).json({ message: "incorrect Pin" })
+        }
+
 
 
 

@@ -4,6 +4,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import Header from "../../../components/shared/Header";
 import StaffLay from "../Layout/StaffLay";
+import GoodMess from "../../../components/shared/GoodMess";
 
 
 
@@ -32,8 +33,22 @@ export default function stores() {
 
 
 
+
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
+    const [isLoading, setLoading] = useState(false)
+
+
+
     let ssd = router.query
 
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
 
     const showinfo = async () => {
@@ -72,6 +87,8 @@ export default function stores() {
 
     const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
+
+        setLoading(true)
         const user = getCookie("Staffuser")
         console.log(user)
         const form = e.currentTarget.elements as any
@@ -87,13 +104,17 @@ export default function stores() {
 
         const reponse = await fetch("/api/staff/cart/newCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
-
                 if (res.status == 200) {
-                    router.push("/staff/Cart")
+                    setgoodtoast({ message: " message", show: true })
+
+                    // router.push("/staff/Cart")
                 }
             }).catch(err => {
                 console.log(err)
             })
+
+
+        setLoading(false)
     }
 
 
@@ -108,6 +129,8 @@ export default function stores() {
                 <Header
                     title={seller?.storename}
                 />
+
+                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
 
 
 
@@ -156,12 +179,11 @@ export default function stores() {
                                 />
 
 
-
                                 <button
 
                                     type="submit"
                                     className="btn bg-black"
-                                > Add to Cart</button>
+                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button>
 
 
                             </form>

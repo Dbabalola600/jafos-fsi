@@ -1,8 +1,13 @@
-import { useRouter } from "next/router";
-import { FormEventHandler, useState } from "react";
-import Header from "../../../components/shared/Header";
-import TextInput from "../../../components/shared/TextInput";
-import AdminLayout from "../Layout/AdminLayout";
+import { useRouter } from "next/router"
+import { useState, FormEventHandler } from "react"
+import Header from "../../../components/shared/Header"
+import TextInput from "../../../components/shared/TextInput"
+import AdminLayout from "../Layout/AdminLayout"
+
+
+
+
+
 
 
 
@@ -24,18 +29,17 @@ export default function newStudent() {
         const body = {
             firstname: form.item(0).value,
             lastname: form.item(1).value,
-            email: form.item(2).value,
-            matricno: form.item(3).value,
-            password: form.item(4).value,
+            staffid: form.item(2).value,
+            password: form.item(3).value
         }
 
 
 
-        const response = await fetch("/api/admin/student/createStudent", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
+        const response = await fetch("/api/admin/staff/createStaff", { method: "POST", body: JSON.stringify(body), headers:{role:"staff"} })
             .then(res => {
 
                 if (res.status == 200) {
-                    router.push("/ADMIN2823/Students/")
+                    router.push("/ADMIN2823/Staff/")
                 }
             }).catch(err => {
                 console.log(err)
@@ -94,31 +98,20 @@ export default function newStudent() {
                             />
                         </div>
 
-                        {/* email */}
+                       
+
+
+                        {/* STAFF ID */}
                         <div className="col-span-12  md:col-span-6 ">
                             <TextInput
                                 // errorMessage={errors.firstName?.message}
-                                placeholder="Email"
-                                // registerName="fistName"
-                                // register={register("firstName")}
-                                type="email"
-                                name="email"
-                                id="email"
-                            />
-                        </div>
-
-
-                        {/* matricNumber */}
-                        <div className="col-span-12  md:col-span-6 ">
-                            <TextInput
-                                // errorMessage={errors.firstName?.message}
-                                placeholder="Matric Number"
+                                placeholder="STAFF ID"
                                 // registerName="fistName"
                                 // register={register("firstName")}
                                 type="text"
 
-                                name="matricno"
-                                id="matricno"
+                                name="Staff ID"
+                              
 
                             />
                         </div>

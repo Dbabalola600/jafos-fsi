@@ -113,6 +113,13 @@ export default function NavBar2() {
                         </Link>
 
 
+                        <Link href='/staff/checkout'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                CheckOut
+                            </a>
+                        </Link>
+
+
 
                         <Link href='/staff/Orders'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>

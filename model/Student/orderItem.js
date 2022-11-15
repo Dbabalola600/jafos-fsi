@@ -53,7 +53,7 @@ const OrderItemSchema = new Schema({
     mod: {
         type: String,
         required: true,
-        enum: ["PickUp", "NDH", "D1", "NEH", "ADMIN", "E1", "E2"],
+        // enum: ["PickUp", "NDH", "D1", "NEH", "ADMIN", "E1", "E2"],
 
     }
 

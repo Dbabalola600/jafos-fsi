@@ -1,13 +1,18 @@
 import mongoose, { Schema, model, models } from 'mongoose';
 
 
-const CheckOutItemSchema = new Schema({
+const OrderItemSchema = new Schema({
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Student',
+        ref: 'Staff',
         required: true,
         unique: false
 
+    },
+    orderNum: {
+        type: Number,
+        required: true,
+        unique: false
     },
     product: {
         type: String,
@@ -42,14 +47,14 @@ const CheckOutItemSchema = new Schema({
     p_status: {
         type: String,
         required: true,
-        enum: ["Paid", "Unpaid","Pay on Delivery"],
-        default: "Pay on Delivery"
+        enum: ["Paid", "Unpaid", "Pay on Delivery"],
+
     },
-    mod:{
+    mod: {
         type: String,
         required: true,
-        // enum:["PickUp", "NDH","D1", "NEH","ADMIN", "E1", "E2" ],
-        default: "PickUp"
+        // enum: ["PickUp", "NDH", "D1", "NEH", "ADMIN", "E1", "E2"],
+
     }
 
 },
@@ -57,6 +62,6 @@ const CheckOutItemSchema = new Schema({
 )
 
 
-const CheckOutItem = models.CheckOutItem || model("CheckOutItem", CheckOutItemSchema)
+const OrderItem = models.OrderItem || model("OrderItem", OrderItemSchema)
 
-export default CheckOutItem
+export default OrderItem

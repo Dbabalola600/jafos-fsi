@@ -4,7 +4,7 @@ import mongoose, { Schema, model, models } from 'mongoose';
 const CheckOutItemSchema = new Schema({
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Student',
+        ref: 'Staff',
         required: true,
         unique: false
 

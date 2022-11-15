@@ -84,6 +84,16 @@ export default function DashBoard() {
 
                 <div className='  mx-auto'>
                     <Link
+                        href="/ADMIN2823/Staff">
+                        <button className="btn btn-lg btn-primary btn-block">
+                            Staff
+                        </button>
+                    </Link>
+                </div>
+
+
+                <div className='  mx-auto'>
+                    <Link
                         href="/ADMIN2823/Sellers">
                         <button className="btn btn-lg btn-primary btn-block">
                             Seller

@@ -25,12 +25,12 @@ export default function WithDraw() {
 
                 <NavButton
                     title=" From student"
-                    uLink="Student/"
+                    uLink="Payment/Student"
                 />
 
                 <NavButton
                     title=" From Staff"
-                    uLink="Staff/"
+                    uLink="Payment/Staff"
                 />
 
 

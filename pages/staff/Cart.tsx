@@ -6,6 +6,7 @@ import { getCookie } from "cookies-next";
 import CartInput from "../../components/shared/CartInput";
 import Header from "../../components/shared/Header";
 import StaffLay from "./Layout/StaffLay";
+import GoodMess from "../../components/shared/GoodMess";
 
 
 
@@ -34,6 +35,16 @@ export type cartListType = {
 
 
 
+type Staff = {
+    _id: string;
+    firstname: string
+    lastname: string
+    staffid: string
+    account_bal: number
+}
+
+
+
 
 
 
@@ -45,6 +56,20 @@ export default function Cart() {
     const [isLoading, setLoading] = useState(false)
 
     const [cartList, setCartList] = useState<cartListType>([]);
+
+
+
+    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
 
 
 
@@ -61,9 +86,6 @@ export default function Cart() {
 
         // console.log({ response })
         setCarts(response)
-
-
-
     }
 
 
@@ -71,9 +93,16 @@ export default function Cart() {
     const delOne = async (id: any) => {
 
 
+        const body={
+            id: id
+        }
+
         const reponse = await fetch("/api/staff/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
             .then(res => {
                 if (res.status == 200) {
+
+                    setgoodtoast({ message: " message", show: true })
+
                     router.reload()
                     console.log("DELETED")
                 }
@@ -88,7 +117,7 @@ export default function Cart() {
 
     // add item to order
 
-    const addOrderItem: FormEventHandler<HTMLFormElement> = async (e) => {
+    const addCheckOutItem: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
         const user = getCookie("Staffuser")
 
@@ -104,18 +133,22 @@ export default function Cart() {
 
         }
 
+        const body2={
+            user: user
+        }
 
-        const response = await fetch("/api/staff/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
+
+        const response = await fetch("/api/staff/order/newCheckOutItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
 
                 if (res.status == 200) {
 
                     //delete entire cart
-                    const del = await fetch("/api/staff/cart/deleteCart", { method: "POST", body: JSON.stringify(user) })
+                    const del = await fetch("/api/staff/cart/deleteCart", { method: "POST", body: JSON.stringify(body2) })
                         .then(res => {
                             if (res.status == 200) {
-                                router.push("/staff/DashBoard/")
+                                router.push("/staff/checkout/")
                                 console.log("SUCCESS")
                             }
                         })
@@ -140,15 +173,6 @@ export default function Cart() {
 
 
 
-    // console.log(cartList
-
-
-
-
-
-   
-
-    // let grande = cartList[0].total
     return (
 
         <StaffLay>
@@ -161,9 +185,12 @@ export default function Cart() {
                 </div>
 
 
+                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
+
+
                 <form
                     onSubmit={
-                        addOrderItem
+                        addCheckOutItem
                     }
                 >
                     {carts.map((cart: {
@@ -200,10 +227,10 @@ export default function Cart() {
 
                     <button
                         className="btn btn-primary w-full mt-10"
-                        onClick={() => addOrderItem}
+                        onClick={() => addCheckOutItem}
                         type="submit"
                     >
-                        {isLoading ? "Loading..." : "SUBMIT"}
+                        {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
                     </button>
                 </form>
 
