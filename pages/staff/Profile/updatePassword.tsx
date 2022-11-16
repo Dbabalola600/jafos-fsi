@@ -1,6 +1,7 @@
 import { getCookie } from "cookies-next"
 import { useRouter } from "next/router"
-import { FormEventHandler, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
+import ErrMess from "../../../components/shared/ErrMess"
 import Header from "../../../components/shared/Header"
 import TextInput from "../../../components/shared/TextInput"
 import StaffLay from "../Layout/StaffLay"
@@ -10,6 +11,21 @@ export default function index() {
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
+
+
+    const [showtoast, settoast] = useState({ message: "", show: false })
+
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
 
 
 
@@ -27,13 +43,17 @@ export default function index() {
 
         const body = {
             id: info,
-            n_pass: form.item(0).value
+            o_pass: form.item(0).value,
+            n_pass: form.item(1).value
         }
 
         const response = await fetch("/api/staff/profile/updatePassword", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     router.push("/staff/Profile")
+                } if (res.status === 401) {
+                    settoast({ message: " message", show: true })
+
                 }
             }).catch(err => {
                 console.log(err)
@@ -64,6 +84,16 @@ export default function index() {
                 >
 
 
+                    {showtoast.show && <ErrMess title="invalid  password" />}
+
+                    <div className="mx-auto  w-full ">
+                        <TextInput
+                            placeholder="*********"
+                            name="Current Password"
+                            type='text'
+
+                        />
+                    </div>
 
                     <div className="mx-auto  w-full ">
                         <TextInput

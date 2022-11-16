@@ -18,7 +18,7 @@ type Sellers = {
 
 function test() {
 
-
+    const router = useRouter()
 
 
     return (
@@ -66,7 +66,13 @@ function test() {
             </div>
 
 
+            <div
+            onClick ={()=> router.back()}
+            className="text-red-500"
+            >
 
+                Goback
+            </div>
 
 
 
