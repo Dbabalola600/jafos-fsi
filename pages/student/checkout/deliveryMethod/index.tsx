@@ -2,12 +2,12 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import GoodMess from "../../../components/shared/GoodMess";
-import Header from "../../../components/shared/Header";
-import NavButton from "../../../components/shared/NavButton";
-import TextInput from "../../../components/shared/TextInput";
-import StuLayout from "../Layout/StuLayout";
+import ErrMess from "../../../../components/shared/ErrMess";
+import GoodMess from "../../../../components/shared/GoodMess";
+import Header from "../../../../components/shared/Header";
+import NavButton from "../../../../components/shared/NavButton";
+import TextInput from "../../../../components/shared/TextInput";
+import StuLayout from "../../Layout/StuLayout";
 
 type Student = {
     _id: string;
@@ -115,7 +115,46 @@ export default function deliveryMethod() {
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
 
-                    router.push("/student/checkout/payment")
+                    router.push("/student/checkout/payment/")
+                }
+                else {
+                    settoast({ message: " message", show: true })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+
+
+
+
+
+
+        setLoading(false)
+    }
+
+
+
+ 
+    const updatePick= async () => {
+    
+        setLoading(true)
+
+
+
+
+        const body = {
+            massId: massId,
+
+
+        }
+
+
+        const response = await fetch("/api/student/order/updateDeliveryPickup", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+
+                    router.push("/student/checkout/payment/")
                 }
                 else {
                     settoast({ message: " message", show: true })
@@ -147,6 +186,7 @@ export default function deliveryMethod() {
 
                 <Header
                     title="update Delivery Mehtod "
+                    desc="delivery to any location attracts a fee"
                 />
 
 
@@ -213,14 +253,21 @@ export default function deliveryMethod() {
 
                         <button className="w-full btn-primary btn "
                             type="submit">
-                            {isLoading ? "Loading..." : "Proceed"}
+                            {isLoading ? "Loading..." : "Proceed with  Address"}
                             {/* Proceed */}
                         </button>
                     </div>
                 </form>
 
 
+                <div className=" w-full  space-y-6">
 
+                    <button className="w-full btn-primary btn "
+                        onClick={ updatePick}>
+                        {isLoading ? "Loading..." : "PickUp At Store"}
+                      
+                    </button>
+                </div>
 
 
 

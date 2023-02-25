@@ -4,10 +4,11 @@ import Header from "../../components/shared/Header";
 import TextInput from "../../components/shared/TextInput";
 
 
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import newStudent from "../api/student/createAccount";
 import addStudent from "../api/student/createAccount";
 import { useRouter } from "next/router";
+import ErrMess from "../../components/shared/ErrMess";
 
 
 
@@ -18,6 +19,18 @@ function CreateAccount() {
 
     const [data, setData] = useState(null)
     const [isLoading, setLoading] = useState(false)
+    const [showtoast, settoast] = useState({ message: "", show: false })
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -40,11 +53,11 @@ function CreateAccount() {
         const response = await fetch("/api/student/createAccount", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
             .then(res => {
 
-                if (res.status == 200) {
+                if (res.status === 200) {
                     router.push("/student/")
                 }
-                if (res.status == 401) {
-                    router.push("/student/CreateAccount")
+               else {
+                    settoast({ message: " message", show: true })
                 }
 
             }).catch(err => {
@@ -149,7 +162,8 @@ function CreateAccount() {
 
 
 
-
+                {showtoast.show && <ErrMess title="invalid credentials specified" />}
+                   
 
                 <div className=" w-full  space-y-6">
                   

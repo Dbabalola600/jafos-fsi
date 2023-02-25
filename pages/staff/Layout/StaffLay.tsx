@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import NavBar from "./NavBar";
 
-export default function StuLayout({ children }: { children?: JSX.Element }) {
+export default function StaffLay({ children }: { children?: JSX.Element }) {
 
 
     const router = useRouter()

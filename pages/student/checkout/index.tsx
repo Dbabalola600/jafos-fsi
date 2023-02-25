@@ -177,8 +177,8 @@ export default function checkout() {
 
 
                 <NavButton
-                    title=" Proceed"
-                    uLink="/student/checkout/deliveryMethod"
+                    title="Select Method of Delivery"
+                    uLink="/student/checkout/deliveryMethod/"
                 />
 
 

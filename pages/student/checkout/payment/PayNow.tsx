@@ -1,27 +1,21 @@
 import { getCookie } from "cookies-next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import GoodMess from "../../../components/shared/GoodMess";
-import Header from "../../../components/shared/Header";
-import NavButton from "../../../components/shared/NavButton";
-import StaffLay from "../Layout/StaffLay";
+import ErrMess from "../../../../components/shared/ErrMess";
+import GoodMess from "../../../../components/shared/GoodMess";
+import Header from "../../../../components/shared/Header";
+import NavButton from "../../../../components/shared/NavButton";
+import TextInput from "../../../../components/shared/TextInput";
+import StuLayout from "../../Layout/StuLayout";
 
-
-
-
-
-
-
-
-type Staff = {
+type Student = {
     _id: string;
     firstname: string
     lastname: string
-    staffid: string
+    matricno: string
     account_bal: number
 }
-
 
 
 type Orders = {
@@ -40,7 +34,7 @@ type Orders = {
 
 
 export default function payPortal() {
-    const [staff, setStaff] = useState<Staff | null>(null);
+    const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
     const [devfee, setDevfee] = useState<number | null>()
@@ -101,7 +95,7 @@ export default function payPortal() {
     }, [showtoast2.show])
 
     const showOrder = async () => {
-        const token = getCookie("Staffuser")
+        const token = getCookie("Normuser")
         const body = {
             _id: token
         }
@@ -109,7 +103,7 @@ export default function payPortal() {
 
         /// fetches checkout items 
 
-        const response = await fetch("/api/staff/order/fetchCheckout", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/student/order/fetchCheckout", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Orders[]
 
 
@@ -148,11 +142,11 @@ export default function payPortal() {
 
 
 
-        const response2 = await fetch("/api/staff/fetchStaff", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as Staff
+        const response2 = await fetch("/api/student/fetchStudent", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as Student
 
 
-        setStaff(response2)
+        setStudent(response2)
 
 
     }
@@ -184,6 +178,10 @@ export default function payPortal() {
 
 
     //payment api
+   
+
+
+
 
     const Pay2 = async (amount: any, _id: string) => {
 
@@ -204,12 +202,13 @@ export default function payPortal() {
 
 
 
-        const reponse = await fetch("/api/staff/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
+        const reponse = await fetch("/api/student/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
+
                     setgoodtoast({ message: " message", show: true })
 
-                    router.reload()
+                    router.push("/student/checkout/confirmOrder")
                 } if (res.status == 256) {
                     settoast({ message: " message", show: true })
                 }
@@ -218,6 +217,8 @@ export default function payPortal() {
                 }
                 if (res.status == 259) {
                     settoastp({ message: " message", show: true })
+                    
+                    router.push("/student/checkout/confirmOrder")
                 }
                 else {
                     settoast3({ message: " message", show: true })
@@ -236,7 +237,12 @@ export default function payPortal() {
 
     //delete one item 
     const delOne = async (id: any) => {
-        const reponse = await fetch("/api/staff/order/deleteFromCheck", { method: "POST", body: JSON.stringify(id) })
+
+
+        const body={
+            id: id
+        }
+        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
 
@@ -247,7 +253,7 @@ export default function payPortal() {
     }
 
     return (
-        <StaffLay>
+        <StuLayout>
             <>
 
                 <Header
@@ -266,12 +272,12 @@ export default function payPortal() {
                     </div>
 
                     <div>
-                        available balance: {staff?.account_bal}
+                        available balance: {student?.account_bal}
                     </div>
                 </div>
 
 
-
+               
 
                 {orders.map((order: {
                     _id: string
@@ -293,7 +299,7 @@ export default function payPortal() {
                         <div
                             className="text-red-500 mt-10"
                         >
-                            Order Status: {order.status}  {"  "} Product name:  {order.product} {" "} ,Price:{order.price}
+                            Order Status: {order.status}  {"  "} Product name:  {order.product} {" "} ,Price:{order.amount}
                             <p>
                                 Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
                             </p>
@@ -303,17 +309,17 @@ export default function payPortal() {
 
                         </div>
 
+                        
+                            <button className="w-full btn-primary btn "
+                                onClick={() => delOne(order._id)}
+                            >
+                                Delete Item
 
-                        <button className="w-full btn-primary btn "
-                            onClick={() => delOne(order._id)}
-                        >
-                            Delete Item
-
-                        </button>
+                            </button>
 
 
 
-                        {/* <button className="w-full btn-primary btn "
+                            {/* <button className="w-full btn-primary btn "
                                 onClick={() => Pay2(order.amount, order._id)}>
                                 {isLoading ? "Loading..." : "Pay"}
 
@@ -321,7 +327,7 @@ export default function payPortal() {
 
 
 
-
+                       
 
 
 
@@ -355,11 +361,6 @@ export default function payPortal() {
 
 
 
-                <NavButton
-                    title="Confirm Order"
-                    uLink="/staff/checkout/confirmOrder"
-                />
-
 
 
 
@@ -367,6 +368,48 @@ export default function payPortal() {
 
 
             </>
-        </StaffLay>
+        </StuLayout>
     )
 }
+
+
+
+{/* <form
+className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+onSubmit={Pay}
+>
+{showtoast.show && <ErrMess title="insufficient funds" />}
+{showtoast2.show && <ErrMess title="invalid pin" />}
+{showtoast3.show && <ErrMess title="invalid USER" />}
+
+
+<div className="mx-auto  w-full ">
+    <TextInput
+        placeholder="Pin"
+        name="Pin"
+        type='text'
+
+    />
+</div>
+
+
+
+
+
+
+
+<div className=" w-full  space-y-6">
+
+    <button className="w-full btn-primary btn "
+        type="submit">
+        {isLoading ? "Loading..." : "Pay"}
+
+    </button>
+
+
+
+</div>
+
+</form> */}
+
+

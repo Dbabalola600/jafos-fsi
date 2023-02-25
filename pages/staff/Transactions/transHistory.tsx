@@ -1,10 +1,11 @@
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { FormEventHandler, useEffect, useState } from "react";
+import ErrMess from "../../../components/shared/ErrMess";
+import GoodMess from "../../../components/shared/GoodMess";
 import Header from "../../../components/shared/Header";
-import NavButton from "../../../components/shared/NavButton";
-import StuLayout from "../Layout/StuLayout";
-
-
+import TextInput from "../../../components/shared/TextInput";
+import StaffLay from "../Layout/StaffLay";
 
 
 type TransHists = {
@@ -23,14 +24,13 @@ type TransHists = {
 
 
 
-
-
 export default function transHistory() {
+
     const [hists, setHistory] = useState<TransHists[]>([])
 
 
     const showinfo = async () => {
-        const token = getCookie("Normuser")
+        const token = getCookie("Staffuser")
         const body = {
             id: token
         }
@@ -43,13 +43,8 @@ export default function transHistory() {
 
 
 
-        // const response = await fetch("/api/fetchHistory", {method:"POST", body:JSON.stringify(body)})
-        // .then(res => res.json()) as TransHists[]
 
-        // setHistory(response)
     }
-
-
     console.log(hists)
 
     useEffect(() => {
@@ -58,9 +53,19 @@ export default function transHistory() {
     }, [])
 
 
+
+
+
+
+
     return (
-        <StuLayout>
+        <StaffLay>
             <>
+
+                <Header
+                    title=""
+                />
+
                 <Header
                     title="History"
                 />
@@ -85,10 +90,10 @@ export default function transHistory() {
 
                         <div
                             className={
-                                `${hist.trans_type === "CREDIT"  ? "DEBIT"  : "text-red-400"}
+                                `${hist.trans_type === "CREDIT" ? "DEBIT" : "text-red-400"}
                                 
                                 text-green-600  mb-6 bg-black`
-                            } 
+                            }
 
                         >
                             <div>
@@ -103,7 +108,7 @@ export default function transHistory() {
 
 
                             <div
-                           
+
                             >
                                 Transfer Type: {hist.trans_type}
                             </div>
@@ -119,8 +124,8 @@ export default function transHistory() {
                     </div>
                 ))}
 
+
             </>
-        </StuLayout >
+        </StaffLay>
     )
 }
-

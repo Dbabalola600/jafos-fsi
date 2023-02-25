@@ -27,7 +27,7 @@ export default async function checkPay(req, res) {
 
 
         if (order.p_status === "Pay on Delivery") {
-       
+       //checks if can afford amount and delivery fee before payment
             if (sender.account_bal > (amt+ devf)) {
                 const new_sender_bal = sender.account_bal - amt
                 const sender_bal = await Student.findById(sen).updateOne({ account_bal: new_sender_bal })
@@ -58,6 +58,8 @@ export default async function checkPay(req, res) {
                     rec_id: reciever[0]._id
                 })
 
+
+                //converts status of item to paid 
                 const paidItem = await CheckOutItem.findById(or_id).updateOne({ p_status: "Paid" })
 
 

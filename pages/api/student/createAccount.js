@@ -7,7 +7,7 @@ import Student from '../../../model/Student/StudentModel';
  * @param {import('next').NextApiResponse} res
  */
 export default async function addStudent(req, res) {
-  try {
+  if (req.method === "POST") {
     console.log('CONNECTING TO MONGO');
     await connectMongo();
     console.log('CONNECTED TO MONGO');
@@ -25,8 +25,9 @@ export default async function addStudent(req, res) {
     console.log('CREATED STUDENT');
 
     res.json({ student });
-  } catch (error) {
-    console.log(error);
-    res.json({ error });
+  }else {
+   return res.status(400).json({
+    message:"wrong request"
+   })
   }
 }
