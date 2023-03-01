@@ -84,11 +84,11 @@ export default function transHistory() {
                     >
 
                         <div
-                            className={
-                                `${hist.trans_type === "CREDIT"  ? "DEBIT"  : "text-red-400"}
-                                
-                                text-green-600  mb-6 bg-black`
-                            } 
+                           className={
+                            `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
+                               
+                            text-red-600  mb-6 bg-black`
+                        }
 
                         >
                             <div>
@@ -103,7 +103,12 @@ export default function transHistory() {
 
 
                             <div
-                           
+                            //  className={
+                            //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
+                               
+                            //     text-red-600`
+                            
+                            // } 
                             >
                                 Transfer Type: {hist.trans_type}
                             </div>

@@ -38,7 +38,7 @@ export default function index() {
 
                     <NavButton
                         uLink="/staff/Transactions/TransUser"
-                        title=" Transfer To Other Users"
+                        title=" Transfer To Other Staff"
                     />
 
 

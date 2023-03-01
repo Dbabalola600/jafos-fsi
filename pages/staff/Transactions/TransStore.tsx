@@ -1,13 +1,9 @@
-import { getCookie } from "cookies-next";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEventHandler, Key, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import HeadButton from "../../../components/shared/HeadButton";
+import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
-import TextInput from "../../../components/shared/TextInput";
-import StuLayout from "../Layout/StuLayout";
+import StaffLay from "../Layout/StaffLay";
+
 
 
 
@@ -25,20 +21,16 @@ type Sellers = {
 
 
 
-
 export default function TransStore() {
-
-
 
     const [sellers, SetSellers] = useState<Sellers[]>([])
     const router = useRouter()
-
-
+    
 
 
     const showinfo = async () => {
 
-        const SellerResponse = await fetch("/api/student/fetchSeller", { method: "GET" })
+        const SellerResponse = await fetch("/api/fetchSeller", { method: "GET" })
             .then(res => res.json()) as Sellers[]
 
         SetSellers(SellerResponse)
@@ -53,11 +45,13 @@ export default function TransStore() {
     }, [])
 
 
-    return (
-        <StuLayout>
-            <>
 
-                <Header
+
+
+    return (
+        <StaffLay>
+            <>
+            <Header
                     title="transfer to a store"
                 />
 
@@ -70,13 +64,14 @@ export default function TransStore() {
                     >
                       
                         <NavButton
-                        uLink={`/student/Transactions/store/${seller._id}`}
+                        uLink={`/staff/Transactions/store/${seller._id}`}
                         title={seller.storename}
                     />
                     </div>
                 )}
 
+
             </>
-        </StuLayout>
+        </StaffLay>
     )
 }

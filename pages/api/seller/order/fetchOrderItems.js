@@ -3,12 +3,17 @@ import OrderItem from "../../../../model/Student/orderItem";
 import Student from "../../../../model/Student/StudentModel"
 import Order from "../../../../model/Student/order";
 
+import Staff from "../../../../model/Staff/StaffModel"
+// import Order from "../../../../model/Staff/order"
+// import OrderItem from "../../../../model/Staff/orderItem";
+
 /**
  * @param {import('next').NextApiRequest} req
  * @param {import('next').NextApiResponse} res
  */
 
-
+// 6378e8dede4ade10cbc5f5c0
+// 6371574a618255ae79c2fa53 student
 
 export default async function fetchOrder(req, res) {
     if (req.method === "POST") {
@@ -19,7 +24,7 @@ export default async function fetchOrder(req, res) {
 
         const { id, Sname } = JSON.parse(req.body)
 
-        console.log(Sname)
+        // console.log(Sname)
 
 
         const orders = await Order.findById(id)
@@ -61,13 +66,29 @@ export default async function fetchOrder(req, res) {
         const DetOrderStruct = await Promise.all(MainOrderStruct.map(async (oriOrder) => {
             const existingUser = await Student.findById(oriOrder.user).select("firstname lastname matricno ")
 
-            if (!existingUser) {
-                return { ...oriOrder, userObj: null };
+            // console.log(existingUser)
+
+            if (existingUser === null) {
+                const existingUser = await Staff.findById(oriOrder.user).select("firstname lastname staffid")
+                if (!existingUser) {
+                    return { ...oriOrder, userObj: null };
+                }
+                return ({
+                    oriOrder,
+                    userObj: existingUser
+                });
+               
+            } else {
+                if (!existingUser) {
+                    return { ...oriOrder, userObj: null };
+                }
+                return ({
+                    oriOrder,
+                    userObj: existingUser
+                });
             }
-            return ({
-                oriOrder,
-                userObj: existingUser
-            });
+
+
 
 
 

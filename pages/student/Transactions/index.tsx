@@ -43,7 +43,7 @@ export default function index() {
 
                     <NavButton
                         uLink="/student/Transactions/TransUser"
-                        title=" Transfer To Other Users"
+                        title=" Transfer To Other Studnets"
                     />
 
 

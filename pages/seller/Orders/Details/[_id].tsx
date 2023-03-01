@@ -18,6 +18,13 @@ type Student = {
 }
 
 
+type Staff = {
+    _id: string;
+    firstname: string
+    lastname: string
+    staffid: string
+}
+
 
 
 
@@ -52,7 +59,7 @@ type OrderItems = {
     userObj: {
         firstname: string
         lastname: string
-        matricno: string
+
         _id: string
     }
 }
@@ -79,6 +86,7 @@ type Order = {
 
 export default function index() {
     const [student, setStudent] = useState<Student | null>(null);
+    const [staff, setStaff] = useState<Staff| null>(null);
     const [seller, setSeller] = useState<Seller | null>(null);
     const [orderItems, setOrderItem] = useState<OrderItems[]>([])
 
@@ -155,13 +163,23 @@ export default function index() {
             id: order.user
         }
 
-        const stuResponse = await fetch("/api/seller/fetchStudent", { method: "POST", body: JSON.stringify(body4) })
+
+
+        const UserResponse = await fetch("/api/seller/fetchStudent", { method: "POST", body: JSON.stringify(body4) })
             .then(res => res.json()) as Student
 
+        if (UserResponse === null) {
+            const UserResponse = await fetch("/api/seller/fetchStaff", { method: "POST", body: JSON.stringify(body4) })
+            .then(res => res.json()) as Staff
+
+            setStaff(UserResponse)
+
+        } else {
+            console.log(UserResponse)
+            setStudent(UserResponse)
+        }
 
 
-        console.log(stuResponse)
-        setStudent(stuResponse)
 
 
 
@@ -251,12 +269,6 @@ export default function index() {
 
 
 
-
-
-
-
-
-
         const body2 = {
             sen: sen_id,
             amt: amt,
@@ -295,7 +307,7 @@ export default function index() {
 
                 <Header
                     title="this a an order thingy"
-                    desc={student?.firstname}
+                desc={student?.firstname || staff?.firstname}
                 />
 
 
@@ -326,7 +338,7 @@ export default function index() {
                         firstname: string
                         _id: string
                         lastname: string
-                        matricno: string
+
                     }
                 }) => (
                     <div
@@ -410,7 +422,7 @@ export default function index() {
                                 firstname: string
                                 _id: string
                                 lastname: string
-                                matricno: string
+
                             }
                         }) => {
                             CancelStat(orderItem.oriOrder._id,
