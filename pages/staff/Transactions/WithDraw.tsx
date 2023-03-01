@@ -1,66 +1,39 @@
-import { getCookie } from "cookies-next";
-import { useRouter } from "next/router";
-import { FormEventHandler, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import GoodMess from "../../../components/shared/GoodMess";
-import Header from "../../../components/shared/Header";
-import TextInput from "../../../components/shared/TextInput";
-import StaffLay from "../Layout/StaffLay";
+import { getCookie } from "cookies-next"
+import { useRouter } from "next/router"
+import { FormEventHandler, useState } from "react"
+import ErrMess from "../../../components/shared/ErrMess"
+import GoodMess from "../../../components/shared/GoodMess"
+import Header from "../../../components/shared/Header"
+import TextInput from "../../../components/shared/TextInput"
+import StaffLay from "../Layout/StaffLay"
 
 
 
 
 
-export default function TransUser(){
+
+
+
+
+
+
+
+export default function Withdraw(){
+
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
-    const [showtoast3, settoast3] = useState({ message: "", show: false })
-
     const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
 
 
 
 
-    useEffect(() => {
-        if (showgoodtoast.show) {
-            setTimeout(() => {
-                setgoodtoast({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showgoodtoast.show])
 
 
-    useEffect(() => {
-        if (showtoast.show) {
-            setTimeout(() => {
-                settoast({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast.show])
 
 
-    useEffect(() => {
-        if (showtoast3.show) {
-            setTimeout(() => {
-                settoast3({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast.show])
-
-    useEffect(() => {
-        if (showtoast2.show) {
-            setTimeout(() => {
-                settoast2({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast2.show])
 
 
     const trans: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -83,21 +56,18 @@ export default function TransUser(){
 
 
 
-        const respone = await fetch("/api/staff/transactions/TransUser", { method: "POST", body: JSON.stringify(body) })
+        const respone = await fetch("/api/staff/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
                    
-                    router.push("/staff/DashBoard")
+                    router.push("/student/DashBoard")
                 }
                 if (res.status == 256) {
                     settoast({ message: " message", show: true })
                 }
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
-                }
-                if(res.status == 500){
-                    settoast3({ message: " message", show: true })
                 }
             })
 
@@ -111,26 +81,25 @@ export default function TransUser(){
         <StaffLay>
             <>
             <Header
-                    title="Transfer to Another"
-                />
+            title="WithDraw"
+            />
+            
 
-                <form
+            <form
                     onSubmit={trans}
                     className="w-full py-20 space-y-12  text-black text-base md:text-xl"
                 >
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
-                    {showtoast3.show && <ErrMess title="invalid USER" />}
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
-
 
 
 
 
                     <div className="mx-auto  w-full ">
                         <TextInput
-                            placeholder="Recipient StaffID"
-                            name="Recipient StaffID"
+                            placeholder="Creder ID"
+                            name="CREDER ID"
                             type='text'
 
                         />
@@ -171,7 +140,7 @@ export default function TransUser(){
 
 
                 </form>
-
+            
             
             </>
         </StaffLay>
