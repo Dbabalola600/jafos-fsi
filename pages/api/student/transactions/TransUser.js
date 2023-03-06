@@ -40,12 +40,9 @@ export default async function TransUser(req, res) {
 
                 console.log(reciever[0])
 
-                let new_reciever_bal = amt
+                let new_reciever_bal = JSON.parse(amt) + reciever[0].account_bal
 
 
-                for (let i = 0; i < reciever.length; i++) {
-                    new_reciever_bal += reciever[i].account_bal
-                }
 
                 console.log(new_reciever_bal)
 
