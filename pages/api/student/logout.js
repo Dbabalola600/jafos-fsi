@@ -22,7 +22,7 @@ export default async function Logout(req, res) {
         const user = getCookie("user", {req,res})
 
 
-        const existingUser = await StudentModel.findById({ user })
+        const existingUser = await Student.findById({ user })
        
 
         if (!existingUser) return res.status(401).json({ message: "Invalid " })
