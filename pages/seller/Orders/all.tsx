@@ -6,7 +6,7 @@ import CatLayout from "../Layout/CatLayout";
 
 
 
-export default function index() {
+export default function Index() {
     return (
         <CatLayout>
             <>

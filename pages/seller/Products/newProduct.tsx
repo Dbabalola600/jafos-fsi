@@ -11,7 +11,7 @@ import {getCookie} from 'cookies-next'
 
 
 
-function newOffer() {
+function NewOffer() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
@@ -158,4 +158,4 @@ function newOffer() {
     )
 }
 
-export default newOffer;
+export default NewOffer;

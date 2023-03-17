@@ -13,7 +13,7 @@ import StaffLay from "../Layout/StaffLay"
 
 
 
-export default function pinUpdate() {
+export default function PinUpdate() {
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)

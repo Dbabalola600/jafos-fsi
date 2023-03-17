@@ -24,7 +24,7 @@ type Seller = {
 
 
 
-export default function stores() {
+export default function Stores() {
     const router = useRouter()
 
     const [seller, setSeller] = useState<Seller | null>(null);

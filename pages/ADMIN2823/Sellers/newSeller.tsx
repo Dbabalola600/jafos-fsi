@@ -12,14 +12,14 @@ import Header from "../../../components/shared/Header";
 
 
 
-export default function newSeller() {
+export default function NewSeller() {
     const router = useRouter()
 
     const [data, setData] = useState(null)
     const [isLoading, setLoading] = useState(false)
 
 
-    const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
+    const Newadd: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
         setLoading(true)
         const formElements = e.currentTarget.elements as typeof e.currentTarget.elements & {
@@ -58,7 +58,7 @@ export default function newSeller() {
                 <form
                     autoSave={"off"}
                     onSubmit={
-                        newadd
+                        Newadd
                     }
                     autoComplete={"off"}
                     className="w-full py-20 space-y-16  text-black text-base md:text-xl"

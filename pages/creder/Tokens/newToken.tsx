@@ -19,7 +19,7 @@ import CredLayout from "../Layout/credLayout";
 
 
 
-export default function newToken() {
+export default function NewToken() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })

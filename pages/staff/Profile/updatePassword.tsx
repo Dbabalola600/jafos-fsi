@@ -7,7 +7,7 @@ import TextInput from "../../../components/shared/TextInput"
 import StaffLay from "../Layout/StaffLay"
 
 
-export default function index() {
+export default function Index() {
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)

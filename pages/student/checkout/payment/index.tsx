@@ -33,7 +33,7 @@ type Orders = {
 
 
 
-export default function payPortal() {
+export default function PayPortal() {
     const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()

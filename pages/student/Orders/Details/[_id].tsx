@@ -53,7 +53,7 @@ type SpecOrder = {
 
 
 
-export default function index() {
+export default function Index() {
 
     const [orderItems, setOrderItems] = useState<OrderItems[]>([])
     const router = useRouter()

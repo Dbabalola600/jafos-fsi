@@ -23,7 +23,7 @@ type Tokens = {
 
 
 
-export default function available() {
+export default function Available() {
     const [tokens, setTokens] = useState<Tokens[]>([])
 
 

@@ -8,7 +8,7 @@ import CatLayout from "../Layout/CatLayout";
 
 
 
-export default function transHistory() {
+export default function TransHistory() {
     return (
         <CatLayout>
             <>

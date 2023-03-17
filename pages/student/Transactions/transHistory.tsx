@@ -25,7 +25,7 @@ type TransHists = {
 
 
 
-export default function transHistory() {
+export default function TransHistory() {
     const [hists, setHistory] = useState<TransHists[]>([])
 
 

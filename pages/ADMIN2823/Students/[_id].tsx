@@ -20,7 +20,7 @@ type Student = {
 
 
 
-export default function users() {
+export default function Users() {
     const router = useRouter()
 
     const [student, setStudent] = useState<Student | null>(null);

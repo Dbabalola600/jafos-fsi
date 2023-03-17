@@ -17,7 +17,7 @@ type Student = {
 }
 
 
-export default function index() {
+export default function Index() {
 
     const [student, setStudent] = useState<Student | null>(null);
 

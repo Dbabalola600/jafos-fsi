@@ -16,7 +16,7 @@ import { getCookie, setCookie, hasCookie, getCookies } from 'cookies-next'
 
 
 
-export default function login(){
+export default function Login(){
 
     const router = useRouter()
 

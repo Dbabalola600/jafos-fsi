@@ -23,7 +23,7 @@ type Sellers = {
 
 
 
-function index() {
+function Index() {
 
     const [sellers, SetSellers] = useState<Sellers[]>([])
 
@@ -83,4 +83,4 @@ function index() {
 
 
 
-export default index
+export default Index

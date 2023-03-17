@@ -26,7 +26,7 @@ type Orders = {
 
 
 
-export default function confirmOrder() {
+export default function ConfirmOrder() {
 
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()

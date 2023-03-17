@@ -30,7 +30,7 @@ type Orders = {
 
 
 
-export default function deliveryMethod() {
+export default function DeliveryMethod() {
 
     const [orders, setOrders] = useState<Orders[]>([])
 

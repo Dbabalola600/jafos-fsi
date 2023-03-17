@@ -17,7 +17,7 @@ type Staff ={
 
 
 
-export default function index() {
+export default function Index() {
     const [staffs, SetStaffs] = useState<Staff[]>([])
     const router = useRouter()
 

@@ -20,7 +20,7 @@ type Seller = {
 
 
 
-export default function stores() {
+export default function Stores() {
 
 
 

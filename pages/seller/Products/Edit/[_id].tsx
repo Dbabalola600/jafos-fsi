@@ -20,7 +20,7 @@ type Offers = {
 }
 
 
-export default function id() {
+export default function Id() {
     const router = useRouter()
     const [offers, SetOffers] = useState<Offers | null>(null);
     const [isLoading, setLoading] = useState(false)

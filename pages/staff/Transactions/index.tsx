@@ -6,7 +6,7 @@ import StaffLay from "../Layout/StaffLay";
 
 
 
-export default function index() {
+export default function Index() {
     return (
         <StaffLay>
             <>

@@ -25,14 +25,14 @@ type Seller = {
 
 
 
-export default function stores() {
+export default function Stores() {
     const router = useRouter()
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
 
     let ssd = router.query
 
-    const showinfo = async () => {
+    const Showinfo = async () => {
         const body = {
             _id: ssd._id
         }
@@ -47,7 +47,7 @@ export default function stores() {
 
 
     useEffect(() => {
-        showinfo()
+        Showinfo()
     }, []
     )
 

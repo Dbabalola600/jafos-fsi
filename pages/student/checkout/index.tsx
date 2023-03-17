@@ -27,7 +27,7 @@ type Orders = {
 
 
 
-export default function checkout() {
+export default function Checkout() {
 
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()

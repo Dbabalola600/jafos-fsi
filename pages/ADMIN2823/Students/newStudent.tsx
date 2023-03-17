@@ -9,7 +9,7 @@ import AdminLayout from "../Layout/AdminLayout";
 
 
 
-export default function newStudent() {
+export default function NewStudent() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 

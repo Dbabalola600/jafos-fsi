@@ -8,7 +8,7 @@ import StuLayout from "../Layout/StuLayout";
 
 
 
-export default function index() {
+export default function Index() {
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)

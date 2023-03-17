@@ -14,7 +14,7 @@ type Students = {
 
 
 
-export default function index() {
+export default function Index() {
     const [students, SetStudents] = useState<Students[]>([])
     const router = useRouter()
 

@@ -22,7 +22,7 @@ type Staff ={
 
 
 
-export default function users() {
+export default function Users() {
     const router = useRouter()
 
     const [staff, setStaff] = useState<Staff | null>(null);

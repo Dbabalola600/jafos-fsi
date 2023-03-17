@@ -14,7 +14,7 @@ import CredLayout from "../Layout/credLayout";
 
 
 
-export default function index() {
+export default function Index() {
 
 
 

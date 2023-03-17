@@ -6,7 +6,7 @@ import AdminLayout from "../../Layout/AdminLayout";
 
 
 
-export default function index() {
+export default function Index() {
     return (
         <AdminLayout>
             <>

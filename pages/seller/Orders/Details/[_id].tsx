@@ -84,7 +84,7 @@ type Order = {
 
 
 
-export default function index() {
+export default function Index() {
     const [student, setStudent] = useState<Student | null>(null);
     const [staff, setStaff] = useState<Staff| null>(null);
     const [seller, setSeller] = useState<Seller | null>(null);

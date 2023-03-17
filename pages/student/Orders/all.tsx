@@ -6,7 +6,7 @@ import StuLayout from "../Layout/StuLayout";
 
 
 
-export default function index() {
+export default function Index() {
     return (
         <StuLayout>
             <>

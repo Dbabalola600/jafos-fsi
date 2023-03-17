@@ -15,23 +15,23 @@ type Sellers = {
 
 
 
-export default function index() {
+export default function Index() {
     const [sellers, SetSellers] = useState<Sellers[]>([])
     const router = useRouter()
 
-    const showinfo = async () => {
+    const Showinfo = async () => {
         const SellerResponse = await fetch("/api/admin/seller/fetchSeller", { method: "GET" })
             .then(res => res.json()) as Sellers[]
 
         SetSellers(SellerResponse)
 
-        console.log(SellerResponse)
+        // console.log(SellerResponse)
 
     }
 
 
     useEffect(() => {
-        showinfo()
+        Showinfo()
 
     }, [])
 

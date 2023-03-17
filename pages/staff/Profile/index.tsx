@@ -19,7 +19,7 @@ type Staff = {
 }
 
 
-export default function index() {
+export default function Index() {
 
     const [staff, setStaff] = useState<Staff | null>(null);
 
