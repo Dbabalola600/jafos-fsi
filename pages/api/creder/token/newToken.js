@@ -1,6 +1,6 @@
 import connectMongo from "../../../../utils/connectMongo";
 import Token from "../../../../model/Creder/token";
-import Creder from "../../../../model/Creder/creder";
+import Creder from "../../../../model/Creder/Creder";
 
 
 
