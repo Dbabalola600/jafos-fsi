@@ -1,5 +1,5 @@
 import connectMongo from "../../../utils/connectMongo";
-import Creder from "../../../model/Creder/creder";
+import Creder from "../../../model/Creder/Creder";
 
 
 
