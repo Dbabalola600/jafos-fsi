@@ -148,7 +148,7 @@ function Login() {
                         </button>
 
                         <h6 className="text-center md:text-xl w-full">
-                            Don't have an account?{" "}
+                            Don&apos;t have an account?{" "}
                             <span className=" hover:underline">
                                 <Link href="student/CreateAccount">Create account</Link>
                             </span>
