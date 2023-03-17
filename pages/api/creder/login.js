@@ -1,7 +1,7 @@
 import connectMongo from "../../../utils/connectMongo";
 
 import { setCookie, getCookie, getCookies } from 'cookies-next'
-import Creder from "../../../model/Creder/creder";
+import Creder from "../../../model/Creder/Creder";
 
 
 
