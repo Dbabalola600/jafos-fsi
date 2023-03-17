@@ -20,7 +20,7 @@ const CrederSchema = new Schema({
     },
     account_bal: {
         type: Number,
-        default: 400.50
+        default: 0
     },
     pin: {
         type: String,

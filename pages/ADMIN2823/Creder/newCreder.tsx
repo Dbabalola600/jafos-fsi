@@ -6,7 +6,7 @@ import TextInput from "../../../components/shared/TextInput";
 import Header from "../../../components/shared/Header";
 
 
-export default function newCreder() {
+export default function NewCreder() {
     const router = useRouter()
 
     const [data, setData] = useState(null)

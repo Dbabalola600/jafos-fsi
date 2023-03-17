@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children?: JSX.Element }) {
     const router = useRouter()
 
 
-    function checkUser() {
+    function CheckUser() {
         const userCheck = hasCookie("Adminuser")
 
         console.log(userCheck)
@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: { children?: JSX.Element }) {
 
 
     useEffect(() => {
-        checkUser()
+        CheckUser()
     }, [])
 
 

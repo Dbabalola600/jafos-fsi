@@ -20,7 +20,7 @@ type Creders = {
 
 
 
-export default function index() {
+export default function Index() {
 
     const [creders, SetCreders] = useState<Creders[]>([])
     const router = useRouter()

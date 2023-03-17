@@ -25,7 +25,7 @@ type Creder = {
 
 
 
-export default function creders() {
+export default function Creders() {
     const router = useRouter()
     const [creder, SetCreder] = useState<Creder | null>(null)
 
