@@ -7,7 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
-import AvailableStores from "./availableStores"
+
 import Link from "next/link";
 import HeadButton from "../../components/shared/HeadButton";
 import NavButton from "../../components/shared/NavButton";

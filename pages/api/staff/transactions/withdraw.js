@@ -1,6 +1,6 @@
 import connectMongo from "../../../../utils/connectMongo";
 import Staff from "../../../../model/Staff/StaffModel";
-import Creder from "../../../../model/Creder/creder";
+import Creder from "../../../../model/Creder/Creder";
 import TransferHistory from "../../../../model/Transactions/TransferHistory";
 
 
