@@ -1,8 +1,9 @@
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-import Header from "../../../components/shared/Header";
-import NavButton from "../../../components/shared/NavButton";
-import StuLayout from "../Layout/StuLayout";
+import Header from "../../../../components/shared/Header";
+import NavButton from "../../../../components/shared/NavButton";
+import StuLayout from "../../Layout/StuLayout";
+import Link from "next/link";
 
 
 
@@ -22,11 +23,18 @@ type TransHists = {
 }
 
 
-
+type TransHistAmt = {
+    debit: number | any
+    credit: number | any
+    all: number | any
+    tok: number | any
+}
 
 
 export default function TransHistory() {
     const [hists, setHistory] = useState<TransHists[]>([])
+    const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
+
 
 
     const showinfo = async () => {
@@ -35,7 +43,7 @@ export default function TransHistory() {
             id: token
         }
 
-        const response = await fetch("/api/fetchTransHistory", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/fetchTransHistory/fetchTokenCredit", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
@@ -43,9 +51,10 @@ export default function TransHistory() {
 
 
 
-        // const response = await fetch("/api/fetchHistory", {method:"POST", body:JSON.stringify(body)})
-        // .then(res => res.json()) as TransHists[]
+        const Amtresponse = await fetch("/api/transactionHistory/fetchTransAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as TransHistAmt
 
+        setHistAmt(Amtresponse)
         // setHistory(response)
     }
 
@@ -58,12 +67,53 @@ export default function TransHistory() {
     }, [])
 
 
+
+
+
+    const transactions = [
+        { transType: "ALL", amount: `${histAmt?.all}`, link: "/student/Transactions/", ink: "primary" },
+        { transType: "Debit", amount: `${histAmt?.debit}`, link: "/student/Transactions/debit", ink: "red-500" },
+        { transType: "Credit", amount: `${histAmt?.credit}`, link: "/student/Transactions/credit", ink: "green-500" },
+        { transType: "Token Credit", amount: `${histAmt?.tok}`, link: "/student/Transactions/tokenCredit", ink: "orange-500" },
+
+    ]
+
     return (
         <StuLayout>
             <>
                 <Header
-                    title="History"
+                    title=" Token Credit Transactions History"
                 />
+
+                <div
+                    className="grid grid-flow-col  overflow-x-scroll mt-10 p-5   gap-5  "
+                >
+
+
+                    {transactions.map((transactions, index) => (
+                        <div key={index}
+                            className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                        >
+                            <Link
+                                href={transactions.link}
+                            >
+                                <a
+                                    className="font-bold mx-2 text-[10px] text-left"
+                                >
+                                    {transactions.transType} {"   "} {transactions.amount}
+
+
+                                </a>
+                            </Link>
+
+
+                        </div>
+                    ))}
+
+                </div>
+
+
+
 
 
                 {hists.map((hist: {
@@ -84,11 +134,7 @@ export default function TransHistory() {
                     >
 
                         <div
-                           className={
-                            `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
-                               
-                            text-red-600  mb-6 bg-black`
-                        }
+                            className={"text-orange-600  mb-6 bg-black"}
 
                         >
                             <div>
@@ -105,9 +151,9 @@ export default function TransHistory() {
                             <div
                             //  className={
                             //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
-                               
+
                             //     text-red-600`
-                            
+
                             // } 
                             >
                                 Transfer Type: {hist.trans_type}

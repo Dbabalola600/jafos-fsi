@@ -129,7 +129,7 @@ export default function NavBar2() {
                         </Link>
 
 
-                        <Link href='/student/Transactions'>
+                        <Link href='/student/Transactions/'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Transactions
                             </a>
