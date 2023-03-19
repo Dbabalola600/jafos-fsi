@@ -71,10 +71,10 @@ export default function TransHistory() {
 
 
     const transactions = [
-        { transType: "ALL", amount: `${histAmt?.all}`, link: "/student/Transactions/", ink: "primary" },
-        { transType: "Debit", amount: `${histAmt?.debit}`, link: "/student/Transactions/debit", ink: "red-500" },
-        { transType: "Credit", amount: `${histAmt?.credit}`, link: "/student/Transactions/credit", ink: "green-500" },
-        { transType: "Token Credit", amount: `${histAmt?.tok}`, link: "/student/Transactions/tokenCredit", ink: "orange-500" },
+        { transType: "ALL", amount: `${histAmt?.all}`, link: "/student/Transactions/transHistory/", ink: "primary" },
+        { transType: "Debit", amount: `${histAmt?.debit}`, link: "/student/Transactions/transHistory/debit", ink: "red-500" },
+        { transType: "Credit", amount: `${histAmt?.credit}`, link: "/student/Transactions/transHistory/credit", ink: "green-500" },
+        { transType: "Token Credit", amount: `${histAmt?.tok}`, link: "/student/Transactions/transHistory/tokenCredit", ink: "orange-500" },
 
     ]
 
@@ -82,8 +82,9 @@ export default function TransHistory() {
         <StuLayout>
             <>
                 <Header
-                    title=" All Transactions History"
+                    title=" Credit Transactions History"
                 />
+
 
 
                 <div
@@ -92,12 +93,13 @@ export default function TransHistory() {
 
 
                     {transactions.map((transactions, index) => (
-                        <div key={index}
-                            className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                        <Link
+                            href={transactions.link}
                         >
-                            <Link
-                                href={transactions.link}
+                            <div key={index}
+                                className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
                             >
+
                                 <a
                                     className="font-bold mx-2 text-[10px] text-left"
                                 >
@@ -105,10 +107,11 @@ export default function TransHistory() {
 
 
                                 </a>
-                            </Link>
 
 
-                        </div>
+
+                            </div>
+                        </Link>
                     ))}
 
                 </div>
