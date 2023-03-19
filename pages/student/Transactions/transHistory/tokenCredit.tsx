@@ -95,6 +95,7 @@ export default function TransHistoryToken() {
                     {transactions.map((transactions, index) => (
                         <Link
                             href={transactions.link}
+                            key={index}
                         >
                             <div key={index}
                                 className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
