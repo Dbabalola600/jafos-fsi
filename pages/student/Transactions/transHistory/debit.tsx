@@ -43,7 +43,7 @@ export default function TransDebit() {
             id: token
         }
 
-        const response = await fetch("/api/fetchTransHistory/fetchDebit", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/transactionHistory/fetchDebit", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
