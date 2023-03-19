@@ -8,11 +8,9 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import cookie, { getCookie, hasCookie, getCookies } from "cookies-next"
 
 
-import Link from "next/link";
-import HeadButton from "../../components/shared/HeadButton";
-import NavButton from "../../components/shared/NavButton";
-import storeButton from "../../components/shared/storeButt";
+
 import StoreButton from "../../components/shared/storeButt";
+import UserDash from "../../components/shared/UserDash";
 
 
 
@@ -31,6 +29,7 @@ type Sellers = {
     firstname: string
     lastname: string
     status:string
+    store_desc: string
 }
 
 
@@ -40,7 +39,7 @@ type Sellers = {
 function DashBoard() {
     const [student, setStudent] = useState<Student | null>(null);
     const [sellers, SetSellers] = useState<Sellers[]>([])
-const router = useRouter()
+    const router = useRouter()
 
     //this works
     // console.log(getCookie("user"))
@@ -101,10 +100,13 @@ const router = useRouter()
                 <Header
                     title="Dashboard"
                 />
-                <div className="text-primary text-3xl">
-                    Welcome {student?.firstname} {"  "}
-                    {student?.account_bal} Credits
-                </div>
+
+                   <UserDash
+                   AccId={student?.matricno}
+                   accBal={student?.account_bal}
+                   name={student?.firstname}
+                   uLink="/student/Transactions/creditAccount"
+                   />
 
 
                 <div
@@ -118,14 +120,14 @@ const router = useRouter()
                     
                 </div>
 
-                <div
-                        className="grid grid-cols-2 space-x-5 mx-auto"
-                        >
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                     
 
 
-{sellers.map((seller: { _id: Key | null | undefined;
-status: string;
-storename: string; }) =>
+                {sellers.map((seller: { _id: string;
+                    status: string;
+                    storename: string;
+                store_desc:string }) =>
                     <div
                         key={seller._id}
                     >
@@ -135,12 +137,12 @@ storename: string; }) =>
 
                            
 
-<StoreButton
-                             ulink={`/student/stores/${seller._id}`}
-                             name={seller.storename}
-                             status={seller.status}
-                             desc="description "
-                            />
+                        <StoreButton
+                        ulink={`/student/stores/${seller._id}`}
+                        name={seller.storename}
+                        status={seller.status}
+                        desc={seller.store_desc}
+                        />
 
                           
                             

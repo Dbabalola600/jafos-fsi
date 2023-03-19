@@ -17,33 +17,34 @@ export default function StoreButton(props: StoreProps) {
                 href={props.ulink}
             >
 
-                <div className="bg-primary rounded-lg btn-block mt-10 mb-5 pt-5 pb-2 text-white cursor-pointer">
+                <div  className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
 
                     <div
-                        className="relative"
+                        className="items-center justify-center "
                     >
                         <div
-                            className="rounded-xl text-center text-sm lg:float-right px-5 mx-2  bg-black text-white"
+                            className="rounded-xl text-center text-sm  bg-black text-white"
                         >
                             {props.status}
                         </div>
 
-                        <div
-                            className=" mx-5"
-                        >
-                            {props.name}
-                        </div>
+                    </div>
+                    <div className="flex items-end space-x-3">
+
+                        <div className="w-1/2  text-left relative">
 
 
+                            <div className="text-black   font-bold text-lg">
+                                {props.name}
+                            </div>
 
-
-                        <div
-                            className=" mx-5"
-                        >
-                            {props.desc}
+                            <p
+                                className="text-gray-400"
+                            >
+                                {props.desc}
+                            </p>
                         </div>
                     </div>
-
                 </div>
             </Link>
         </div>

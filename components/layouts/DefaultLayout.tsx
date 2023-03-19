@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
 import EmpNav from "./EmpNav";
+import Footer from "./Footer";
 function DefaultLayout({ children }: { children?: JSX.Element }) {
     return (
-
+        <div>
         <div className="bg-primaryColour md:space-y-20  min-h-screen">
             <EmpNav/>
             <div className="bg-white max-w-5xl mx-auto py-5 px-10 md:py-10 md:px-20 min-h-screen md:min-h-0">
@@ -18,7 +19,10 @@ function DefaultLayout({ children }: { children?: JSX.Element }) {
                 </main>
 
             </div>
+          
         </div>
+          <Footer/>
+          </div>
     )
 }
 

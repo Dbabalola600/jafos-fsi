@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/seller/product/updateProduct.js", "pages/api/admin/staff/login.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/seller/product/updateProduct.js", "pages/api/admin/staff/login.js", "utils/connectMongo.js"],
   "exclude": ["node_modules"]
 }

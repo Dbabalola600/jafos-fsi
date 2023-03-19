@@ -6,6 +6,7 @@ import { getCookie, hasCookie, getCookies } from "cookies-next"
 
 import StoreButton from "../../components/shared/storeButt";
 import StaffLay from "./Layout/StaffLay";
+import UserDash from "../../components/shared/UserDash";
 
 
 
@@ -27,6 +28,7 @@ type Sellers = {
     firstname: string
     lastname: string
     status: string
+    store_desc:string 
 }
 
 
@@ -87,11 +89,14 @@ export default function DashBoard() {
                 <Header
                     title="Dashboard"
                 />
-                <div className="text-primary text-3xl">
-                    Welcome {staff?.firstname} {"  "}
-                    {staff?.account_bal} Credits
-                </div>
 
+               <UserDash
+               AccId={staff?.staffid}
+               accBal={staff?.account_bal}
+               name={staff?.firstname}
+               uLink="/staff/Transactions/creditAccount"
+               
+               />
 
                 <div
                     className="pt-5"
@@ -104,15 +109,16 @@ export default function DashBoard() {
 
                 </div>
 
-                <div
-                    className="grid grid-cols-2 space-x-5 mx-auto"
-                >
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                     
+
 
 
                     {sellers.map((seller: {
                         _id: Key | null | undefined;
                         status: string;
                         storename: string;
+                        store_desc:string 
                     }) =>
                         <div
                             key={seller._id}
@@ -121,7 +127,7 @@ export default function DashBoard() {
                                 ulink={`/staff/stores/${seller._id}`}
                                 name={seller.storename}
                                 status={seller.status}
-                                desc="description "
+                                desc={seller.store_desc}
                             />
                         </div>
                     )}
