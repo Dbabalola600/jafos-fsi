@@ -106,7 +106,7 @@ export default function Stores() {
             .then(res => {
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
-
+                    router.reload()
                     // router.push("/staff/Cart")
                 }
             }).catch(err => {

@@ -1,7 +1,7 @@
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
-import { deleteCookie, hasCookie } from "cookies-next"
+import { Fragment, useEffect, useState } from "react";
+import { deleteCookie, getCookie, hasCookie } from "cookies-next"
 
 
 import { InferGetStaticPropsType } from "next";
@@ -11,6 +11,40 @@ import { useRouter } from "next/router";
 
 export default function NavBar2() {
     const [isLoading, setLoading] = useState(false)
+    const [cartNo, setCartNo] = useState(0)
+
+
+    const showinfo = async () => {
+        const token = getCookie("Normuser")
+        const body = {
+            id: token
+        }
+
+
+
+        const response = await fetch("/api/student/cart/cartPopulation", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json())
+
+        setCartNo(response)
+
+
+
+
+
+
+
+    }
+
+
+
+
+    useEffect(() => {
+        showinfo()
+
+    }, [])
+
+ 
+
     const router = useRouter()
     const logout = async () => {
         //e.preventDefault()
@@ -109,9 +143,19 @@ export default function NavBar2() {
 
 
                         <Link href='/student/Cart'>
-                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
-                                Cart
+                            <a
+                                className="indicator w-full overscroll-none"
+                            >
+                                <span
+                                    className="indicator-item badge badge-primary"
+                                >
+                                    {cartNo}
+                                </span>
+                                <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                    Cart
+                                </a>
                             </a>
+
                         </Link>
 
 
