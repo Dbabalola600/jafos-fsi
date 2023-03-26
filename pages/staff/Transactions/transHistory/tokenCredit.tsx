@@ -1,11 +1,12 @@
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
-import ErrMess from "../../../components/shared/ErrMess";
-import GoodMess from "../../../components/shared/GoodMess";
-import Header from "../../../components/shared/Header";
-import TextInput from "../../../components/shared/TextInput";
-import StaffLay from "../Layout/StaffLay";
+import ErrMess from "../../../../components/shared/ErrMess";
+import GoodMess from "../../../../components/shared/GoodMess";
+import Header from "../../../../components/shared/Header";
+import TextInput from "../../../../components/shared/TextInput";
+import StaffLay from "../../Layout/StaffLay";
+import HistBar from "../../../../components/shared/historyBar";
 
 
 type TransHists = {
@@ -24,9 +25,20 @@ type TransHists = {
 
 
 
-export default function TransHistory() {
 
+
+
+type TransHistAmt = {
+    debit: number | any
+    credit: number | any
+    all: number | any
+    tok: number | any
+}
+
+
+export default function TransHistory() {
     const [hists, setHistory] = useState<TransHists[]>([])
+    const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
 
 
     const showinfo = async () => {
@@ -35,13 +47,16 @@ export default function TransHistory() {
             id: token
         }
 
-        const response = await fetch("/api/fetchTransHistory", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/fetchTransHistory/fetchTokenCredit", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
 
 
+        const Amtresponse = await fetch("/api/transactionHistory/fetchTransAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as TransHistAmt
 
+        setHistAmt(Amtresponse)
 
 
     }
@@ -63,11 +78,18 @@ export default function TransHistory() {
             <>
 
                 <Header
-                    title=""
+                    title=" Token Credit Transactions History"
                 />
 
-                <Header
-                    title="History"
+                <HistBar
+                    allAmt={histAmt?.all}
+                    allLink={"/staff/Transactions/transHistory/"}
+                    creditAmt={histAmt?.credit}
+                    creditLink={"/staff/Transactions/transHistory/credit"}
+                    debitAmt={histAmt?.debit}
+                    debitLink={"/staff/Transactions/transHistory/debit"}
+                    tokenAmt={histAmt?.tok}
+                    tokenLink={"/staff/Transactions/transHistory/tokenCredit"}
                 />
 
 
@@ -89,11 +111,7 @@ export default function TransHistory() {
                     >
 
                         <div
-                            className={
-                                `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
-                                   
-                                text-red-600  mb-6 bg-black`
-                            }
+                            className={"text-orange-600  mb-6 bg-black"}
 
                         >
                             <div>

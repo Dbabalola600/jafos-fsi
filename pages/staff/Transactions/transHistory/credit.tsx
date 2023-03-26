@@ -1,12 +1,12 @@
 import { getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { FormEventHandler, useEffect, useState } from "react";
+import ErrMess from "../../../../components/shared/ErrMess";
+import GoodMess from "../../../../components/shared/GoodMess";
 import Header from "../../../../components/shared/Header";
-import NavButton from "../../../../components/shared/NavButton";
-import StuLayout from "../../Layout/StuLayout";
-import Link from "next/link";
+import TextInput from "../../../../components/shared/TextInput";
+import StaffLay from "../../Layout/StaffLay";
 import HistBar from "../../../../components/shared/historyBar";
-
-
 
 
 type TransHists = {
@@ -24,6 +24,10 @@ type TransHists = {
 }
 
 
+
+
+
+
 type TransHistAmt = {
     debit: number | any
     credit: number | any
@@ -32,34 +36,30 @@ type TransHistAmt = {
 }
 
 
-export default function TransCredit() {
+export default function TransHistory() {
     const [hists, setHistory] = useState<TransHists[]>([])
     const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
 
 
-
     const showinfo = async () => {
-        const token = getCookie("Normuser")
+        const token = getCookie("Staffuser")
         const body = {
             id: token
         }
 
-        const response = await fetch("/api/transactionHistory/fetchCredit", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/fetchTransHistory/fetchCredit", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
-
-
 
 
         const Amtresponse = await fetch("/api/transactionHistory/fetchTransAmt", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHistAmt
 
         setHistAmt(Amtresponse)
-        // setHistory(response)
+
+
     }
-
-
     console.log(hists)
 
     useEffect(() => {
@@ -71,28 +71,26 @@ export default function TransCredit() {
 
 
 
-    
+
 
     return (
-        <StuLayout>
+        <StaffLay>
             <>
+
                 <Header
                     title=" Credit Transactions History"
                 />
 
-
-
                 <HistBar
                     allAmt={histAmt?.all}
-                    allLink={"/student/Transactions/transHistory/"}
+                    allLink={"/staff/Transactions/transHistory/"}
                     creditAmt={histAmt?.credit}
-                    creditLink={"/student/Transactions/transHistory/credit"}
+                    creditLink={"/staff/Transactions/transHistory/credit"}
                     debitAmt={histAmt?.debit}
-                    debitLink={"/student/Transactions/transHistory/debit"}
+                    debitLink={"/staff/Transactions/transHistory/debit"}
                     tokenAmt={histAmt?.tok}
-                    tokenLink={"/student/Transactions/transHistory/tokenCredit"}
+                    tokenLink={"/staff/Transactions/transHistory/tokenCredit"}
                 />
-
 
 
                 {hists.map((hist: {
@@ -113,7 +111,8 @@ export default function TransCredit() {
                     >
 
                         <div
-                            className={"text-green-400   mb-6 bg-black"}
+                            className={"text-green-500  mb-6 bg-black"}
+
                         >
                             <div>
                                 from {hist.sender} to {hist.reciever}
@@ -127,12 +126,7 @@ export default function TransCredit() {
 
 
                             <div
-                            //  className={
-                            //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
 
-                            //     text-red-600`
-
-                            // } 
                             >
                                 Transfer Type: {hist.trans_type}
                             </div>
@@ -148,8 +142,8 @@ export default function TransCredit() {
                     </div>
                 ))}
 
+
             </>
-        </StuLayout >
+        </StaffLay>
     )
 }
-
