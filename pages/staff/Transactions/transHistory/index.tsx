@@ -80,7 +80,7 @@ export default function TransHistory() {
                
 
                 <Header
-                    title=" History"
+                    title=" Transactions History"
                 />
 
                 <HistBar

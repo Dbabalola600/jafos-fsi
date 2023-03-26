@@ -47,7 +47,7 @@ export default function TransHistoryToken() {
             id: token
         }
 
-        const response = await fetch("/api/fetchTransHistory/fetchTokenCredit", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/transactionHistory/fetchTokenCredit", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
