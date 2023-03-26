@@ -77,9 +77,7 @@ export default function TransHistory() {
         <StaffLay>
             <>
 
-                <Header
-                    title=""
-                />
+               
 
                 <Header
                     title=" History"
