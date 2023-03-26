@@ -4,6 +4,7 @@ import Header from "../../../../components/shared/Header";
 import NavButton from "../../../../components/shared/NavButton";
 import StuLayout from "../../Layout/StuLayout";
 import Link from "next/link";
+import HistBar from "../../../../components/shared/historyBar";
 
 
 
@@ -70,52 +71,27 @@ export default function TransHistoryToken() {
 
 
 
-    const transactions = [
-        { transType: "ALL", amount: `${histAmt?.all}`, link: "/student/Transactions/transHistory/", ink: "primary" },
-        { transType: "Debit", amount: `${histAmt?.debit}`, link: "/student/Transactions/transHistory/debit", ink: "red-500" },
-        { transType: "Credit", amount: `${histAmt?.credit}`, link: "/student/Transactions/transHistory/credit", ink: "green-500" },
-        { transType: "Token Credit", amount: `${histAmt?.tok}`, link: "/student/Transactions/transHistory/tokenCredit", ink: "orange-500" },
-
-    ]
+    
 
     return (
         <StuLayout>
             <>
                 <Header
-                    title=" Credit Transactions History"
+                    title=" Token Credit Transactions History"
                 />
 
 
 
-                <div
-                    className="grid grid-flow-col  overflow-x-scroll mt-10 p-5   gap-5  "
-                >
-
-
-                    {transactions.map((transactions, index) => (
-                        <Link
-                            href={transactions.link}
-                            key={index}
-                        >
-                            <div key={index}
-                                className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
-                            >
-
-                                <a
-                                    className="font-bold mx-2 text-[10px] text-left"
-                                >
-                                    {transactions.transType} {"   "} {transactions.amount}
-
-
-                                </a>
-
-
-
-                            </div>
-                        </Link>
-                    ))}
-
-                </div>
+                <HistBar
+                    allAmt={histAmt?.all}
+                    allLink={"/student/Transactions/transHistory/"}
+                    creditAmt={histAmt?.credit}
+                    creditLink={"/student/Transactions/transHistory/credit"}
+                    debitAmt={histAmt?.debit}
+                    debitLink={"/student/Transactions/transHistory/debit"}
+                    tokenAmt={histAmt?.tok}
+                    tokenLink={"/student/Transactions/transHistory/tokenCredit"}
+                />
 
 
 
@@ -153,14 +129,7 @@ export default function TransHistoryToken() {
 
 
 
-                            <div
-                            //  className={
-                            //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
-
-                            //     text-red-600`
-
-                            // } 
-                            >
+                            <div>
                                 Transfer Type: {hist.trans_type}
                             </div>
 

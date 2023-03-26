@@ -1,28 +1,31 @@
 import Link from "next/link";
 
 
-type DashProps ={
-    accBal: string|any;
-    name: string|any;
-    AccId: string|any;
+type DashProps = {
+    accBal: string | any;
+    name: string | any;
+    AccId: string | any;
     uLink: string
 }
 
 
 
-export default function UserDash(props:DashProps) {
+export default function UserDash(props: DashProps) {
     return (
         <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
+            <div className=" rounded-lg ">
 
-            <div className="text-primary text-3xl">
-                Welcome {props.name}{"  "}
-                <p>
-                    {props.AccId}
-                </p>
+                <div className="text-primary lg:text-3xl  text-lg">
+                    Welcome {props.name}{"  "}
+                    <p>
+                        {props.AccId}
+                    </p>
 
 
+                </div>
             </div>
+
 
 
 

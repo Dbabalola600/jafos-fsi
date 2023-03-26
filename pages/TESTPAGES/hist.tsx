@@ -102,17 +102,17 @@ export default function Hist() {
                 >
 
 
-                    {transactions.map((transactions, index) => (
-                        <div key={index}
-                            className={`bg-${transactions.ink} rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                    
+                        <div 
+                            className={`bg-red-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
                         >
                             <Link
-                                href={transactions.link}
+                                href={"/"}
                             >
                                 <a
                                     className="font-bold mx-2 text-[10px] text-left"
                                 >
-                                    {transactions.transType} {"   "} {transactions.amount}
+                                    Credit {"   "} 12
                                     
 
                                 </a>
@@ -120,7 +120,63 @@ export default function Hist() {
 
 
                         </div>
-                    ))}
+
+
+
+                        <div 
+                            className={`bg-red-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                        >
+                            <Link
+                                href={"/"}
+                            >
+                                <a
+                                    className="font-bold mx-2 text-[10px] text-left"
+                                >
+                                    Credit {"   "} 12
+                                    
+
+                                </a>
+                            </Link>
+
+
+                        </div>
+
+                        <div 
+                            className={`bg-red-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                        >
+                            <Link
+                                href={"/"}
+                            >
+                                <a
+                                    className="font-bold mx-2 text-[10px] text-left"
+                                >
+                                    Credit {"   "} 12
+                                    
+
+                                </a>
+                            </Link>
+
+
+                        </div>
+
+                        <div 
+                            className={`bg-green-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black `}
+                        >
+                            <Link
+                                href={"/"}
+                            >
+                                <a
+                                    className="font-bold mx-2 text-[10px] text-left"
+                                >
+                                    Credit {"   "} 12
+                                    
+
+                                </a>
+                            </Link>
+
+
+                        </div>
+                    
 
                 </div>
 
