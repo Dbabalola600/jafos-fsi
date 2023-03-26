@@ -36,7 +36,7 @@ type TransHistAmt = {
 }
 
 
-export default function TransHistory() {
+export default function TransCredit() {
     const [hists, setHistory] = useState<TransHists[]>([])
     const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
 
