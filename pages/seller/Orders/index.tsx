@@ -5,6 +5,7 @@ import { getCookie } from "cookies-next";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import OrderCard from "../../../components/shared/OrderCard";
 
 
 
@@ -40,13 +41,37 @@ type OrderItems = {
 
 
 
-type SpecOrder = {
-    _id: string;
-    user: string;
-    stores: string
-    orderList: OrderItems
-    orderNum: number
-  
+
+type Order = {
+
+    userObj: {
+        firstname: string
+        _id: string
+        lastname: string
+    }
+
+    orderObj: {
+        "0": {
+            _id: string;
+            storename: string
+            product: string
+            orderNum: number
+            user: string
+            price: number;
+            quantity: number;
+            amount: number;
+            status: string
+        }
+    }
+
+    oriOrder: {
+        stores: string
+        orderList: OrderItems
+        orderNum: number
+        user: string
+        _id: string
+
+    }
 }
 
 
@@ -57,7 +82,7 @@ function Orders() {
 
     const [orderItems, setOrderItems] = useState<OrderItems[]>([]);
 
-    const [orders, setOrders] = useState<SpecOrder[]>([])
+    const [orders, setOrders] = useState<Order[]>([])
 
 
 
@@ -82,21 +107,6 @@ function Orders() {
 
 
 
-        // const body2 = {
-        //     name: response.storename
-        // }
-
-
-
-
-        // const OrderResponse = await fetch("/api/seller/order/fetchOrder", { method: "POST", body: JSON.stringify(body2) })
-        //     .then(res => res.json()) as OrderItems[]
-
-        // setOrderItems(OrderResponse)
-        // console.log(OrderResponse[0])
-
-
-
 
 
         const body3 = {
@@ -106,8 +116,8 @@ function Orders() {
 
 
 
-        const specOrder = await fetch("/api/seller/order/fetchSpecOrder", { method: "POST", body: JSON.stringify(body3) })
-            .then(res => res.json()) as SpecOrder[]
+        const specOrder = await fetch("/api/seller/order/fetchNewOrder", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json()) as Order[]
 
 
         console.log(specOrder)
@@ -148,29 +158,54 @@ function Orders() {
 
 
 
-                {orders.map((order: {
-                    _id: string;
-                    user: string
-                    stores: string
-                    orderNum: number
-                }) => (
+             {orders.map((order: {
+                    userObj: {
+                        firstname: string
+                        _id: string
+                        lastname: string
+                    }
+
+                    orderObj: {
+                        "0": {
+                            _id: string;
+                            storename: string
+                            product: string
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string
+                        }
+                    }
+
+                    oriOrder: {
+                        stores: string
+                        orderList: OrderItems
+                        orderNum: number
+                        user: string
+                        _id: string
+
+                    }
+                }, index) => (
                     <div
-                        key={order._id}
+                        key={order.oriOrder._id}
                     >
 
+                        <div className="grid mt-10 ">
+                            <OrderCard
+                                OrderNum={order.oriOrder.orderNum}
+                                User={order.userObj.firstname + order.userObj.lastname}
+                                status={order.orderObj[0].status}
+                                ulink={`Orders/Details/${order.oriOrder._id}`}
 
 
-                        <Link
-                            href={`Orders/Details/${order._id}`}
-                        >
-                            <a>
-                                <Header
-                                    title=   "order" 
-                                    desc={order.orderNum}
-                                />
-                            </a>
 
-                        </Link>
+                            />
+
+
+
+                        </div>
 
                     </div>
                 ))}

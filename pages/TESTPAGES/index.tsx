@@ -5,19 +5,12 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 
 
 export default function Index() {
+let status = "Order status : delivered"
 
-    const executives = [
-        { name: "Benjamin Ajibade", position: "President", link: "https://example.com" },
-        { name: "Olatubusun John", position: "Vice-President", link: "https://example.com" },
-        { name: "Babalola Damisi", position: "Financial Secretary", link: "https://example.com" },
-        { name: "Ajayi Israel", position: "General Secretary", link: "https://example.com" },
-        { name: "Merit Mohammed", position: "Assistant General Secretary", link: "https://example.com" },
-        { name: "Chineye ", position: "Librarian", link: "https://example.com" },
-        { name: "??", position: "Assistant Librarian", link: "https://example.com" },
-        { name: "Kuboye Katete", position: "Public Relations Officer", link: "https://example.com" },
-        { name: "Julo", position: "Director of Socials", link: "https://example.com" },
-        { name: "Kemi Sarah", position: "Director of Sports", link: "https://example.com" }
-    ];
+let numb ="OrderNo: 2"
+
+let name ="damisi babalola"
+
     return (
         <DefaultLayout>
             <>
@@ -27,17 +20,133 @@ export default function Index() {
                 >
                     TEST AREA
                 </h1>
-                <div
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
+
+
+
+                    <div>
+
+                        <Link
+                            href="/"
+                        >
+
+                            <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
+
+                                <div
+                                    className="items-center justify-center "
+                                >
+                                    <div
+                                        className="rounded-xl text-center text-sm  bg-black text-white"
+                                    >
+                                        {status}
+                                    </div>
+
+                                </div>
+                                <div className="flex items-end space-x-3">
+
+                                    <div className="w-1/2  text-left relative">
+
+
+                                        <div className="text-black   font-bold text-lg">
+                                            {numb}
+                                        </div>
+
+                                        <p
+                                            className="text-gray-400"
+                                        >
+                                            {name}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+
+
+
+
+
+                    <div>
+
+                        <Link
+                            href="/"
+                        >
+
+                            <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
+
+                                <div
+                                    className="items-center justify-center "
+                                >
+                                    <div
+                                        className="rounded-xl text-center text-sm  bg-black text-white"
+                                    >
+                                        {status}
+                                    </div>
+
+                                </div>
+                                <div className="flex items-end space-x-3">
+
+                                    <div className="w-1/2  text-left relative">
+
+
+                                        <div className="text-black   font-bold text-lg">
+                                            {numb}
+                                        </div>
+
+                                        <p
+                                            className="text-gray-400"
+                                        >
+                                            {name}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+                {/* <div
                 >
 
 
                     <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
 
-                        <div className="text-primary text-3xl">
-                            Welcome DAMISI{"  "}
+                        <div className="text-primary rounded-lg  lg:text-3xl  text-lg">
+                            Welcome ALPHA STORE{"  "}
+
                             <p>
-                                18010301079
+                                Currently: open
+                            </p>
+
+                            <p
+                                className="space-y-5 mt-1 lg:space-x-5"
+                            >
+
+                                <div
+                                    className="text-green-500 btn btn-primary"
+                                // onClick={OpStat}
+                                >
+                                    OPEN
+                                </div>
+
+                                <div
+                                    className="text-red-500 btn btn-primary"
+                                // onClick={closeStat}
+                                >
+                                    Closed
+                                </div>
                             </p>
 
 
@@ -60,7 +169,7 @@ export default function Index() {
                                     <p
                                         className="text-gray-400"
                                     >
-                                        NGN 1
+                                        NGN 100
                                     </p>
                                 </div>
                             </div>
@@ -75,7 +184,7 @@ export default function Index() {
                                     <div
                                         className="rounded-xl text-center text-sm  bg-black text-white "
                                     >
-                                        Credit Account
+                                        Add new product
                                     </div>
 
                                 </Link>
@@ -86,7 +195,7 @@ export default function Index() {
 
                     </div>
 
-                </div>
+                </div> */}
             </>
         </DefaultLayout>
     )

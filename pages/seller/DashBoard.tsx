@@ -6,6 +6,7 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import Header from "../../components/shared/Header";
 
 import CatLayout from "./Layout/CatLayout";
+import OrderCard from "../../components/shared/OrderCard";
 
 
 
@@ -32,28 +33,51 @@ type OrderItems = {
     userObj: {
         firstname: string
         _id: string
+        lastname: string
     }
 }
 
 
 
-type SpecOrder = {
-    _id: string;
-    user: string;
-    stores: string
-    orderList: OrderItems
-    orderNum: number
-  
+type Order = {
+
+    userObj: {
+        firstname: string
+        _id: string
+        lastname: string
+    }
+
+    orderObj: {
+        "0": {
+            _id: string;
+            storename: string
+            product: string
+            orderNum: number
+            user: string
+            price: number;
+            quantity: number;
+            amount: number;
+            status: string
+        }
+    }
+
+    oriOrder: {
+        stores: string
+        orderList: OrderItems
+        orderNum: number
+        user: string
+        _id: string
+
+    }
 }
 
 function DashBoard() {
     const router = useRouter()
     const [seller, setSeller] = useState<Seller | null>(null);
 
-    const [orderItems, setOrderItems] = useState<OrderItems[]>([]);
-    const [orderNum, setorderNum] = useState<number>()
 
-    const [orders, setOrders] = useState<SpecOrder[]>([])
+
+    const [orders, setOrders] = useState<Order[]>([])
     const showinfo = async () => {
 
         const token = getCookie("Selluser")
@@ -74,20 +98,6 @@ function DashBoard() {
 
 
 
-        const body2 = {
-            name: response.storename
-        }
-
-
-
-
-        // const OrderResponse = await fetch("/api/seller/order/fetchOrder", { method: "POST", body: JSON.stringify(body2) })
-        //     .then(res => res.json()) as OrderItems[]
-
-        // setOrderItems(OrderResponse)
-        // console.log(OrderResponse[0]._doc._id)
-
-
         const body3 = {
             Sname: response.storename
         }
@@ -95,17 +105,16 @@ function DashBoard() {
 
 
 
-        const specOrder = await fetch("/api/seller/order/fetchSpecOrder", { method: "POST", body: JSON.stringify(body3) })
-            .then(res => res.json()) as SpecOrder[]
+        const specOrder = await fetch("/api/seller/order/fetchNewOrder", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json()) as Order[]
 
 
         console.log(specOrder)
         setOrders(specOrder)
 
-        // console.log(specOrder[0].stores)
 
 
-        
+
 
     }
 
@@ -174,71 +183,142 @@ function DashBoard() {
         <CatLayout>
             <>
 
-                <div
-                    className=" bg-black md:w-60">
-                    <div className="text-primary text-3xl">
-                        Welcome {seller?.storename} {" "}
-                        {seller?.account_bal} Credits
+
+
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+
+                    <div className="text-primary rounded-lg  lg:text-3xl  text-lg">
+                        Welcome {seller?.storename}{"  "}
+                        <p>
+                            Currently: {seller?.status}
+                        </p>
+                        <p
+                            className="space-y-5 mt-1 lg:space-x-5"
+                        >
+                            <div
+                                className="text-green-500 btn btn-primary"
+                                onClick={OpStat}
+                            >
+                                OPEN
+                            </div>
+
+                            <div
+                                className="text-red-500 btn btn-primary"
+                                onClick={closeStat}
+                            >
+                                Closed
+                            </div>
+                        </p>
+
+
                     </div>
 
 
 
-                    <div>
-                        {seller?.status}
+                    <div className="bg-primary rounded-lg  p-3">
+
+
+                        <div className="flex items-end space-x-3">
+
+                            <div className=" relative">
+
+
+                                <div className="text-black   font-bold  text-xl">
+                                    Available Balance
+                                </div>
+
+                                <p
+                                    className="text-gray-400"
+                                >
+                                    NGN {seller?.account_bal}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            className="pt-2 float-right w-1/2 hover:cursor-pointer "
+                        >
+
+                            <Link
+                                href="/seller/Products/newProduct"
+                            >
+                                <div
+                                    className="rounded-xl text-center text-sm  bg-black text-white "
+                                >
+                                    Add new product
+                                </div>
+
+                            </Link>
+
+
+                        </div>
                     </div>
-                </div>
 
-
-
-
-
-                <div
-                    className="text-green-500 btn btn-primary"
-                    onClick={OpStat}
-                >
-                    OPEN
                 </div>
 
                 <div
-                    className="text-red-500 btn btn-primary"
-                    onClick={closeStat}
+                    className="pt-5"
                 >
-                    Closed
+                    <div
+                        className="text-primary  text-2xl font-bold text-center  underline"
+                    >
+                        New Orders
+                    </div>
+
                 </div>
 
-
-
-                <div
-                    className="text-2xl text-primary"
-                >
-                    Display orders
-                </div>
 
 
 
                 {orders.map((order: {
-                    _id: string;
-                    user: string
-                    stores: string
-                    orderNum: number
+                    userObj: {
+                        firstname: string
+                        _id: string
+                        lastname: string
+                    }
+
+                    orderObj: {
+                        "0": {
+                            _id: string;
+                            storename: string
+                            product: string
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string
+                        }
+                    }
+
+                    oriOrder: {
+                        stores: string
+                        orderList: OrderItems
+                        orderNum: number
+                        user: string
+                        _id: string
+
+                    }
                 }, index) => (
                     <div
-                        key={order._id}
+                        key={order.oriOrder._id}
                     >
 
+                        <div className="grid mt-10 ">
+                            <OrderCard
+                                OrderNum={order.oriOrder.orderNum}
+                                User={order.userObj.firstname + order.userObj.lastname}
+                                status={order.orderObj[0].status}
+                                ulink={`Orders/Details/${order.oriOrder._id}`}
 
 
-                        <Link
-                            href={`Orders/Details/${order._id}`}
-                        >
-                            <a>
-                                <Header
-                                    title=   "order" 
-                                    desc={order.orderNum}
-                                />
-                            </a>
 
-                        </Link>
+                            />
+
+
+
+                        </div>
 
                     </div>
                 ))}
@@ -246,35 +326,7 @@ function DashBoard() {
 
 
 
-                {/* {orderItems.map((orderItem: {
-                    _doc: any;
-                    _id: string;
-                    storename: string
-                    product: string
-                    user: string
-                    userObj: {
-                        firstname: string
-                        _id: string
-                    }
-                }) => (
-                    <div
-                        key={orderItem._id}
-                    >
-                        <Link
-                            href={`/seller/Orders/Details/${orderItem._doc._id}`}
-                        >
-                            <a>
-                                <Header
-                                    title={orderItem._doc.product}
-                                    desc={orderItem?.userObj?.firstname}
-                                />
-                            </a>
 
-                        </Link>
-
-
-                    </div>
-                ))} */}
 
 
             </>
