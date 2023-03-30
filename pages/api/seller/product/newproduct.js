@@ -18,6 +18,11 @@ export default async function addProduct (req,res){
         console.log('CREATING DOCUMENT');
         const {owner, title, category, price, description} = JSON.parse(req.body)
         
+
+
+
+
+        
         const product = await Product.create({
             owner,
             title,

@@ -7,7 +7,7 @@ import TextInput from "../../../components/shared/TextInput";
 
 import CatLayout from "../Layout/CatLayout";
 
-import {getCookie} from 'cookies-next'
+import { getCookie } from 'cookies-next'
 
 
 
@@ -20,13 +20,13 @@ function NewOffer() {
         console.log(user)
         e.preventDefault()
         setLoading(true)
-        const formElements = e.currentTarget.elements as typeof e.currentTarget.elements 
+        const formElements = e.currentTarget.elements as typeof e.currentTarget.elements
 
         const form = e.currentTarget.elements as any
 
 
         const body = {
-            owner:user ,
+            owner: user,
             title: form.item(0).value,
             price: form.item(1).value,
             category: form.item(2).value,
@@ -70,11 +70,18 @@ function NewOffer() {
                         <TextInput
                             // errorMessage={errors.firstName?.message}
                             placeholder="Title"
-                           
+
                             type="text"
                             name="Title"
                             id="title"
                         />
+
+                       
+
+
+
+
+
                     </div>
 
 
