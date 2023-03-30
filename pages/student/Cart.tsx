@@ -56,7 +56,7 @@ export default function Cart() {
 
     const [cartList, setCartList] = useState<cartListType>([]);
 
-    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
     useEffect(() => {
         if (showgoodtoast.show) {
@@ -89,7 +89,7 @@ export default function Cart() {
     const delOne = async (_id: any) => {
 
 
-        const body={
+        const body = {
             id: _id
         }
         console.log(_id)
@@ -131,7 +131,7 @@ export default function Cart() {
 
 
 
-        const body2={
+        const body2 = {
             user: user
         }
 
@@ -151,7 +151,7 @@ export default function Cart() {
                         })
                 }
 
-             
+
 
 
                 if (res.status == 401) {
@@ -177,7 +177,7 @@ export default function Cart() {
         <StuLayout>
             <>
                 <div
-                    className=" bg-black md:w-60">
+                    className="">
                     <Header
                         title="CART"
                     />
@@ -185,56 +185,74 @@ export default function Cart() {
 
                 {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
+
+
+
+
                 <form
                     onSubmit={
                         addCheckoutItem
                     }
                 >
-                    {carts.map((cart: {
-                        _id: string | null | undefined;
-                        title: string
-                        price: number
-                        storename: string
+                    <div
 
-                    }, index) => (
-                        <div
-                            key={cart._id}
-                        >
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6 "
 
+                    >
+                        {carts.map((cart: {
+                            _id: string | null | undefined;
+                            title: string
+                            price: number
+                            storename: string
 
+                        }, index) => (
+                            <div
+                                key={cart._id}
 
-                            <CartInput
-                                id={cart._id || ""}
-                                cartList={cartList}
-                                setCartList={setCartList}
-                                product={cart.title}
-                                storename={cart.storename}
-                                price={cart.price}
-                                index={index}
-                                clickButton={() => delOne(cart._id)}
-
-                            />
-
-                        </div>
+                            >
 
 
 
-                    ))}
+                                <CartInput
+                                    id={cart._id || ""}
+                                    cartList={cartList}
+                                    setCartList={setCartList}
+                                    product={cart.title}
+                                    storename={cart.storename}
+                                    price={cart.price}
+                                    index={index}
+                                    clickButton={() => delOne(cart._id)}
+
+                                />
+
+                            </div>
+
+
+
+
+                        ))}
+
+                    </div>
 
 
                     <button
-                        className="btn btn-primary w-full mt-10"
+                        className="btn btn-primary w-full mt-10 col-span-2"
                         onClick={() => addCheckoutItem}
                         type="submit"
                     >
                         {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
                     </button>
+
+
+
+
                 </form>
+
 
 
             </>
 
-        </StuLayout>
+        </StuLayout >
     )
 
 

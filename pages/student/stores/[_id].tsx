@@ -4,6 +4,7 @@ import { useState, useEffect, FormEventHandler } from "react"
 import GoodMess from "../../../components/shared/GoodMess"
 import Header from "../../../components/shared/Header"
 import StuLayout from "../Layout/StuLayout"
+import InputFromStore from "../../../components/shared/InputFromStore"
 
 
 
@@ -161,10 +162,10 @@ export default function Stores() {
         <StuLayout>
             <>
                 <Header
-                    title={"store "+ seller?.storename}
+                    title={"store " + seller?.storename}
                 />
-                 <form
-                onSubmit={search}
+                <form
+                    onSubmit={search}
 
                 >
                     <div
@@ -199,12 +200,15 @@ export default function Stores() {
                     </div>
 
 
-                </form> 
+                </form>
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
 
 
 
-                <div>
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+
+                >
 
                     {offers.map((offer: {
                         category: string
@@ -218,42 +222,31 @@ export default function Stores() {
                         <div
                             key={offer._id}
                         >
-                            <form className=" bg-primary text-red-500"
+                            <form
+                                className=""
+
                                 onSubmit={
                                     addCart
                                 }
                             >
-                                <input
-                                    defaultValue={offer.title}
-                                    readOnly
+
+
+                                <InputFromStore
+                                    category={offer.category}
+                                    price={offer.price}
+                                    title={offer.title}
+                                    load={isLoading ? "ADDING..." : "ADD TO CART"}
                                 />
 
 
 
-                                <input
-                                    readOnly
-                                    defaultValue={offer.category}
-                                />
 
-
-
-                                <input
-
-                                    defaultValue={offer.price}
-                                    readOnly
-                                />
-                                <input
-                                    readOnly
-                                    defaultValue={offer.description}
-                                />
-
-
-
+                                {/* 
                                 <button
 
                                     type="submit"
                                     className="btn bg-black"
-                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button>
+                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
 
 
                             </form>

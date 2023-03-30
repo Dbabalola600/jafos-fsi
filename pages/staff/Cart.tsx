@@ -59,7 +59,7 @@ export default function Cart() {
 
 
 
-    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export default function Cart() {
     const delOne = async (id: any) => {
 
 
-        const body={
+        const body = {
             id: id
         }
 
@@ -133,7 +133,7 @@ export default function Cart() {
 
         }
 
-        const body2={
+        const body2 = {
             user: user
         }
 
@@ -166,7 +166,7 @@ export default function Cart() {
 
 
 
-     
+
 
         setLoading(false)
     }
@@ -193,36 +193,47 @@ export default function Cart() {
                         addCheckOutItem
                     }
                 >
-                    {carts.map((cart: {
-                        _id: string | null | undefined;
-                        title: string
-                        price: number
-                        storename: string
-
-                    }, index) => (
-                        <div
-                            key={cart._id}
-                        >
 
 
+                    <div
 
-                            <CartInput
-                                id={cart._id || ""}
-                                cartList={cartList}
-                                setCartList={setCartList}
-                                product={cart.title}
-                                storename={cart.storename}
-                                price={cart.price}
-                                index={index}
-                                clickButton={() => delOne(cart._id)}
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6 "
 
-                            />
+                    >
+                        {carts.map((cart: {
+                            _id: string | null | undefined;
+                            title: string
+                            price: number
+                            storename: string
 
-                        </div>
+                        }, index) => (
+                            <div
+                                key={cart._id}
+                            >
 
 
 
-                    ))}
+                                <CartInput
+                                    id={cart._id || ""}
+                                    cartList={cartList}
+                                    setCartList={setCartList}
+                                    product={cart.title}
+                                    storename={cart.storename}
+                                    price={cart.price}
+                                    index={index}
+                                    clickButton={() => delOne(cart._id)}
+
+                                />
+
+                            </div>
+
+
+
+                        ))}
+
+
+                    </div>
+
 
 
                     <button

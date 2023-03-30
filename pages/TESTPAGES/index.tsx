@@ -15,11 +15,11 @@ type Target = {
 
 
 export default function Index() {
-    let status = "Order status : delivered"
+    let item = " maryland cookiessfunsfouwbwoubg"
 
-    let numb = "OrderNo: 2"
+    let price = " 20000"
 
-    let name = "damisi babalola"
+    let description = "damisi babalola"
 
     const router = useRouter()
 
@@ -42,13 +42,7 @@ export default function Index() {
         router.push(`/TESTPAGES/${form.item(0).value}`)
 
 
-        // const response = await fetch("/api/searchProduct", { method: "POST", body: JSON.stringify(body) })
-        //     .then(res => {
 
-        //         if (res.status === 200) {
-        //             router.push(`/TESTPAGES/${form.item(0).value}`)
-        //         }
-        //     })
     }
 
 
@@ -66,124 +60,142 @@ export default function Index() {
                 </h1>
 
 
-                <form
-                    onSubmit={search}
-
-                >
-
-                    <div className="flex justify-center">
-                        <div className="mb-3 xl:w-96">
-                            <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input
-                                    type="search"
-                                    className="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-black font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    aria-describedby="button-addon3"
 
 
-                                />
-                                <button
 
 
-                                    className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-                                    type="submit"
-                                    id="button-addon3"
-                                    data-te-ripple-init>
-                                    Search
-                                </button>
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+
+
+                    <div className="bg-primary rounded-lg p-3 pb-10  ">
+                        <div className="flex items-end space-x-3 break-words">
+
+                            <div className="w-full  text-left relative">
+
+
+                                <div className="text-black   font-bold text-lg">
+                                    {item}
+                                </div>
+
+                                <p
+                                    className="text-gray-400"
+                                >
+                                    NGN {price}
+                                </p>
                             </div>
                         </div>
-                    </div>
-
-
-                </form>
 
 
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
-
-
-
-                    <div>
-
-                        <Link
-                            href="/"
+                        <div
+                            className="w-1/2 grid grid-cols-3 lg:grid-cols-3 space-x-2 items-center lg:items-start"
                         >
 
-                            <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
 
-                                <div
-                                    className="items-center justify-center "
-                                >
-                                    <div
-                                        className="rounded-xl text-center text-sm  bg-black text-white"
-                                    >
-                                        {status}
-                                    </div>
+                            <div
+                                // onClick={() => handleQuantityChange("decrement")}
 
-                                </div>
-                                <div className="flex items-end space-x-3">
-
-                                    <div className="w-1/2  text-left relative">
-
-
-                                        <div className="text-black   font-bold text-lg">
-                                            {numb}
-                                        </div>
-
-                                        <p
-                                            className="text-gray-400"
-                                        >
-                                            {name}
-                                        </p>
-                                    </div>
-                                </div>
+                                className="rounded-lg lg:w-10 w-5  bg-red-500 text-black text-center lg:text-3xl text-lg hover:cursor-pointer border-black border-2  " >
+                                -
                             </div>
-                        </Link>
+
+                            <div
+                                className="bg-white lg:pt-3  pt-1 lg:w-10 w-5 item-center rounded-lg hover:bg-white hover:cursor-default text-center text-black"
+                            >
+                                {/* {quantity.toString} */} 2
+                            </div>
+
+
+                            <div
+                                // onClick={() => handleQuantityChange("increment")}
+
+                                className="rounded-lg lg:w-10 w-5  bg-green-500 text-black text-center lg:text-3xl text-lg hover:cursor-pointer border-black border-2  " >
+                                +
+                            </div>
+
+                            {/* <div
+                                // onClick={props.clickButton}
+                                className="btn btn-red-500"
+                            >
+                                Delete button
+                            </div> */}
+                            <input
+                                type="number"
+                                className="bg-white hidden text-center text-black"
+                                // value={quantity.toString}
+                                min={1}
+                                readOnly
+
+
+                            />
+
+
+
+
+                        </div>
+
+
+
+
+                        <button
+
+                            type="submit"
+                            className="btn bg-black lg:float-right   mt-5 "
+                        > delert
+                        </button>
+
+
+
                     </div>
 
 
 
+                    <div className="bg-primary rounded-lg  p-3 ">
 
 
-                    <div>
 
-                        <Link
-                            href="/"
-                        >
 
-                            <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
+                        <div className="">
 
-                                <div
-                                    className="items-center justify-center "
-                                >
-                                    <div
-                                        className="rounded-xl text-center text-sm  bg-black text-white"
+                            <div
+                                className="items-center justify-center "
+                            >
+
+
+                            </div>
+                            <div className="flex items-end space-x-3 break-words" >
+
+                                <div className="w-full  text-left relative">
+
+
+                                    <div className="text-black   font-bold text-lg">
+                                        {item}
+                                    </div>
+
+                                    <p
+                                        className="text-gray-400"
                                     >
-                                        {status}
-                                    </div>
-
-                                </div>
-                                <div className="flex items-end space-x-3">
-
-                                    <div className="w-1/2  text-left relative">
-
-
-                                        <div className="text-black   font-bold text-lg">
-                                            {numb}
-                                        </div>
-
-                                        <p
-                                            className="text-gray-400"
-                                        >
-                                            {name}
-                                        </p>
-                                    </div>
+                                        NGN {price}
+                                    </p>
                                 </div>
                             </div>
-                        </Link>
+
+                            <button
+
+                                type="submit"
+                                className="btn bg-black float-right"
+                            > {"ADD TO CART"}
+                            </button>
+
+
+
+                        </div>
+
                     </div>
+
+
+
 
 
 
