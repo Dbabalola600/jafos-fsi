@@ -3,6 +3,7 @@ type Props = {
     price: number
     title: string
     category: string
+    owner: string
     load: any
 
 }
@@ -52,7 +53,12 @@ export default function InputFromStore(props: Props) {
 
             />
 
+            <input
+                readOnly
+                className="hidden"
+                defaultValue={props.owner}
 
+            />
 
 
 

@@ -58,11 +58,44 @@ export default function Index() {
             <div
                 className="w-full py-20 text-black text-base md:text-xl"
             >
+
+
+
+
+
+
                 <Header
-                    title="PROFILE PAGE"
+                    title="PROFILE"
                 />
 
 
+
+
+
+
+                <div className=" text-primary mt-5 space-y-5 w-full ">
+
+                    <div>
+                        Name:  {student?.firstname} {" "} {student?.lastname}
+                      
+
+                    </div>
+
+                    <div>
+                        Matric No: {student?.matricno}
+                       
+
+                    </div>
+
+
+                    <div>
+                        Email: {student?.email}
+            
+                    </div>
+
+
+
+                </div>
                 <NavButton
                     uLink="/student/Transactions/creditAccount"
                     title=" Credit Account"
@@ -90,36 +123,7 @@ export default function Index() {
                 />
 
 
-                <div className=" text-primary mt-10 space-y-5 bg-black w-full ">
 
-                    <div>
-                        NAME
-                        <p>
-                            {student?.firstname} {" "} {student?.lastname}
-                        </p>
-
-                    </div>
-
-                    <div>
-                        Matric No
-                        <p>
-                            {student?.matricno}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-                        Email
-                        <p>
-                            {student?.email}
-                        </p>
-
-                    </div>
-
-
-
-                </div>
 
 
 

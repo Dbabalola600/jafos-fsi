@@ -18,7 +18,7 @@ type Offers = {
     category: string
     price: number
     description: string
-    storename: string
+    owner: string
 }
 
 type Seller = {
@@ -149,13 +149,7 @@ export default function Stores() {
         router.push(`/student/stores/${ssd._id}/${form.item(0).value}`)
 
 
-        // const response = await fetch("/api/searchProduct", { method: "POST", body: JSON.stringify(body) })
-        //     .then(res => {
-
-        //         if (res.status === 200) {
-        //             router.push(`/TESTPAGES/${form.item(0).value}`)
-        //         }
-        //     })
+       
     }
 
     return (
@@ -215,7 +209,7 @@ export default function Stores() {
                         description: string
                         price: number
                         title: string;
-                        storename: string
+                        owner: string
                         _id: string | null | undefined
 
                     }) => (
@@ -235,6 +229,7 @@ export default function Stores() {
                                     category={offer.category}
                                     price={offer.price}
                                     title={offer.title}
+                                    owner={offer.owner}
                                     load={isLoading ? "ADDING..." : "ADD TO CART"}
                                 />
 
@@ -253,6 +248,9 @@ export default function Stores() {
                         </div>
                     ))}
                 </div>
+
+
+
             </>
 
         </StuLayout>

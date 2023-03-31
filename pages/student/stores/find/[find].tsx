@@ -4,6 +4,8 @@ import { useState, useEffect, FormEventHandler } from "react"
 import GoodMess from "../../../../components/shared/GoodMess"
 import Header from "../../../../components/shared/Header"
 import StuLayout from "../../Layout/StuLayout"
+import InputFromStore from "../../../../components/shared/InputFromStore"
+import ErrMess from "../../../../components/shared/ErrMess"
 
 
 
@@ -18,7 +20,7 @@ type Offers = {
     category: string
     price: number
     description: string
-    storename: string
+    owner: string
 }
 
 type Seller = {
@@ -37,7 +39,8 @@ export default function Found() {
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
-
+    const [showtoast, settoast] = useState({ message: "", show: false })
+   
 
 
     let ssd = router.query
@@ -53,6 +56,18 @@ export default function Found() {
 
 
 
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+
+
     const search = async () => {
 
 
@@ -63,10 +78,10 @@ export default function Found() {
         const response = await fetch("/api/searchProduct", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as Offers[]
 
-            SetOffers(response)
+        SetOffers(response)
     }
 
-   
+
 
 
 
@@ -81,71 +96,113 @@ export default function Found() {
 
 
 
-    // search 
+    const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault()
 
-    
+        setLoading(true)
+        const user = getCookie("Normuser")
+        // console.log(user)
+        const form = e.currentTarget.elements as any
+
+
+
+
+        const body2 = {
+            _id: form.item(3).value
+        }
+
+        const response2 = await fetch("/api/store/fetchSeller", { method: "POST", body: JSON.stringify(body2) })
+            .then(res => res.json()) as Seller
+
+
+        setSeller(response2)
+
+        const body = {
+            user: user,
+            storename: response2["storename"],
+            title: form.item(0).value,
+            category: form.item(1).value,
+            price: form.item(2).value,
+
+        }
+
+        const reponse = await fetch("/api/student/cart/newCart", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+
+                if (res.status == 200) {
+                    setgoodtoast({ message: " message", show: true })
+                    // router.reload()
+                    router.push("/student/Cart")
+                }
+                if (res.status == 500){
+                    settoast({message :"error", show: true})
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+
+
+        setLoading(false)
+    }
+
+
+
 
     return (
         <StuLayout>
             <>
                 <Header
-                    title={ssd.find}
+                    title={"search result for "+ssd.find}
                 />
-               
+
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
+                {showtoast.show && <ErrMess title="Not Found" />}
+                   
 
 
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                <div>
+                >
 
                     {offers.map((offer: {
                         category: string
                         description: string
                         price: number
                         title: string;
-                        storename: string
+                        owner: string
                         _id: string | null | undefined
 
                     }) => (
                         <div
                             key={offer._id}
                         >
-                            <form className=" bg-primary text-red-500"
-                                // onSubmit={
-                                //     addCart
-                                // }
+                            <form
+                                className=""
+
+                            onSubmit={
+                                 addCart
+                            }
                             >
-                                <input
-                                    defaultValue={offer.title}
-                                    readOnly
+
+
+                                <InputFromStore
+                                    category={offer.category}
+                                    price={offer.price}
+                                    title={offer.title}
+                                    owner={offer.owner}
+                                    load={isLoading ? "ADDING..." : "ADD TO CART"}
                                 />
 
 
 
-                                <input
-                                    readOnly
-                                    defaultValue={offer.category}
-                                />
 
-
-
-                                <input
-
-                                    defaultValue={offer.price}
-                                    readOnly
-                                />
-                                <input
-                                    readOnly
-                                    defaultValue={offer.description}
-                                />
-
-
-
+                                {/* 
                                 <button
 
                                     type="submit"
                                     className="btn bg-black"
-                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button>
+                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
 
 
                             </form>
