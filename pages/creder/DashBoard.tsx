@@ -6,6 +6,8 @@ import { Key, useEffect, useState } from "react";
 
 import CredLayout from "./Layout/credLayout";
 import Header from "../../components/shared/Header";
+import UserDash from "../../components/shared/UserDash";
+import UserDash2 from "../../components/shared/UserDash2";
 
 
 
@@ -60,22 +62,19 @@ export default function DashBoard() {
                 className="w-full py-20 space-y-10  text-black text-base md:text-xl"
 
             >
-                <div
-                    className=" bg-black md:w-60"
-                >
-                    <div className="text-primary text-3xl">
-                        Welcome {creder?.firstname} {" "}
-                        {creder?.account_bal} Credits
-                    </div>
+                
 
 
+                <Header
+                    title="DashBoard"
+                />
 
-                    <div className="text-red-500">
-                        {creder?.creder_no}
-                    </div>
-                </div>
-
-
+                <UserDash2
+                    AccId={creder?.creder_no}
+                    accBal={creder?.account_bal}
+                    name={creder?.firstname}
+                  
+                />
 
 
 

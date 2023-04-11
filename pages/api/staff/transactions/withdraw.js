@@ -5,6 +5,8 @@ import TransferHistory from "../../../../model/Transactions/TransferHistory";
 
 
 export default async function Withdraw(req, res) {
+
+
     if (req.method === "POST") {
         console.log('CONNECTING TO MONGO');
         await connectMongo();
@@ -28,7 +30,7 @@ export default async function Withdraw(req, res) {
 
                 const sen_history = await TransferHistory.create({
                     sender: sender.firstname + sender.lastname,
-                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    reciever: reciever[0].creder_no,
                     amount: amt,
                     trans_type: "DEBIT",
                     send_id: sen,
@@ -43,7 +45,7 @@ export default async function Withdraw(req, res) {
 
 
 
-                let new_reciever_bal = JSON.parse(amt) + reciever[0].account_bal
+                let new_reciever_bal =  reciever[0].account_bal - JSON.parse(amt) 
 
 
 
@@ -56,9 +58,9 @@ export default async function Withdraw(req, res) {
                 const reciever_bal = await Creder.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
                 const rec_history = await TransferHistory.create({
                     sender: sender.firstname + sender.lastname,
-                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    reciever: reciever[0].creder_no,
                     amount: amt,
-                    trans_type: "CREDIT",
+                    trans_type: "WITHDRAW",
                     send_id: sen,
                     rec_id: reciever[0].id
                 })

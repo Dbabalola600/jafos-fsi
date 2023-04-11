@@ -42,6 +42,7 @@ export default async function TokenCredit(req, res) {
             // update creder info
             const cred = await Creder.find({ creder_no: tok_val[0].madeBy })
             const new_rec_bal = tok_val[0].amount + cred[0].account_bal
+            const reciever_bal = await Creder.findById(cred[0]._id).updateOne({ account_bal: new_rec_bal })
 
 
 
@@ -74,41 +75,41 @@ export default async function TokenCredit(req, res) {
         }
 
 
-        if (tok_val[0].status === "Master") {
-            //credit account with token 
-            const new_bal = tok_val[0].amount + user.account_bal
-            const bal = await Staff.findById(id).updateOne({ account_bal: new_bal })
+        // if (tok_val[0].status === "Master") {
+        //     //credit account with token 
+        //     const new_bal = tok_val[0].amount + user.account_bal
+        //     const bal = await Staff.findById(id).updateOne({ account_bal: new_bal })
 
-            //update token details 
-            const tok_update = await Token.findById(tok_val[0]._id).updateOne({ usedBy: user.staffid })
-
-
-            const history = await TransferHistory.create({
-                sender: tok_val[0].madeBy,
-                reciever: user.firstname + user.lastname,
-                amount: tok_val[0].amount,
-                trans_type: "MASTER TOKEN CREDIT",
-                send_id: tok_val[0]._id,
-                rec_id: id
-            })
+        //     //update token details 
+        //     const tok_update = await Token.findById(tok_val[0]._id).updateOne({ usedBy: user.staffid })
 
 
-
-            console.log(history)
+        //     const history = await TransferHistory.create({
+        //         sender: tok_val[0].madeBy,
+        //         reciever: user.firstname + user.lastname,
+        //         amount: tok_val[0].amount,
+        //         trans_type: "MASTER TOKEN CREDIT",
+        //         send_id: tok_val[0]._id,
+        //         rec_id: id
+        //     })
 
 
 
+        //     console.log(history)
 
 
-            return res.status(200).json({
-                message: "transfer done",
-            })
-        }
-        else {
-            return res.status(256).json({
-                message: "nope",
-            });
-        }
+
+
+
+        //     return res.status(200).json({
+        //         message: "transfer done",
+        //     })
+        // }
+        // else {
+        //     return res.status(256).json({
+        //         message: "nope",
+        //     });
+        // }
 
 
 

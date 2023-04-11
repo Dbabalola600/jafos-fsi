@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { deleteCookie, getCookie, hasCookie } from "cookies-next"
 
 import { useRouter } from "next/router";
@@ -18,7 +18,7 @@ export default function NavBar2() {
 
 
     const showinfo = async () => {
-        const token = getCookie("Normuser")
+        const token = getCookie("Staffuser")
         const body = {
             id: token
         }
@@ -64,6 +64,16 @@ export default function NavBar2() {
     const handleClick = () => {
         setActive(!active);
     };
+
+
+
+    useEffect(() => {
+        showinfo()
+
+    }, [])
+
+
+
     return (
         <>
             <nav className='flex items-center flex-wrap bg-black p-3 sticky top-0 z-50 '>

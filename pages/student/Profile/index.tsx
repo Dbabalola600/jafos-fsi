@@ -65,7 +65,7 @@ export default function Index() {
 
 
                 <Header
-                    title="PROFILE"
+                    title="Profile Information"
                 />
 
 

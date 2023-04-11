@@ -1,11 +1,13 @@
-import { FormEventHandler, useEffect, useState } from "react";
-import Header from "../../../../components/shared/Header";
-import TextInput from "../../../../components/shared/TextInput";
-import CatLayout from "../../Layout/CatLayout";
-import { getCookie } from "cookies-next";
+import Link from "next/link";
+import Header from "../../../components/shared/Header";
+import CredLayout from "../Layout/credLayout";
+import NavButton from "../../../components/shared/NavButton";
+import { FormEventHandler, useState } from "react";
 import { useRouter } from "next/router";
-import GoodMess from "../../../../components/shared/GoodMess";
-import ErrMess from "../../../../components/shared/ErrMess";
+import { getCookie } from "cookies-next";
+import TextInput from "../../../components/shared/TextInput";
+import GoodMess from "../../../components/shared/GoodMess";
+import ErrMess from "../../../components/shared/ErrMess";
 
 
 
@@ -16,22 +18,16 @@ import ErrMess from "../../../../components/shared/ErrMess";
 
 
 
-export default function Student() {
+export default function StuWithDraw() {
 
 
     const router = useRouter()
-    let ssd = router.query
-
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showtoast3, settoast3] = useState({ message: "", show: false })
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
-
-
-
-
 
 
 
@@ -43,24 +39,24 @@ export default function Student() {
 
         const form = e.currentTarget.elements as any
 
-        const info = getCookie("Selluser")
-        console.log(info)
-
+        const token = getCookie("Creduser")
 
 
         const body = {
             sen: form.item(0).value,
-            rec: info,
+            rec: token,
             amt: form.item(1).value,
             pin: form.item(2).value
         }
 
 
 
-        const respone = await fetch("/api/seller/transactions/RecStudent", { method: "POST", body: JSON.stringify(body) })
+        const respone = await fetch("/api/creder/transactions/StuWithdraw", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
-                    router.push("/seller/DashBoard")
+                    setgoodtoast({ message: " message", show: true })
+
+                    router.push("/creder/DashBoard")
                 }
                 if (res.status == 256) {
                     settoast({ message: " message", show: true })
@@ -68,7 +64,7 @@ export default function Student() {
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
                 }
-                if (res.status == 247) {
+                if (res.status == 500) {
                     settoast3({ message: " message", show: true })
                 }
             })
@@ -79,59 +75,15 @@ export default function Student() {
 
 
 
-
-
-    useEffect(() => {
-        if (showgoodtoast.show) {
-            setTimeout(() => {
-                setgoodtoast({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showgoodtoast.show])
-
-
-    useEffect(() => {
-        if (showtoast.show) {
-            setTimeout(() => {
-                settoast({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast.show])
-
-
-    useEffect(() => {
-        if (showtoast3.show) {
-            setTimeout(() => {
-                settoast3({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast.show])
-
-    useEffect(() => {
-        if (showtoast2.show) {
-            setTimeout(() => {
-                settoast2({ message: "", show: false })
-            }, 5000)
-        }
-
-    }, [showtoast2.show])
-
-
-
-
-
-
     return (
-        <CatLayout>
-            <>
+        <CredLayout>
+            <div
+                className="w-full py-20 space-y-10  text-black text-base md:text-xl"
+
+            >
                 <Header
-                    title='Student PAYMENT'
+                    title="Student WITHDRAW"
                 />
-
-
 
 
                 <form
@@ -149,8 +101,8 @@ export default function Student() {
 
                     <div className="mx-auto  w-full ">
                         <TextInput
-                            placeholder="Sender Matric Number"
-                            name="Sender Matric Number"
+                            placeholder="Student Matric Number"
+                            name="Student Matric Number"
                             type='text'
 
                         />
@@ -194,7 +146,9 @@ export default function Student() {
 
 
 
-            </>
-        </CatLayout>
+
+
+            </div>
+        </CredLayout>
     )
 }

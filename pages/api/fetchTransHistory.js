@@ -19,7 +19,9 @@ export default async function fetchTransHistory(req, res) {
         const sen_hist = await TransferHistory.find({ send_id: id, trans_type: "DEBIT" }).sort({ createdAt: -1 })
         const cred_hist = await TransferHistory.find({ rec_id: id, trans_type: "MASTER TOKEN CREDIT" }).sort({ createdAt: -1 })
         const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
-
+        const creder_hist = await TransferHistory.find({ sen_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
+        const withdraw = await TransferHistory.find({ rec_id: id, trans_type: "WITHDRAW" }).sort({ createdAt: -1 })
+       
 
 
 
@@ -33,7 +35,7 @@ export default async function fetchTransHistory(req, res) {
 
 
 
-        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist]
+        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist, ...creder_hist,...withdraw]
 
 
 
@@ -54,7 +56,14 @@ export default async function fetchTransHistory(req, res) {
         for (let i = 0; i < tok_hist.length; i++) {
             coolStruct.push(tok_hist[i])
         }
+        for (let i = 0; i < creder_hist.length; i++) {
+            coolStruct.push(creder_hist[i])
+        }
 
+
+        for (let i = 0; i < withdraw.length; i++) {
+            coolStruct.push(withdraw[i])
+        }
 
 
         // console.log(coolStruct.length)
@@ -75,14 +84,10 @@ export default async function fetchTransHistory(req, res) {
         return res.status(200).json(
             coolStruct
         )
-
-
-     
     } else {
 
         return res.status(400).json({
             message: "WRONG REQUEST",
         });
-
     }
 }

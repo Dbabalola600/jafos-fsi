@@ -1,7 +1,9 @@
-import { getCookie } from "cookies-next";
+import Link from "next/link";
 import Header from "../../../components/shared/Header";
-import CatLayout from "../Layout/CatLayout";
+import CredLayout from "../Layout/credLayout";
 import { useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
+
 
 
 
@@ -23,16 +25,17 @@ type TransHists = {
 
 
 
+
+
+
+
 export default function TransHistory() {
+
 
     const [hists, setHistory] = useState<TransHists[]>([])
 
-
-
-
-
     const showinfo = async () => {
-        const token = getCookie("Selluser")
+        const token = getCookie("Creduser")
         const body = {
             id: token
         }
@@ -41,10 +44,6 @@ export default function TransHistory() {
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
-
-
-
-
     }
 
 
@@ -55,13 +54,17 @@ export default function TransHistory() {
 
     }, [])
 
-    return (
-        <CatLayout>
-            <>
-                <Header
-                    title='TRANSACTION HISTORY'
-                />
 
+
+    return (
+        <CredLayout>
+            <div
+                className="w-full py-20 space-y-10  text-black text-base md:text-xl"
+
+            >
+                <Header
+                    title="Transaction History"
+                />
 
                 {hists.map((hist: {
                     sender: string,
@@ -113,14 +116,7 @@ export default function TransHistory() {
                 ))}
 
 
-
-            </>
-        </CatLayout>
+            </div>
+        </CredLayout>
     )
 }
-
-
-
-
-
-

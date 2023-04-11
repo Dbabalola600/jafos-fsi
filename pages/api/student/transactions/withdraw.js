@@ -42,7 +42,7 @@ export default async function Withdraw(req, res) {
 
 
 
-                let new_reciever_bal = JSON.parse(amt) +reciever[0].account_bal
+                let new_reciever_bal =  reciever[0].account_bal - JSON.parse(amt) 
 
 
                 
@@ -57,7 +57,7 @@ export default async function Withdraw(req, res) {
                     sender: sender.firstname + sender.lastname,
                     reciever: reciever[0].firstname + reciever[0].lastname,
                     amount: amt,
-                    trans_type: "CREDIT",
+                    trans_type: "WITHDRAW",
                     send_id: sen,
                     rec_id: reciever[0].id
                 })

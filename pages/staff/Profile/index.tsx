@@ -16,6 +16,7 @@ type Staff = {
     lastname: string
     staffid: string
     account_bal: number
+    email: string
 }
 
 
@@ -25,7 +26,7 @@ export default function Index() {
 
     const router = useRouter()
 
-   
+
 
 
     const showinfo = async () => {
@@ -59,10 +60,25 @@ export default function Index() {
                 className="w-full py-20 text-black text-base md:text-xl"
             >
                 <Header
-                    title="PROFILE PAGE"
+                    title="Profile Information"
                 />
 
 
+
+                <div className=" text-primary mt-5 space-y-5 w-full ">
+
+                    <div>
+                        Name:  {staff?.firstname} {" "} {staff?.lastname}
+
+
+                    </div>
+
+                    <div>
+                        Staff ID : {staff?.staffid}
+
+
+                    </div>
+                </div>
                 <NavButton
                     uLink="/staff/Transactions/creditAccount"
                     title=" Credit Account"
@@ -90,33 +106,7 @@ export default function Index() {
                 />
 
 
-                <div className=" text-primary mt-10 space-y-5 bg-black w-full ">
 
-                    <div>
-                        NAME
-                        <p>
-                       </p>
-
-                    </div>
-
-                    <div>
-                        Matric No
-                        <p>
-                       </p>
-
-                    </div>
-
-
-                    <div>
-                        Email
-                        <p>
-                        </p>
-
-                    </div>
-
-
-
-                </div>
 
 
 
