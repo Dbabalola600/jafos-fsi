@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import OrderCard from "../../../components/shared/OrderCard";
+import OrderCard2 from "../../../components/shared/OrderCard2";
 
 
 
@@ -63,6 +64,15 @@ type Order = {
 }
 
 
+type OrderAmt = {
+    all: number
+    cance: number
+    del: number
+    comp: number
+    pend: number
+
+}
+
 
 function Orders() {
     const router = useRouter()
@@ -71,6 +81,8 @@ function Orders() {
     const [orderItems, setOrderItems] = useState<OrderItems[]>([]);
 
     const [orders, setOrders] = useState<Order[]>([])
+
+    const [Amt, setAmt] = useState<OrderAmt | null>(null)
 
 
 
@@ -113,6 +125,14 @@ function Orders() {
 
 
 
+        //fetch the amount of the orders 
+
+
+        const Amtresponse = await fetch("/api/seller/order/fetchOrderAmt", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json()) as OrderAmt
+
+        setAmt(Amtresponse)
+
 
 
 
@@ -129,59 +149,98 @@ function Orders() {
         <CatLayout>
             <>
                 <Header
-                    title="Pending ORDERS"
+                    title="Pending Orders"
                 />
 
 
                 <div
-                    className="btn btn-primary"
-                    onClick={() => router.push("/seller/Orders/all")}
+                    className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
                 >
-                    All Orders
+
+
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => router.push("/seller/Orders/")}
+                    >
+                        All Orders {" "} ({Amt?.all})
+                    </div>
+
+
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => router.push("/seller/Orders/PendingOrder")}
+                    >
+                        Pending Order{" "}  ({Amt?.pend})
+                    </div>
+
+
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => router.push("/seller/Orders/CompletedOrder")}
+                    >
+                        Completed Order {" "}({Amt?.comp})
+                    </div>
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => router.push("/seller/Orders/DeliveredOrder")}
+                    >
+                        Delivered Order{" "} ({Amt?.del})
+                    </div>
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => router.push("/seller/Orders/CancelledOrder")}
+                    >
+                        Cancelled Order{" "} ({Amt?.cance})
+                    </div>
+
+
                 </div>
 
 
 
 
 
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+                    {orders.map((order: {
+                        "0": {
+                            _id: string;
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string;
+                            orderList: string
+
+                        }
 
 
-                {orders.map((order: {
-                    "0": {
-                        _id: string;
-                        orderNum: number
-                        user: string
-                        price: number;
-                        quantity: number;
-                        amount: number;
-                        status: string;
-                        orderList: string
-                
-                    }
-                
+                    }, index) => (
+                        <div
+                            key={order[0]._id}
+                        >
 
-                }, index) => (
-                    <div
-                        key={order[0]._id}
-                    >
+                            <div className="grid mt-10 ">
+                                <OrderCard2
+                                    OrderNum={order[0].orderNum}
 
-                        <div className="grid mt-10 ">
-                            <OrderCard
-                                OrderNum={order[0].orderNum}
-                                User={"user"}
-                                status={"Pending"}
-                                ulink={`/seller/Orders/Details/${order[0]._id}`}
+                                    status={"Pending"}
+                                    ulink={`/seller/Orders/Details/${order[0]._id}`}
 
 
 
-                            />
+                                />
 
 
+
+                            </div>
 
                         </div>
+                    ))}
+                </div>
 
-                    </div>
-                ))}
+
 
 
                 {/* {orderItems.map((orderItem: {

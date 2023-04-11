@@ -5,7 +5,7 @@ import Student from "../../../../model/Student/StudentModel";
 import Staff from "../../../../model/Staff/StaffModel";
 
 
-export default async function fetchPendingOrder(req, res) {
+export default async function fetchCompletedOrder(req, res) {
     if (req.method === "POST") {
 
         console.log('CONNECTING TO MONGO');
@@ -18,55 +18,22 @@ export default async function fetchPendingOrder(req, res) {
 
 
 
-        const item = await OrderItem.find({ storename: Sname, status: "Pending" }).sort({ createdAt: -1 })
+        const item = await OrderItem.find({ storename: Sname, status: "Completed" }).sort({ createdAt: -1 })
+        console.log(item.length)
 
+        let item_no_list =[]
 
-        let item_no_list = []
-
-        for (let i = 0; i < item.length; i++) {
+        for (let i = 0; i <item.length; i++){
             item_no_list.push(item[i].orderNum)
         }
 
-
-        let item_user_list = []
-        for (let i = 0; i < item.length; i++) {
-            item_user_list.push(item[i].user)
-        }
-
-        console.log(item_user_list)
-
-        const orderStruct = await Promise.all(item_no_list.map(async (nom) => {
+        const orderStruct  = await Promise.all(item_no_list.map(async(nom)=>{
             const l_order = Order.find({ orderNum: nom })
 
-
-
-
-            // const existingUser = await Promise.all(item_user_list.map(async (name) => {
-            //     const user = await Student.findById(name).select("firstname lastname matricno ")
-
-
-            //     return (user)
-            // }))
-            // console.log(existingUser)
-
-            return (
-
+            return(
                 l_order
-              
             )
-
-
-
-
-
         }))
-
-
-
-
-
-
-
 
 
         return res.json(orderStruct)

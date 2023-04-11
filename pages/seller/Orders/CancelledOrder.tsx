@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import OrderCard from "../../../components/shared/OrderCard";
+import OrderCard2 from "../../../components/shared/OrderCard2";
 
 
 
@@ -43,36 +44,25 @@ type OrderItems = {
 
 
 type Order = {
+    "0": {
+        _id: string;
 
-    userObj: {
-        firstname: string
-        _id: string
-        lastname: string
-    }
 
-    orderObj: {
-        "0": {
-            _id: string;
-            storename: string
-            product: string
-            orderNum: number
-            user: string
-            price: number;
-            quantity: number;
-            amount: number;
-            status: string
-        }
-    }
-
-    oriOrder: {
-        stores: string
-        orderList: OrderItems
         orderNum: number
         user: string
-        _id: string
+        price: number;
+        quantity: number;
+        amount: number;
+        status: string
+        orderList: string
 
     }
+
+
+
+
 }
+
 
 type OrderAmt = {
     all: number
@@ -82,6 +72,7 @@ type OrderAmt = {
     pend: number
 
 }
+
 
 function Orders() {
     const router = useRouter()
@@ -125,12 +116,13 @@ function Orders() {
 
 
 
-        const specOrder = await fetch("/api/seller/order/fetchNewOrder", { method: "POST", body: JSON.stringify(body3) })
+        const specOrder = await fetch("/api/seller/order/fetchCancelledOrder", { method: "POST", body: JSON.stringify(body3) })
             .then(res => res.json()) as Order[]
 
 
         console.log(specOrder)
         setOrders(specOrder)
+
 
 
 
@@ -141,6 +133,7 @@ function Orders() {
             .then(res => res.json()) as OrderAmt
 
         setAmt(Amtresponse)
+
 
     }
 
@@ -155,7 +148,7 @@ function Orders() {
         <CatLayout>
             <>
                 <Header
-                    title="All Orders"
+                    title="Cancelled Orders"
                 />
 
 
@@ -203,49 +196,39 @@ function Orders() {
                 </div>
 
 
+
+
+
+
+
+
                 <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
-
                     {orders.map((order: {
-                        userObj: {
-                            firstname: string
-                            _id: string
-                            lastname: string
-                        }
-
-                        orderObj: {
-                            "0": {
-                                _id: string;
-                                storename: string
-                                product: string
-                                orderNum: number
-                                user: string
-                                price: number;
-                                quantity: number;
-                                amount: number;
-                                status: string
-                            }
-                        }
-
-                        oriOrder: {
-                            stores: string
-                            orderList: OrderItems
+                        "0": {
+                            _id: string;
                             orderNum: number
                             user: string
-                            _id: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string;
+                            orderList: string
 
                         }
+
+
                     }, index) => (
                         <div
-                            key={order.oriOrder._id}
+                            key={order[0]._id}
                         >
 
                             <div className="grid mt-10 ">
-                                <OrderCard
-                                    OrderNum={order.oriOrder.orderNum}
-                                    User={order.userObj.firstname + order.userObj.lastname}
-                                    status={order.orderObj[0].status}
-                                    ulink={`Orders/Details/${order.oriOrder._id}`}
+                                <OrderCard2
+                                    OrderNum={order[0].orderNum}
+
+                                    status={"Cancelled"}
+                                    ulink={`/seller/Orders/Details/${order[0]._id}`}
 
 
 
@@ -258,6 +241,7 @@ function Orders() {
                         </div>
                     ))}
                 </div>
+
 
 
                 {/* {orderItems.map((orderItem: {

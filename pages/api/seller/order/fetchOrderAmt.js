@@ -5,7 +5,7 @@ import Student from "../../../../model/Student/StudentModel";
 import Staff from "../../../../model/Staff/StaffModel";
 
 
-export default async function fetchPendingOrder(req, res) {
+export default async function fetchOrderAmtr(req, res) {
     if (req.method === "POST") {
 
         console.log('CONNECTING TO MONGO');
@@ -18,58 +18,27 @@ export default async function fetchPendingOrder(req, res) {
 
 
 
-        const item = await OrderItem.find({ storename: Sname, status: "Pending" }).sort({ createdAt: -1 })
+        const cancelled = await OrderItem.find({ storename: Sname, status: "Cancelled" }).sort({ createdAt: -1 })
+        const pending = await OrderItem.find({ storename: Sname, status: "Pending" }).sort({ createdAt: -1 })
+        const delivered = await OrderItem.find({ storename: Sname, status: "Delivered" }).sort({ createdAt: -1 })
+        const completed = await OrderItem.find({ storename: Sname, status: "Completed" }).sort({ createdAt: -1 })
+        const allOr = await OrderItem.find({ storename: Sname })
 
+        console.log(allOr.length)
 
-        let item_no_list = []
+        let cance = cancelled.length
+        let pend = pending.length
+        let del = delivered.length
+        let comp = completed.length
+        let all = allOr.length
 
-        for (let i = 0; i < item.length; i++) {
-            item_no_list.push(item[i].orderNum)
-        }
-
-
-        let item_user_list = []
-        for (let i = 0; i < item.length; i++) {
-            item_user_list.push(item[i].user)
-        }
-
-        console.log(item_user_list)
-
-        const orderStruct = await Promise.all(item_no_list.map(async (nom) => {
-            const l_order = Order.find({ orderNum: nom })
-
-
-
-
-            // const existingUser = await Promise.all(item_user_list.map(async (name) => {
-            //     const user = await Student.findById(name).select("firstname lastname matricno ")
-
-
-            //     return (user)
-            // }))
-            // console.log(existingUser)
-
-            return (
-
-                l_order
-              
-            )
-
-
-
-
-
-        }))
-
-
-
-
-
-
-
-
-
-        return res.json(orderStruct)
+        return res.status(200).json({
+            cance,
+            pend,
+            del,
+            comp,
+            all
+        })
         // return res.json(orderStruct)
 
 

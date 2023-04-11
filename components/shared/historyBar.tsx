@@ -1,4 +1,5 @@
 import Link from "next/link";
+import router from "next/router";
 
 
 type histProps = {
@@ -24,7 +25,7 @@ export default function HistBar(props: histProps) {
 
 
             {/* all */}
-            <Link
+            {/* <Link
                 href={props.allLink}
 
             >
@@ -45,88 +46,58 @@ export default function HistBar(props: histProps) {
 
 
                 </div>
-            </Link>
+            </Link> */}
+
+            <div
+                className="btn btn-primary text-white text-center"
+                onClick={() => router.push(props.allLink)}
+            >
+
+                All {"   "} {props.allAmt}
+            </div>
 
 
 
             {/* debit */}
 
-            <Link
-                href={props.debitLink}
 
+
+
+            <div
+                className="btn bg-red-500 text-white text-center"
+                onClick={() => router.push(props.debitLink)}
             >
-                <div
-                    className={"bg-red-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black  "}
 
-                >
-
-
-                    <a
-                        className="font-bold mx-2 text-[10px] text-left"
-                    >
-                        Debit {"   "} {props.debitAmt}
+                Debit {"   "} {props.debitAmt}
+            </div>
 
 
-                    </a>
-
-
-
-                </div>
-            </Link>
 
 
             {/* credit */}
 
-            <Link
-                href={props.creditLink}
 
+            <div
+                className="btn bg-green-500 text-white text-center"
+                onClick={() => router.push(props.creditLink)}
             >
-                <div
-                    className={"bg-green-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black  "}
 
-                >
+                Credit {"   "} {props.creditAmt}
+            </div>
 
-
-                    <a
-                        className="font-bold mx-2 text-[10px] text-left"
-                    >
-                        Credit {"   "} {props.creditAmt}
-
-
-                    </a>
-
-
-
-                </div>
-            </Link>
 
 
 
             {/* token credit */}
-
-
-            <Link
-                href={props.tokenLink}
-
+            <div
+                className="btn bg-orange-500 text-white text-center"
+                onClick={() => router.push(props.tokenLink)}
             >
-                <div
-                    className={"bg-orange-500 rounded-xl  mx-auto w-28 hover:cursor-pointer hover:bg-black hover:text-white text-black  "}
 
-                >
-
-
-                    <a
-                        className="font-bold mx-2 text-[10px] text-left"
-                    >
-                        TokenCredit{"   "} {props.tokenAmt}
+                Token Credit{"     "} {props.tokenAmt}
+            </div>
 
 
-                    </a>
-
-
-
-                </div>
-            </Link>
 
 
         </div>
