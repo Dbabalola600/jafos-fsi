@@ -43,35 +43,23 @@ type OrderItems = {
 
 
 type Order = {
+    "0": {
+        _id: string;
 
-    userObj: {
-        firstname: string
-        _id: string
-        lastname: string
-    }
 
-    orderObj: {
-        "0": {
-            _id: string;
-            storename: string
-            product: string
-            orderNum: number
-            user: string
-            price: number;
-            quantity: number;
-            amount: number;
-            status: string
-        }
-    }
-
-    oriOrder: {
-        stores: string
-        orderList: OrderItems
         orderNum: number
         user: string
-        _id: string
+        price: number;
+        quantity: number;
+        amount: number;
+        status: string
+        orderList: string
 
     }
+
+
+
+
 }
 
 
@@ -116,7 +104,7 @@ function Orders() {
 
 
 
-        const specOrder = await fetch("/api/seller/order/fetchNewOrder", { method: "POST", body: JSON.stringify(body3) })
+        const specOrder = await fetch("/api/seller/order/fetchPendingOrder", { method: "POST", body: JSON.stringify(body3) })
             .then(res => res.json()) as Order[]
 
 
@@ -141,7 +129,7 @@ function Orders() {
         <CatLayout>
             <>
                 <Header
-                    title="ORDERS"
+                    title="Pending ORDERS"
                 />
 
 
@@ -153,56 +141,36 @@ function Orders() {
                 </div>
 
 
-                <div
-                    className="btn btn-primary"
-                    onClick={() => router.push("/seller/Orders/PendingOrder")}
-                >
-                    Pending Order
-                </div>
 
 
 
 
-             {orders.map((order: {
-                    userObj: {
-                        firstname: string
-                        _id: string
-                        lastname: string
-                    }
 
-                    orderObj: {
-                        "0": {
-                            _id: string;
-                            storename: string
-                            product: string
-                            orderNum: number
-                            user: string
-                            price: number;
-                            quantity: number;
-                            amount: number;
-                            status: string
-                        }
-                    }
-
-                    oriOrder: {
-                        stores: string
-                        orderList: OrderItems
+                {orders.map((order: {
+                    "0": {
+                        _id: string;
                         orderNum: number
                         user: string
-                        _id: string
-
+                        price: number;
+                        quantity: number;
+                        amount: number;
+                        status: string;
+                        orderList: string
+                
                     }
+                
+
                 }, index) => (
                     <div
-                        key={order.oriOrder._id}
+                        key={order[0]._id}
                     >
 
                         <div className="grid mt-10 ">
                             <OrderCard
-                                OrderNum={order.oriOrder.orderNum}
-                                User={order.userObj.firstname + order.userObj.lastname}
-                                status={order.orderObj[0].status}
-                                ulink={`Orders/Details/${order.oriOrder._id}`}
+                                OrderNum={order[0].orderNum}
+                                User={"user"}
+                                status={"Pending"}
+                                ulink={`/seller/Orders/Details/${order[0]._id}`}
 
 
 

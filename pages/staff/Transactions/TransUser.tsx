@@ -111,7 +111,7 @@ export default function TransUser(){
         <StaffLay>
             <>
             <Header
-                    title="Transfer to Another"
+                    title="Transfer to Another Staff"
                 />
 
                 <form
@@ -135,6 +135,7 @@ export default function TransUser(){
 
                         />
                     </div>
+
 
                     <div className="mx-auto  w-full ">
                         <TextInput
