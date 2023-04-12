@@ -64,6 +64,124 @@ export default function Index() {
 
 
 
+
+
+
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+
+                >
+
+
+
+
+                    <div className="bg-primary rounded-lg p-3 pb-5 ">
+                        <div className="flex items-end space-x-3 break-words">
+
+                            <div className="w-full  text-left relative">
+
+
+                                <div className="text-black   font-bold text-lg">
+                                    {"second product"}
+                                </div>
+
+                                <p
+                                    className="text-gray-400"
+                                >
+                                    NGN {"55"}
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div
+                            className=" grid lg:grid-cols-2 gap-6 pt-5 grid-cols-1"
+
+                        >
+                            <button
+
+                                type="submit"
+                                className="btn bg-black float-right "
+                            > Delete
+                            </button>
+
+
+
+                            <button
+
+                                type="submit"
+                                className="btn bg-black float-right "
+                            > EDIT
+                            </button>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div className="bg-primary rounded-lg p-3 pb-5 ">
+                        <div className="flex items-end space-x-3 break-words">
+
+                            <div className="w-full  text-left relative">
+
+
+                                <div className="text-black   font-bold text-lg">
+                                    {"second product"}
+                                </div>
+
+                                <p
+                                    className="text-gray-400"
+                                >
+                                    NGN {"55"}
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div
+                            className=" grid lg:grid-cols-2 gap-6 pt-5 grid-cols-1"
+
+                        >
+                            <button
+
+                                type="submit"
+                                className="btn bg-black float-right "
+                            > Delete
+                            </button>
+
+
+
+                            <button
+
+                                type="submit"
+                                className="btn bg-black float-right "
+                            > EDIT
+                            </button>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
                 <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
 

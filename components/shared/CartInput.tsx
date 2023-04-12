@@ -96,7 +96,7 @@ export default function CartInput(props: CartInputProps) {
 
 
     return (
-        <div className="bg-primary rounded-lg p-3 pb-10 lg:pb-20 ">
+        <div className="bg-white border-2 border-black rounded-lg p-3 pb-10 lg:pb-20 ">
 
 
 
@@ -121,7 +121,7 @@ export default function CartInput(props: CartInputProps) {
 
 
             <div
-                className="w-1/2 grid grid-cols-3 lg:grid-cols-3 space-x-2 items-center lg:items-start"
+                className="w-1/2 grid grid-cols-3 lg:grid-cols-3 space-x-2 items-center lg:items-start my-2"
             >
 
 
@@ -133,7 +133,7 @@ export default function CartInput(props: CartInputProps) {
                 </div>
 
                 <div
-                    className="bg-white lg:pt-3  pt-1 lg:w-10 w-5 item-center rounded-lg hover:bg-white hover:cursor-default text-center text-black"
+                    className="bg-gray-500 lg:pt-2 lg:pb-2 pt-1 pb-1 lg:w-10 border-2 border-black w-5 item-center rounded-lg hover:none hover:cursor-default text-center text-black"
                 >
                     {quantity.toString()}
                 </div>

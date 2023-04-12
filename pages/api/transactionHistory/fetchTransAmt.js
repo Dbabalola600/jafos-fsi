@@ -19,7 +19,7 @@ export default async function fetchTransHistory(req, res) {
 
         const sen_hist = await TransferHistory.find({ send_id: id, trans_type: "DEBIT" }).sort({ createdAt: -1 })
         const cred_hist = await TransferHistory.find({ rec_id: id, trans_type: "MASTER TOKEN CREDIT" }).sort({ createdAt: -1 })
-        const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
+        const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
 
 
 

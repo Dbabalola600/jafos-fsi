@@ -16,7 +16,7 @@ export default async function fetchCredit(req,res){
 
         console.log('FETCHING DOCUMENTS');
 
-        const rec_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
+        const rec_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
 
 
         const coolStruct = []

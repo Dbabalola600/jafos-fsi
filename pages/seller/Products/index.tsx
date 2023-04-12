@@ -99,10 +99,10 @@ function Offerings() {
                 <div className="grid grid-cols-2 space-x-10">
 
                     <div
-                        className=" bg-black  ">
+                        className=" ">
                         <div
                             className="text-center text-primaryColour font-bold mx-auto text-2xl">
-                            VIEW PRODUCTS
+                            All Products
                         </div>
                     </div>
 
@@ -124,7 +124,10 @@ function Offerings() {
 
                 </div>
 
-                <div>
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+
+                >
 
                     {offers.map((offer: {
                         description: string
@@ -136,47 +139,61 @@ function Offerings() {
                     }) => (
                         <div
                             key={offer._id}
-                            className="pt-5"
+
                         >
 
 
-                            <div className="text-red-500">
-                                {offer.title} {" "}
-                                {offer.price}{" "}
-                                {offer.description}
-                            </div>
+                            <div className="bg-primary rounded-lg p-3 pb-5 ">
 
 
+                                <div className="flex items-end space-x-3 break-words">
+
+                                    <div className="w-full  text-left relative">
 
 
+                                        <div className="text-black   font-bold text-lg">
+                                            {offer.title}
+                                        </div>
 
-
-                            <div className="grid grid-cols-2 space-x-10">
-
-                                <button className="btn btn-lg btn-primary btn-block"
-                                    onClick={() => del(offer._id)}
-                                >
-                                    delete
-                                </button>
-
-
-
-
-                                <div className='mx-auto'>
-                                    <Link
-                                        href={`Products/Edit/${offer._id}`}
-                                    >
-                                        <button className="btn btn-lg btn-primary btn-block">
-                                            Edit
-                                        </button>
-                                    </Link>
+                                        <p
+                                            className="text-gray-400"
+                                        >
+                                            NGN {offer.price}
+                                        </p>
+                                    </div>
                                 </div>
 
 
 
 
 
+
+                                <div
+                                    className=" grid lg:grid-cols-2 gap-6 pt-5 grid-cols-1"
+
+                                >
+                                    <button
+
+                                        onClick={() => del(offer._id)}
+                                        className="btn bg-black float-right "
+                                    > Delete
+                                    </button>
+
+
+
+                                    <button
+                                        onClick={() => router.push(`Products/Edit/${offer._id}`)}
+                                        className="btn bg-black float-right "
+                                    > EDIT
+                                    </button>
+
+
+                                </div>
+
                             </div>
+
+
+
 
                         </div>
                     ))}

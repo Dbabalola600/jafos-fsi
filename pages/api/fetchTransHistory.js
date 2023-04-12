@@ -18,12 +18,13 @@ export default async function fetchTransHistory(req, res) {
 
         const sen_hist = await TransferHistory.find({ send_id: id, trans_type: "DEBIT" }).sort({ createdAt: -1 })
         const cred_hist = await TransferHistory.find({ rec_id: id, trans_type: "MASTER TOKEN CREDIT" }).sort({ createdAt: -1 })
-        const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
-        const creder_hist = await TransferHistory.find({ sen_id: id, trans_type: "TOKEN CREDIT" }).sort({ createdAt: -1 })
+
         const withdraw = await TransferHistory.find({ rec_id: id, trans_type: "WITHDRAW" }).sort({ createdAt: -1 })
-       
 
+        const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
+        const creder_hist = await TransferHistory.find({ send_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
 
+        console.log(creder_hist)
 
         // .sort({createdAt: -1})
         // const hist = [
@@ -35,7 +36,7 @@ export default async function fetchTransHistory(req, res) {
 
 
 
-        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist, ...creder_hist,...withdraw]
+        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist, ...creder_hist, ...withdraw]
 
 
 
@@ -59,8 +60,6 @@ export default async function fetchTransHistory(req, res) {
         for (let i = 0; i < creder_hist.length; i++) {
             coolStruct.push(creder_hist[i])
         }
-
-
         for (let i = 0; i < withdraw.length; i++) {
             coolStruct.push(withdraw[i])
         }

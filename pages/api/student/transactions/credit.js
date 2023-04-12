@@ -44,7 +44,7 @@ export default async function TokenCredit(req, res) {
                 sender: tok_val[0].madeBy,
                 reciever: user.firstname + user.lastname,
                 amount: tok_val[0].amount,
-                trans_type: "TOKEN CREDIT",
+                trans_type: "TOKENCREDIT",
                 send_id: tok_val[0]._id,
                 rec_id: id
             })
