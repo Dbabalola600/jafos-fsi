@@ -259,13 +259,15 @@ function DashBoard() {
                 </div>
 
                 <div
-                    className="pt-5"
+                    className=" text-center text-primary  text-2xl font-bold mt-10 "
+
                 >
-                    <div
-                        className="text-primary  text-2xl font-bold text-center  underline"
+                    <a
+                        className="text-center hover:underline hover:cursor-pointer"
+                        onClick={() => router.push("/seller/Orders")}
                     >
-                        New Orders
-                    </div>
+                        Orders
+                    </a>
 
                 </div>
 
