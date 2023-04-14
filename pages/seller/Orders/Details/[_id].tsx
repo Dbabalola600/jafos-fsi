@@ -86,7 +86,7 @@ type Order = {
 
 export default function Index() {
     const [student, setStudent] = useState<Student | null>(null);
-    const [staff, setStaff] = useState<Staff| null>(null);
+    const [staff, setStaff] = useState<Staff | null>(null);
     const [seller, setSeller] = useState<Seller | null>(null);
     const [orderItems, setOrderItem] = useState<OrderItems[]>([])
 
@@ -94,7 +94,7 @@ export default function Index() {
 
     const [order, setOrder] = useState<Order[]>([])
 
-
+    const [total, setTotal] = useState<number | null>(0)
 
 
 
@@ -142,9 +142,16 @@ export default function Index() {
 
 
 
-        console.log(Ordresponse)
+        let tot = 0
 
+        for (let i = 0; i < Ordresponse.length.valueOf(); i++) {
+            tot += Ordresponse[i].oriOrder.amount
+            setTotal(tot)
+        }
+      
         setOrderItem(Ordresponse)
+
+        console.log(Ordresponse)
 
 
 
@@ -165,19 +172,22 @@ export default function Index() {
 
 
 
+
+
         const UserResponse = await fetch("/api/seller/fetchStudent", { method: "POST", body: JSON.stringify(body4) })
             .then(res => res.json()) as Student
 
         if (UserResponse === null) {
             const UserResponse = await fetch("/api/seller/fetchStaff", { method: "POST", body: JSON.stringify(body4) })
-            .then(res => res.json()) as Staff
+                .then(res => res.json()) as Staff
 
             setStaff(UserResponse)
 
         } else {
-            console.log(UserResponse)
+
             setStudent(UserResponse)
         }
+
 
 
 
@@ -306,11 +316,28 @@ export default function Index() {
             <>
 
                 <Header
-                    title="this a an order thingy"
-                desc={student?.firstname || staff?.firstname}
+                    title={"Order Details for " + student?.firstname || staff?.firstname}
+                    desc={"Order Number: " + orderItems[0]?.oriOrder.orderNum}
                 />
 
 
+                <div
+                    className="mb-5 mt-5 text-primary"
+                >
+                    <div>
+                        Order Status:  {orderItems[0]?.oriOrder.status}
+                    </div>
+                    <div>
+                        Payment Information:  {orderItems[0]?.oriOrder.p_status}
+
+                    </div>
+                    <div>
+                        Devliery Information: {orderItems[0]?.oriOrder.mod}
+                    </div>
+                    <div>
+                        Amount Due: NGN {total}
+                    </div>
+                </div>
 
 
 
@@ -318,124 +345,147 @@ export default function Index() {
 
 
 
+                <div
+                    className="underline text-primary text-xl"
+                >
+                    Products
+                </div>
+                <div
+                    className="text-black text-lg   mt-2 "
 
+                >
+                    {orderItems.map((orderItem: {
+                        oriOrder: {
+                            _id: string;
+                            storename: string
+                            product: string
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string
+                        }
 
+                        userObj: {
+                            firstname: string
+                            _id: string
+                            lastname: string
 
-                {orderItems.map((orderItem: {
-                    oriOrder: {
-                        _id: string;
-                        storename: string
-                        product: string
-                        orderNum: number
-                        user: string
-                        price: number;
-                        quantity: number;
-                        amount: number;
-                        status: string
-                    }
-
-                    userObj: {
-                        firstname: string
-                        _id: string
-                        lastname: string
-
-                    }
-                }) => (
-                    <div
-                        key={orderItem.oriOrder._id}
-                    >
+                        }
+                    }) => (
                         <div
-                            className="text-red-500"
+                            key={orderItem.oriOrder._id}
                         >
-                            {orderItem.oriOrder.product} {" "} {orderItem.oriOrder.orderNum} {" "} {orderItem.userObj.firstname}
-                            <p>
-                                {orderItem.oriOrder.status}
-                            </p>
+
+
+                            <div>
+                                {orderItem.oriOrder.quantity}  {orderItem.oriOrder.product} : NGN{orderItem.oriOrder.amount}
+                            </div>
+
+
+
+
 
                         </div>
+                    ))}
+
+
+                </div>
+
+
+
+
+
+
+
+                <div
+                    className=" pt-5 space-x-6 grid grid-cols-3"
+                >
+
+                    {/* completed order button */}
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => {
+                            orderItems.map((orderItem: {
+                                oriOrder: {
+                                    _id: string;
+                                }
+
+
+                            }) => {
+                                CompleteStat(orderItem.oriOrder._id)
+                            })
+                        }}
+
+                    >
+                        {isLoading ? "Loading..." : "Completed"}
                     </div>
-                ))}
+
+
+                    {/* delivered order button */}
+                    <div
+
+                        className="btn btn-primary"
+                        onClick={() => {
+                            orderItems.map((orderItem: {
+                                oriOrder: {
+                                    _id: string;
+                                }
+                            }) => {
+                                DeliveredStat(orderItem.oriOrder._id)
+                            })
+                        }}
+
+                    >
+                        {isLoading ? "Loading..." : "Delivered"}
+                    </div>
 
 
 
 
+                    {/* for cancel and refund */}
+                    <div
+                        className="btn btn-primary"
+                        onClick={() => {
+                            orderItems.map((orderItem: {
+                                oriOrder: {
+                                    _id: string;
+                                    storename: string
+                                    product: string
+                                    orderNum: number
+                                    user: string
+                                    price: number;
+                                    quantity: number;
+                                    amount: number;
+                                    status: string
+                                }
 
-                {/* completed order button */}
+                                userObj: {
+                                    firstname: string
+                                    _id: string
+                                    lastname: string
+
+                                }
+                            }) => {
+                                CancelStat(orderItem.oriOrder._id,
+                                    orderItem.userObj._id,
+                                    orderItem.oriOrder.status,
+                                    orderItem.oriOrder.amount,
+                                    orderItem.oriOrder.storename)
+                            })
+                        }}
+
+                    >
+                        {isLoading ? "Loading..." : "Cancel Order"}
+                    </div>
+                </div>
                 <div
-                    className="btn btn-primary"
-                    onClick={() => {
-                        orderItems.map((orderItem: {
-                            oriOrder: {
-                                _id: string;
-                            }
-
-
-                        }) => {
-                            CompleteStat(orderItem.oriOrder._id)
-                        })
-                    }}
-
+                    className="pt-5 text-black text-center text-sm font-thin"
                 >
-                    {isLoading ? "Loading..." : "Completed"}
+                    Please select one to change the user's order status
                 </div>
 
-
-                {/* delivered order button */}
-                <div
-
-                    className="btn btn-primary"
-                    onClick={() => {
-                        orderItems.map((orderItem: {
-                            oriOrder: {
-                                _id: string;
-                            }
-                        }) => {
-                            DeliveredStat(orderItem.oriOrder._id)
-                        })
-                    }}
-
-                >
-                    {isLoading ? "Loading..." : "Delivered"}
-                </div>
-
-
-
-
-                {/* for cancel and refund */}
-                <div
-                    className="btn btn-primary"
-                    onClick={() => {
-                        orderItems.map((orderItem: {
-                            oriOrder: {
-                                _id: string;
-                                storename: string
-                                product: string
-                                orderNum: number
-                                user: string
-                                price: number;
-                                quantity: number;
-                                amount: number;
-                                status: string
-                            }
-
-                            userObj: {
-                                firstname: string
-                                _id: string
-                                lastname: string
-
-                            }
-                        }) => {
-                            CancelStat(orderItem.oriOrder._id,
-                                orderItem.userObj._id,
-                                orderItem.oriOrder.status,
-                                orderItem.oriOrder.amount,
-                                orderItem.oriOrder.storename)
-                        })
-                    }}
-
-                >
-                    {isLoading ? "Loading..." : "Cancel Order"}
-                </div>
 
             </>
         </CatLayout>

@@ -165,6 +165,7 @@ function DashBoard() {
         const respone = await fetch("/api/seller/openStat", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
+                    // router.push("/seller/DashBoard")
                     router.reload()
                     console.log("Successful")
                 }
