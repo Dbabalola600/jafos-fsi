@@ -23,7 +23,7 @@ export default async function TokenCredit(req, res) {
 
         const tok_val = await Token.find({ token: tok })
 
-       
+
 
         if (tok_val[0].status === "available") {
             //credit account with token 
@@ -31,10 +31,10 @@ export default async function TokenCredit(req, res) {
             const bal = await Student.findById(id).updateOne({ account_bal: new_bal })
 
             //update token details 
-             const tok_update = await Token.findById(tok_val[0]._id).updateOne({ status: "used", usedBy: user.matricno })
+            const tok_update = await Token.findById(tok_val[0]._id).updateOne({ status: "used", usedBy: user.matricno })
 
             // update creder info
-            const cred = await Creder.find({ creder_no: tok_val[0].madeBy })
+            const cred = await Creder.find({ _id: tok_val[0].madeBy })
             const new_rec_bal = tok_val[0].amount + cred[0].account_bal
             const reciever_bal = await Creder.findById(cred[0]._id).updateOne({ account_bal: new_rec_bal })
 
@@ -45,7 +45,7 @@ export default async function TokenCredit(req, res) {
                 reciever: user.firstname + user.lastname,
                 amount: tok_val[0].amount,
                 trans_type: "TOKENCREDIT",
-                send_id: tok_val[0]._id,
+                send_id: tok_val[0].madeBy,
                 rec_id: id
             })
 

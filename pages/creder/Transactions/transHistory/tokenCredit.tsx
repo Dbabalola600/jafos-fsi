@@ -1,8 +1,9 @@
 import Link from "next/link";
-import Header from "../../../components/shared/Header";
-import CredLayout from "../Layout/credLayout";
+import Header from "../../../../components/shared/Header";
+import CredLayout from "../../Layout/credLayout";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import HistBarCred from "../../../../components/shared/historyBarCred";
 
 
 
@@ -25,12 +26,17 @@ type TransHists = {
 
 
 
+type TransHistAmt = {
+
+    w_hist: number | any
+    all: number | any
+    tok: number | any
+}
 
 
 
-
-export default function TransHistory() {
-
+export default function TransHistoryTokCred() {
+    const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
 
     const [hists, setHistory] = useState<TransHists[]>([])
 
@@ -40,10 +46,19 @@ export default function TransHistory() {
             id: token
         }
 
-        const response = await fetch("/api/fetchTransHistory", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/transactionHistory/Creder/fetchTok", { method: "POST", body: JSON.stringify(body) })
             .then(res => res.json()) as TransHists[]
 
         setHistory(response)
+
+
+
+
+
+        const Amtresponse = await fetch("/api/transactionHistory/Creder/fetchTransAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as TransHistAmt
+
+        setHistAmt(Amtresponse)
     }
 
 
@@ -66,6 +81,19 @@ export default function TransHistory() {
                     title="Transaction History"
                 />
 
+
+
+
+                <HistBarCred
+                    WithAmt={histAmt?.w_hist}
+                    WithLink={"/creder/Transactions/transHistory/withdraw"}
+                    allAmt={histAmt?.all}
+                    allLink={"/creder/Transactions/transHistory/"}
+                    tokenAmt={histAmt?.tok}
+                    tokenLink={"/creder/Transactions/transHistory/tokenCredit"}
+
+                />
+
                 {hists.map((hist: {
                     sender: string,
                     reciever: string,
@@ -84,7 +112,7 @@ export default function TransHistory() {
                     >
 
                         <div
-                            className={"text-primary  mb-6 bg-black"}
+                            className={"text-orange-500  mb-6 bg-black"}
 
                         >
                             <div>

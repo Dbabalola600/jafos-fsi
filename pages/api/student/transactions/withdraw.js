@@ -27,7 +27,7 @@ export default async function Withdraw(req, res) {
 
                 const sen_history = await TransferHistory.create({
                     sender: sender.firstname + sender.lastname,
-                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    reciever: reciever[0].creder_no,
                     amount: amt,
                     trans_type: "DEBIT",
                     send_id: sen,
@@ -55,7 +55,7 @@ export default async function Withdraw(req, res) {
                    const reciever_bal = await Creder.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
                    const rec_history = await TransferHistory.create({
                     sender: sender.firstname + sender.lastname,
-                    reciever: reciever[0].firstname + reciever[0].lastname,
+                    reciever: reciever[0].creder_no,
                     amount: amt,
                     trans_type: "WITHDRAW",
                     send_id: sen,

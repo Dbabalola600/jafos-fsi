@@ -16,7 +16,7 @@ export default async function fetchAvailToken(req, res) {
 
 
 
-        const tok = await Token.find({ status: "available" }).find({ madeBy: user.creder_no })
+        const tok = await Token.find({ status: "available" }).find({ madeBy: user._id })
 
 
         return res.status(200).json(tok)

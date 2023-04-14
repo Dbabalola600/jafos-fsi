@@ -34,7 +34,7 @@ export default async function createToken(req, res) {
             const new_tok = await Token.create({
                 token: generateToken(6),
                 amount,
-                madeBy: cred_det.creder_no
+                madeBy: credid
             })
 
             console.log("CREATED TOKEN")

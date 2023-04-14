@@ -23,7 +23,7 @@ export default async function fetchTransHistory(req, res) {
 
         const tok_hist = await TransferHistory.find({ rec_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
         const creder_hist = await TransferHistory.find({ send_id: id, trans_type: "TOKENCREDIT" }).sort({ createdAt: -1 })
-
+        // const S_withdraw = await TransferHistory.find({ send_id: id, trans_type: "WITHDRAW" }).sort({ createdAt: -1 })
         console.log(creder_hist)
 
         // .sort({createdAt: -1})
@@ -36,7 +36,7 @@ export default async function fetchTransHistory(req, res) {
 
 
 
-        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist, ...creder_hist, ...withdraw]
+        const newHistStruct = [...rec_hist, ...sen_hist, ...cred_hist, ...tok_hist, ...creder_hist, ...withdraw, ]
 
 
 
@@ -64,6 +64,10 @@ export default async function fetchTransHistory(req, res) {
             coolStruct.push(withdraw[i])
         }
 
+        
+        // for (let i = 0; i < S_withdraw.length; i++) {
+        //     coolStruct.push(S_withdraw[i])
+        // }
 
         // console.log(coolStruct.length)
 
