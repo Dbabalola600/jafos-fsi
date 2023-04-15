@@ -5,7 +5,7 @@ import Student from "../../../../model/Student/StudentModel";
 import Staff from "../../../../model/Staff/StaffModel";
 
 
-export default async function fetchOrderAmtr(req, res) {
+export default async function fetchOrderAmt(req, res) {
     if (req.method === "POST") {
 
         console.log('CONNECTING TO MONGO');

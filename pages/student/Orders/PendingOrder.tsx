@@ -12,33 +12,17 @@ import OrderNav from "../../../components/shared/OrderNav";
 
 
 type Order = {
-
-    userObj: {
-        firstname: string
-        _id: string
-        lastname: string
-    }
-
-    orderObj: {
-
+    "0": {
         _id: string;
-        storename: string
-        product: string
+
+
         orderNum: number
         user: string
         price: number;
         quantity: number;
         amount: number;
         status: string
-
-    }
-
-    oriOrder: {
-        stores: string
-        orderList: OrderItems
-        orderNum: number
-        user: string
-        _id: string
+        orderList: string
 
     }
 }
@@ -70,16 +54,16 @@ type OrderAmt = {
 
 
 
-export default function Index() {
+export default function PendingOrder() {
 
-    const [orders, setOrders] = useState<OrderItems[]>([])
+    const [orders, setOrders] = useState<Order[]>([])
     const router = useRouter()
     const [Amt, setAmt] = useState<OrderAmt | null>(null)
 
     const showOrder = async () => {
         const token = getCookie("Normuser")
         const body = {
-            _id: token
+            name: token
         }
 
 
@@ -89,8 +73,8 @@ export default function Index() {
 
 
 
-        const response = await fetch("/api/student/order/fetchOrder", { method: "POST", body: JSON.stringify(body) })
-            .then(res => res.json()) as OrderItems[]
+        const response = await fetch("/api/student/order/fetchPendingOrder", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as Order[]
 
 
         setOrders(response)
@@ -122,7 +106,7 @@ export default function Index() {
         <StuLayout>
             <>
                 <Header
-                    title="Orders"
+                    title="Pending Orders"
 
                 />
 
@@ -148,32 +132,33 @@ export default function Index() {
 
 
                     {orders.map((order: {
-                        _id: string;
-                        storename: string
-                        product: string
-                        orderNum: number
-                        user: string
-                        price: number;
-                        quantity: number;
-                        amount: number;
-                        status: string
-                        p_status: string;
+                         "0": {
+                            _id: string;
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string;
+                            orderList: string
+
+                        }
                     }) => (
                         <div
-                            key={order._id}
+                            key={order[0]._id}
                         >
 
-                            {/* <OrderCard2
+                            {/* <OrderCard
                             OrderNum={order.oriOrder.orderNum}
                             status={order.orderObj.status}
                             ulink={`Orders/Details/${order.oriOrder._id}`}
                         /> */}
 
-                            <OrderCardUser2
-                                OrderNum={order.orderNum}
+                            <OrderCardUser
+                                OrderNum={order[0].orderNum}
 
-                                store={order.storename}
-                                ulink={`Orders/Details/${order._id}`}
+                                status="Pending"
+                                ulink={`/student/Orders/Details/${order[0]._id}`}
 
 
                             />

@@ -17,7 +17,7 @@ export default async function fetchOrder(req, res) {
 
         console.log('FETCHING Orders');
 
-        const orders = await OrderItem.find({ user: _id })
+        const orders = await Order.find({ user: _id }).sort({createdAt: -1})
         console.log("FETCHED ORDERS")
 
         return res.status(200).json(

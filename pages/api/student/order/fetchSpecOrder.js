@@ -1,6 +1,6 @@
 import connectMongo from "../../../../utils/connectMongo";
 import Order from "../../../../model/Student/order";
-
+import OrderItem from "../../../../model/Student/orderItem";
 
 
 
@@ -14,16 +14,23 @@ export default async function fetchSpecOrder(req, res) {
 
 
 
-        const { stu } = JSON.parse(req.body)
+        const { id } = JSON.parse(req.body)
 
         // const ord = await Order.find()
 
-        console.log(stu)
+       
 
-        const sepc = await Order.find({ user: stu }).sort({ createdAt: -1 })
+        const sepc = await Order.find({ orderList: id })
         console.log(sepc)
 
-        let num = []
+        const NewStruct = await Promise.all(sepc.map(async (oriOrder) => {
+            const item = await OrderItem.findById(oriOrder.orderList)
+
+            return {
+                oriOrder,
+                orderObj: item 
+            }
+        }))
 
 
 
@@ -33,7 +40,7 @@ export default async function fetchSpecOrder(req, res) {
 
         return res.status(200).json(
 
-            sepc
+            NewStruct
         )
 
     } else {
