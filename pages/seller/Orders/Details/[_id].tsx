@@ -316,7 +316,7 @@ export default function Index() {
             <>
 
                 <Header
-                    title={"Order Details for " + student?.firstname || staff?.firstname}
+                    title={"Order Details for " + (student?.firstname || staff?.firstname)}
                     desc={"Order Number: " + orderItems[0]?.oriOrder.orderNum}
                 />
 
