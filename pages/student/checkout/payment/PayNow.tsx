@@ -8,6 +8,7 @@ import Header from "../../../../components/shared/Header";
 import NavButton from "../../../../components/shared/NavButton";
 import TextInput from "../../../../components/shared/TextInput";
 import StuLayout from "../../Layout/StuLayout";
+import CheckOutInfo from "../../../../components/shared/CheckOutInfo";
 
 type Student = {
     _id: string;
@@ -178,7 +179,7 @@ export default function PayPortal() {
 
 
     //payment api
-   
+
 
 
 
@@ -217,7 +218,7 @@ export default function PayPortal() {
                 }
                 if (res.status == 259) {
                     settoastp({ message: " message", show: true })
-                    
+
                     router.push("/student/checkout/confirmOrder")
                 }
                 else {
@@ -239,7 +240,7 @@ export default function PayPortal() {
     const delOne = async (id: any) => {
 
 
-        const body={
+        const body = {
             id: id
         }
         const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
@@ -257,83 +258,72 @@ export default function PayPortal() {
             <>
 
                 <Header
-                    title="payment portal "
+                    title="Pay Now "
                 />
                 <div
                     className="text-red-500"
                 >
 
-                    <div>
-                        amount due: {total}
-                    </div>
 
-                    <div>
-                        Delivery Fee: {devfee}
-                    </div>
-
-                    <div>
-                        available balance: {student?.account_bal}
-                    </div>
                 </div>
 
 
-               
 
-                {orders.map((order: {
-                    _id: string
-                    user: string
-                    product: string
-                    storename: string
-                    price: number
-                    quantity: number
-                    amount: number
-                    status: string
-                    p_status: string
-                    mod: string
-                }) =>
-                    <div
-                        key={order._id}
-                    >
+                <div
+                    className="pt-5 text-black text-xl "
+                >
+
+                    <div>
+                        Amount Due: NGN {total}
+                    </div>
+                    <div>
+                        Available Balance: NGN {student?.account_bal}
+                    </div>
+                    <div>
+                        Delivery Fee: NGN {devfee}
+                    </div>
+
+                    <div>
+                        Current Method of Delivery:  {orders[0]?.mod}
+                    </div>
+
+                </div>
 
 
+
+
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+
+                >
+                    {orders.map((order: {
+                        _id: string
+                        user: string
+                        product: string
+                        storename: string
+                        price: number
+                        quantity: number
+                        amount: number
+                        status: string
+                        p_status: string
+                        mod: string
+                    }) =>
                         <div
-                            className="text-red-500 mt-10"
+                            key={order._id}
                         >
-                            Order Status: {order.status}  {"  "} Product name:  {order.product} {" "} ,Price:{order.amount}
-                            <p>
-                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
-                            </p>
+                            <CheckOutInfo
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                                clickButton={() => delOne(order._id)}
 
-
+                            />
 
 
                         </div>
+                    )}
+                </div>
 
-                        
-                            <button className="w-full btn-primary btn "
-                                onClick={() => delOne(order._id)}
-                            >
-                                Delete Item
-
-                            </button>
-
-
-
-                            {/* <button className="w-full btn-primary btn "
-                                onClick={() => Pay2(order.amount, order._id)}>
-                                {isLoading ? "Loading..." : "Pay"}
-
-                            </button> */}
-
-
-
-                       
-
-
-
-
-                    </div>
-                )}
 
 
 

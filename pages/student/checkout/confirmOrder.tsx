@@ -5,6 +5,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
+import CheckOutConfirm from "../../../components/shared/CheckOutConfirm";
 
 
 
@@ -88,7 +89,7 @@ export default function ConfirmOrder() {
 
 
 
-       
+
 
 
 
@@ -97,7 +98,7 @@ export default function ConfirmOrder() {
         showOrder()
     }, [])
 
-   
+
 
 
     const addOrderItem = async () => {
@@ -123,8 +124,8 @@ export default function ConfirmOrder() {
             devf: devfee
         }
 
-        const body3={
-            user:user
+        const body3 = {
+            user: user
         }
 
         const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
@@ -172,7 +173,7 @@ export default function ConfirmOrder() {
 
 
 
-   
+
 
 
 
@@ -187,46 +188,69 @@ export default function ConfirmOrder() {
                     title="Checkout"
                 />
 
-                {orders.map((order: {
-                    _id: string | null
-                    user: string
-                    product: string
-                    storename: string
-                    price: number
-                    quantity: number
-                    amount: number
-                    status: string
-                    p_status: string
-                    mod: string
-                }) =>
-                    <div
-                        key={order._id}
-                    >
+                <div
+                    className="text-black text-xl"
+                >
 
-
-                        <div
-                            className="text-red-500 mt-10"
-                        >
-                            Order Status: {order.status}  {"  "} ,Quantity:  {order.quantity} {"  "} ,Product name:  {order.product}
-                            <p>
-                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod}
-                            </p>
-                        </div>
-
-
-
-
-
+                    <div>
+                        Amount Due: NGN {total}
                     </div>
-                )}
+                    <div>
+                        Payment Status: {orders[0]?.p_status}
+                    </div>
+                    <div>
+                        Method Of Delivery: {orders[0]?.mod}
+                    </div>
+                </div>
+
+
+
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+
+                >
+                    {orders.map((order: {
+                        _id: string | null
+                        user: string
+                        product: string
+                        storename: string
+                        price: number
+                        quantity: number
+                        amount: number
+                        status: string
+                        p_status: string
+                        mod: string
+                    }) =>
+                        <div
+                            key={order._id}
+                        >
+
+
+
+                            <CheckOutConfirm
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                            />
+
+
+
+
+
+
+                        </div>
+                    )}
+
+                </div>
+
 
 
 
 
                 <div
-                    className="text-slate-800 mt-5 mb-5"
+                    className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
-                    Total {total}
+                    Total: NGN {total}
                 </div>
 
 

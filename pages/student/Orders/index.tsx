@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import StuLayout from "../Layout/StuLayout";
+import OrderCard2 from "../../../components/shared/OrderCard2";
 
 
 type Orders = {
@@ -102,6 +103,7 @@ export default function Index() {
 
 
 
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
 
                 {orders.map((order: {
@@ -114,9 +116,13 @@ export default function Index() {
                         key={order._id}
                     >
 
+                        <OrderCard2
+                            OrderNum={order.orderNum}
+                            status={"pend"}
+                            ulink={`Orders/Details/${order._id}`}
+                        />
 
-
-                        <Link
+                        {/* <Link
                             href={`Orders/Details/${order._id}`}
                         >
                             <a>
@@ -126,10 +132,11 @@ export default function Index() {
                                 />
                             </a>
 
-                        </Link>
+                        </Link> */}
 
                     </div>
                 ))}
+                </div>
 
             </>
         </StuLayout>

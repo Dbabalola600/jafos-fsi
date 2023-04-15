@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import OrderCard from "../../../components/shared/OrderCard";
 import OrderCard2 from "../../../components/shared/OrderCard2";
+import OrderNav from "../../../components/shared/OrderNav";
 
 
 
@@ -100,7 +101,7 @@ function Orders() {
         setSeller(response)
 
         console.log(response.storename)
-      
+
 
 
 
@@ -149,48 +150,19 @@ function Orders() {
                     title="Completed Orders"
                 />
 
-                <div
-                    className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
-                >
+                <OrderNav
+                    all={Amt?.all}
+                    allLink="/seller/Orders/"
+                    canc={Amt?.cance}
+                    cancLink="/seller/Orders/CancelledOrder"
+                    comp={Amt?.comp}
+                    compLink="/seller/Orders/CompletedOrder"
+                    del={Amt?.del}
+                    delLink="/seller/Orders/DeliveredOrder"
+                    pend={Amt?.pend}
+                    pendLink="/seller/Orders/PendingOrder"
 
-
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => router.push("/seller/Orders/")}
-                    >
-                        All Orders {" "} ({Amt?.all})
-                    </div>
-
-
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => router.push("/seller/Orders/PendingOrder")}
-                    >
-                        Pending Order{" "}  ({Amt?.pend})
-                    </div>
-
-
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => router.push("/seller/Orders/CompletedOrder")}
-                    >
-                        Completed Order {" "}({Amt?.comp})
-                    </div>
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => router.push("/seller/Orders/DeliveredOrder")}
-                    >
-                        Delivered Order{" "} ({Amt?.del})
-                    </div>
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => router.push("/seller/Orders/CancelledOrder")}
-                    >
-                        Cancelled Order{" "} ({Amt?.cance})
-                    </div>
-
-
-                </div>
+                />
 
 
 

@@ -39,8 +39,8 @@ export default function PayPortal() {
     const [total, setTotal] = useState<number | null>()
     const [devfee, setDevfee] = useState<number | null>()
     const router = useRouter()
-   
-  
+
+
 
     const showOrder = async () => {
         const token = getCookie("Normuser")
@@ -126,62 +126,67 @@ export default function PayPortal() {
 
 
     //payment api
-   
 
 
 
 
-   
 
 
-  
+
+
+
     return (
         <StuLayout>
             <>
 
                 <Header
-                    title="payment portal "
+                    title="Payment"
                 />
                 <div
-                    className="text-red-500"
+                    className="text-black text-xl"
                 >
 
                     <div>
-                        amount due: {total}
+                        Amount Due: NGN {total}
                     </div>
 
                     <div>
-                        Delivery Fee: {devfee}
+                        Delivery Fee: NGN {devfee}
                     </div>
 
                     <div>
-                        available balance: {student?.account_bal}
+                        Available Balance: NGN {student?.account_bal}
                     </div>
                 </div>
 
 
-               
-
-               
-
-
-                
-
-
-                
 
 
 
-                <NavButton
-                    title="Pay Now"
-                    uLink="/student/checkout/payment/PayNow"
-                />
 
 
-                <NavButton
-                    title="Pay On Delivery"
-                    uLink="/student/checkout/confirmOrder"
-                />
+
+
+
+
+
+                <div
+                    className="grid grid-cols-2 space-x-5"
+                >
+
+                    <NavButton
+                        title="Pay Now"
+                        uLink="/student/checkout/payment/PayNow"
+                    />
+
+
+                    <NavButton
+                        title="Pay On Delivery"
+                        uLink="/student/checkout/confirmOrder"
+                    />
+
+                </div>
+
 
 
 
