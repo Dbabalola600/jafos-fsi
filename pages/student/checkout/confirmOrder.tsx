@@ -201,6 +201,9 @@ export default function ConfirmOrder() {
                     <div>
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
+                    <div>
+                        Delivery Fee: {devfee}
+                    </div>
                 </div>
 
 
@@ -263,7 +266,11 @@ export default function ConfirmOrder() {
                     {isLoading ? "Loading..." : "Confirm Order"}
 
                 </button>
-
+                <div
+                    className=" text-center text-sm mt-5"
+                >
+                  NOTE:  confirming and order with a delivery fee will see the amount deducted from your account
+                </div>
 
             </>
         </StuLayout>
