@@ -350,6 +350,7 @@ export default function Index() {
                 >
                     Products
                 </div>
+                
                 <div
                     className="text-black text-lg   mt-2 "
 

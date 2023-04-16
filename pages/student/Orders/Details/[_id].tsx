@@ -57,6 +57,8 @@ export default function Index() {
 
     const [orderItems, setOrderItems] = useState<OrderItems[]>([])
     const router = useRouter()
+    const [total, setTotal] = useState<number | null>(0)
+
 
 
 
@@ -83,6 +85,15 @@ export default function Index() {
             .then(res => res.json()) as OrderItems[]
 
 
+
+        let tot = 0
+
+        for (let i = 0; i < response.length.valueOf(); i++) {
+            tot += response[i].amount
+            setTotal(tot)
+        }
+
+
         setOrderItems(response)
         console.log(response)
 
@@ -98,15 +109,66 @@ export default function Index() {
         <StuLayout>
             <>
                 <Header
-                    title="Orders Details"
-                    desc="Show recent orders i.e pending and what not"
+                    title={"Order Number: " + orderItems[0]?.orderNum}
+
                 />
 
 
 
 
+                <div
+                    className="mb-5 mt-5 text-primary"
+                >
 
+                  
+                    <div>
+                        Devliery Information: {orderItems[0]?.mod}
+                    </div>
+                    <div>
+                        Amount Due: NGN {total}
+                    </div>
+                </div>
 
+                <div
+                    className="underline text-primary text-xl"
+                >
+                    Order details
+                </div>
+
+                <div
+                    className="text-black space-x-4 lg:text-lg  text-[10px] mt-2 grid grid-cols-6 border-solid border-black break-words"
+
+                >
+
+                    <div
+                        className="bg-"
+                    >
+                        Quantity
+                    </div>
+
+                    <div
+                        className="bg-"
+                    >
+                        Product
+                    </div>
+                    <div>
+                        Price
+                    </div>
+                    <div>
+                        Store
+                    </div>
+                    <div>
+                        Order Status
+                    </div>
+
+                    <div>
+                        Payment Info
+                    </div>
+                </div>
+
+                <hr
+                className="w-full bg-primary "
+                />
                 {orderItems.map((orderItem: {
                     _doc: any;
                     _id: string;
@@ -130,16 +192,54 @@ export default function Index() {
                     <div
                         key={orderItem._id}
                     >
-                        <div
-                            className="text-green-500"
-                        >
-                            {orderItem.product}  {" "}
 
-                            {orderItem.status}
+                        <div
+                            className="text-black space-x-4 lg:text-lg  text-[10px] mt-2 grid grid-cols-6  border-solid border-black break-words"
+                        >
+                            <div
+                                className="col-span-1"
+                            >
+                                {orderItem.quantity}
+                            </div>
+
+
+                            <div
+
+                                className="col-span-1">
+                                {orderItem.product}
+                            </div>
+
+                            <div
+                                className="col-span-1"
+                            >
+                                {orderItem.amount}
+
+                            </div>
+
+                            <div
+                                className="col-span-1"
+                            >
+                                {orderItem.storename}
+                            </div>
+
+                            <div
+                                className="col-span-1"
+                            >
+                                {orderItem.status}
+                            </div>
+                            <div
+                                className="col-span-1"
+                            >
+                                {orderItem.p_status}
+                            </div>
 
                         </div>
+
                     </div>
                 ))}
+
+
+
 
 
 

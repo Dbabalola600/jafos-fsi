@@ -81,18 +81,17 @@ function CreateAccount() {
             >
 
                 <Header
-                    title="Create Account"
-                    desc=" please provide necessary details for account creation" />
+                    title="Student Account Creation"
+                    desc="please provide necessary details to create a student account" />
 
                 <div className="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-12 md:gap-y-28">
 
                     {/* first name */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                            // errorMessage={errors.firstName?.message}
+                          
                             placeholder="First Name"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                           
                             type="text"
                             name="firstname"
                             id="firstname"
@@ -102,10 +101,9 @@ function CreateAccount() {
                     {/* lastname */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                            // errorMessage={errors.firstName?.message}
+                          
                             placeholder="Last Name"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                       
                             type="text"
                             name="lastname"
                             id="lastname"
@@ -115,10 +113,9 @@ function CreateAccount() {
                     {/* email */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                            // errorMessage={errors.firstName?.message}
+                          
                             placeholder="Email"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                    
                             type="email"
                             name="email"
                             id="email"
@@ -129,10 +126,9 @@ function CreateAccount() {
                     {/* matricNumber */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                            // errorMessage={errors.firstName?.message}
+                         
                             placeholder="Matric Number"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                        
                             type="number"
 
                             name="matricno"
@@ -145,10 +141,9 @@ function CreateAccount() {
                     {/* password */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                            // errorMessage={errors.firstName?.message}
+                     
                             placeholder="Password"
-                            // registerName="fistName"
-                            // register={register("firstName")}
+                        
                             type="password"
                             name="Password"
                           
@@ -174,9 +169,9 @@ function CreateAccount() {
                     </button>
 
                     <h6 className="text-center md:text-xl w-full">
-                        already have an account?{" "}
+                        Already have an Account?{" "}
                         <span className=" hover:underline">
-                            <Link href="/student/">Login</Link>
+                            <Link href="/">Login</Link>
                         </span>
                     </h6>
                 </div>
