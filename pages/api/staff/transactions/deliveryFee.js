@@ -26,16 +26,16 @@ export default async function deliveryFee(req, res) {
 
 
         if (devf > 0) {
-            const MainAdmin = await Admin.find({ AdminId: "101" })
+            const MainAdmin = await Admin.find({ AdminId: "Admin101" })
 
-            const main_admin_bal = MainAdmin[0].account_bal + devf
+            const main_admin_bal = MainAdmin[0].account_bal + JSON.parse(devf)
             const new_main_admin_bal = await Admin.findById(MainAdmin[0]._id).updateOne({ account_bal: main_admin_bal })
 
             const dev_history = await TransferHistory.create({
                 sender: sender.firstname + sender.lastname,
-                reciever: MainAdmin[0].firstname,
+                reciever: MainAdmin[0].AdminId,
                 amount: devf,
-                trans_type: "DELIVERY FEE",
+                trans_type: "DEBIT",
                 send_id: sen,
                 rec_id: MainAdmin[0]._id
             })

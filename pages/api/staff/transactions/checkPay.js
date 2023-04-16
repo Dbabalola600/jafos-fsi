@@ -15,21 +15,29 @@ export default async function checkPay(req, res) {
 
 
 
-        const { sen, amt, or_id, devf } = JSON.parse(req.body)
+        const { sen, amt, or_id, devf, tot } = JSON.parse(req.body)
 
         const sender = await Staff.findById(sen)
         const order = await CheckOutItem.findById(or_id)
 
 
-       
+
 
         // console.log(or_id)
         const reciever = await Seller.find({ storename: order.storename })
 
 
         if (order.p_status === "Pay on Delivery") {
-       
-            if (sender.account_bal > (amt+ devf)) {
+
+            if (sender.account_bal < (tot + devf)) {
+
+                return res.status(256).json({
+                    message: "insufficient funds",
+                });
+
+            } else {
+
+
                 const new_sender_bal = sender.account_bal - amt
                 const sender_bal = await Staff.findById(sen).updateOne({ account_bal: new_sender_bal })
 
@@ -45,7 +53,7 @@ export default async function checkPay(req, res) {
 
 
 
-                let new_reciever_bal = JSON.parse(amt) +reciever[0].account_bal
+                let new_reciever_bal = JSON.parse(amt) + reciever[0].account_bal
 
                 const reciever_bal = await Seller.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
 
@@ -61,21 +69,11 @@ export default async function checkPay(req, res) {
 
                 const paidItem = await CheckOutItem.findById(or_id).updateOne({ p_status: "Paid" })
 
-
-
-
-               
-
-               
-
                 return res.status(200).json({
                     message: "successful"
                 }
                 )
-            } else {
-                return res.status(256).json({
-                    message: "insufficient funds",
-                });
+
 
             }
         } else {

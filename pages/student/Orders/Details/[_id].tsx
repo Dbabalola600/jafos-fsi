@@ -212,7 +212,7 @@ export default function Index() {
                             <div
                                 className="col-span-1"
                             >
-                                {orderItem.amount}
+                                NGN {orderItem.amount}
 
                             </div>
 

@@ -14,7 +14,7 @@ export default async function checkPay(req, res) {
 
 
 
-        const { sen, amt, or_id, devf } = JSON.parse(req.body)
+        const { sen, amt, or_id, devf,tot } = JSON.parse(req.body)
 
         const sender = await Student.findById(sen)
         const order = await CheckOutItem.findById(or_id)
@@ -28,7 +28,12 @@ export default async function checkPay(req, res) {
 
         if (order.p_status === "Pay on Delivery") {
        //checks if can afford amount and delivery fee before payment
-            if (sender.account_bal > (amt+ devf)) {
+            if (sender.account_bal < (tot+ devf)) {
+                return res.status(256).json({
+                    message: "insufficient funds",
+                });
+            } else {
+               
                 const new_sender_bal = sender.account_bal - amt
                 const sender_bal = await Student.findById(sen).updateOne({ account_bal: new_sender_bal })
 
@@ -73,11 +78,6 @@ export default async function checkPay(req, res) {
                     message: "successful"
                 }
                 )
-            } else {
-                return res.status(256).json({
-                    message: "insufficient funds",
-                });
-
             }
         } else {
             return res.status(259).json({

@@ -90,14 +90,14 @@ export default function Cart() {
 
 
     //delete one item
-    const delOne = async (id: any) => {
+    const delOne = async (_id: any) => {
 
 
         const body = {
-            id: id
+            id: _id
         }
 
-        const reponse = await fetch("/api/staff/cart/deleteFromCart", { method: "POST", body: JSON.stringify(id) })
+        const reponse = await fetch("/api/staff/cart/deleteFromCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
 
@@ -178,7 +178,7 @@ export default function Cart() {
         <StaffLay>
             <>
                 <div
-                    className=" bg-black md:w-60">
+                    className="">
                     <Header
                         title="CART"
                     />

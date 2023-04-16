@@ -180,7 +180,7 @@ export default function DeliveryMethod() {
             <>
 
                 <Header
-                    title="update Delivery Mehtod "
+                    title="Update Mehtod of Delivery "
                     desc="delivery to any location attracts a fee"
                 />
 
@@ -192,9 +192,13 @@ export default function DeliveryMethod() {
                 {showgoodtoast.show && <GoodMess title="Delivery Address added" />}
 
 
+                <div
+                    className="pt-5 text-black text-xl text-center"
+                >
+                    Current Method of Delivery:  {orders[0]?.mod}
+                </div>
 
-
-                {orders.map((order: {
+                {/* {orders.map((order: {
                     _id: string | null
                     user: string
                     product: string
@@ -225,12 +229,12 @@ export default function DeliveryMethod() {
 
 
                     </div>
-                )}
+                )} */}
 
 
 
                 <form
-                    className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+                    className="w-full py-10 space-y-12  text-black text-base md:text-xl"
                     onSubmit={update}
                 >
 
@@ -243,27 +247,34 @@ export default function DeliveryMethod() {
                         />
                     </div>
 
+                    <div
+                        className="grid grid-cols-2 space-x-6"
+                    >
+                        <div className="  space-y-6">
+
+                            <button className="w-full btn-primary btn "
+                                type="submit">
+                                {isLoading ? "Loading..." : "Proceed with  Address"}
+                            </button>
+                        </div>
 
 
-                    <div className=" w-full  space-y-6">
 
-                        <button className="w-full btn-primary btn "
-                            type="submit">
-                            {isLoading ? "Loading..." : "Proceed with  Address"}
-                            {/* Proceed */}
-                        </button>
+                        <div className="  space-y-6 float-right">
+
+                            <button className="w-full btn-primary btn "
+                                onClick={updatePick}>
+                                {isLoading ? "Loading..." : "PickUp At Store"}
+
+                            </button>
+                        </div>
                     </div>
+
+
                 </form>
 
 
-                <div className=" w-full  space-y-6">
 
-                    <button className="w-full btn-primary btn "
-                        onClick={updatePick}>
-                        {isLoading ? "Loading..." : "PickUp At Store"}
-
-                    </button>
-                </div>
 
 
 

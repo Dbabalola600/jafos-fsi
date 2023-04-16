@@ -196,7 +196,8 @@ export default function PayPortal() {
             sen: token,
             amt: amount,
             or_id: _id,
-            devf: devfee
+            devf: devfee,
+            tot: total
 
 
         }
@@ -231,135 +232,137 @@ export default function PayPortal() {
 
 
         setLoading(false)
+    
+
+}
+
+
+
+
+//delete one item 
+const delOne = async (id: any) => {
+
+
+    const body = {
+        id: id
     }
+    const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
+        .then(res => {
+            if (res.status == 200) {
+
+                router.reload()
+                console.log("DELETED")
+            }
+        })
+}
+
+return (
+    <StuLayout>
+        <>
+
+            <Header
+                title="Pay Now "
+            />
+            <div
+                className="text-red-500"
+            >
+
+
+            </div>
 
 
 
+            <div
+                className="pt-5 text-black text-xl "
+            >
 
-    //delete one item 
-    const delOne = async (id: any) => {
-
-
-        const body = {
-            id: id
-        }
-        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-                if (res.status == 200) {
-
-                    router.reload()
-                    console.log("DELETED")
-                }
-            })
-    }
-
-    return (
-        <StuLayout>
-            <>
-
-                <Header
-                    title="Pay Now "
-                />
-                <div
-                    className="text-red-500"
-                >
-
-
+                <div>
+                    Amount Due: NGN {total}
+                </div>
+                <div>
+                    Available Balance: NGN {student?.account_bal}
+                </div>
+                <div>
+                    Delivery Fee: NGN {devfee}
                 </div>
 
-
-
-                <div
-                    className="pt-5 text-black text-xl "
-                >
-
-                    <div>
-                        Amount Due: NGN {total}
-                    </div>
-                    <div>
-                        Available Balance: NGN {student?.account_bal}
-                    </div>
-                    <div>
-                        Delivery Fee: NGN {devfee}
-                    </div>
-
-                    <div>
-                        Current Method of Delivery:  {orders[0]?.mod}
-                    </div>
-
+                <div>
+                    Current Method of Delivery:  {orders[0]?.mod}
                 </div>
 
-
-
-
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-                >
-                    {orders.map((order: {
-                        _id: string
-                        user: string
-                        product: string
-                        storename: string
-                        price: number
-                        quantity: number
-                        amount: number
-                        status: string
-                        p_status: string
-                        mod: string
-                    }) =>
-                        <div
-                            key={order._id}
-                        >
-                            <CheckOutInfo
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                clickButton={() => delOne(order._id)}
-
-                            />
-
-
-                        </div>
-                    )}
-                </div>
+            </div>
 
 
 
 
-                <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => {
-                        orders.map((order: any) => {
-                            Pay2(order.amount, order._id)
-                        }
-                        )
-                    }}>
-                    {isLoading ? "Loading..." : "Pay"}
+            <div
+                className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                </button>
+            >
+                {orders.map((order: {
+                    _id: string
+                    user: string
+                    product: string
+                    storename: string
+                    price: number
+                    quantity: number
+                    amount: number
+                    status: string
+                    p_status: string
+                    mod: string
+                }) =>
+                    <div
+                        key={order._id}
+                    >
+                        <CheckOutInfo
+                            amount={order.amount}
+                            product={order.product}
+                            quantity={order.quantity}
+                            clickButton={() => delOne(order._id)}
+
+                        />
 
 
-                {showtoast.show && <ErrMess title="insufficient funds" />}
-                {showtoast2.show && <ErrMess title="invalid pin" />}
-                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
-
-                {showgoodtoast.show && <GoodMess title="payment successful" />}
-                {showtoastp.show && <ErrMess title="Payment Already Made" />}
+                    </div>
+                )}
+            </div>
 
 
 
 
+            <button className="w-full btn-primary btn mt-5 "
+                onClick={() => {
+                    orders.map((order: any) => {
+                        Pay2(order.amount, order._id)
+                    }
+                    )
+                }}>
+                {isLoading ? "Loading..." : "Pay"}
+
+            </button>
 
 
+            {showtoast.show && <ErrMess title="insufficient funds" />}
+            {showtoast2.show && <ErrMess title="invalid pin" />}
+            {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
+
+            {showgoodtoast.show && <GoodMess title="payment successful" />}
+            {showtoastp.show && <ErrMess title="Payment Already Made" />}
 
 
 
 
 
 
-            </>
-        </StuLayout>
-    )
+
+
+
+
+
+
+        </>
+    </StuLayout>
+)
 }
 
 

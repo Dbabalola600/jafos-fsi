@@ -47,11 +47,11 @@ export default function PayPortal() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
-  
 
-   
 
-   
+
+
+
 
 
     const showOrder = async () => {
@@ -125,36 +125,36 @@ export default function PayPortal() {
     // console.log(massId)
 
 
-    
 
 
 
 
 
 
-    
+
+
 
     return (
         <StaffLay>
             <>
 
                 <Header
-                    title="payment portal "
+                    title="Payment"
                 />
                 <div
-                    className="text-red-500"
+                    className="text-black text-xl"
                 >
 
                     <div>
-                        amount due: {total}
+                        Amount Due: NGN {total}
                     </div>
 
                     <div>
-                        Delivery Fee: {devfee}
+                        Delivery Fee: NGN {devfee}
                     </div>
 
                     <div>
-                        available balance: {staff?.account_bal}
+                        Available Balance: NGN {staff?.account_bal}
                     </div>
                 </div>
 
@@ -162,23 +162,28 @@ export default function PayPortal() {
 
 
 
-               
+
+                <div
+                    className="grid grid-cols-2 space-x-5"
+                >
 
 
-               
-
-
-                <NavButton
-                    title="Pay Now"
-                    uLink="/staff/checkout/payment/PayNow"
-                />
+                    <NavButton
+                        title="Pay Now"
+                        uLink="/staff/checkout/payment/PayNow"
+                    />
 
 
 
-                <NavButton
-                    title="Pay On Delivery"
-                    uLink="/staff/checkout/confirmOrder"
-                />
+                    <NavButton
+                        title="Pay On Delivery"
+                        uLink="/staff/checkout/confirmOrder"
+                    />
+                </div>
+
+
+
+
 
 
 

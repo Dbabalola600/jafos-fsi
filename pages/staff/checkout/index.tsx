@@ -5,6 +5,7 @@ import GoodMess from "../../../components/shared/GoodMess"
 import Header from "../../../components/shared/Header"
 import NavButton from "../../../components/shared/NavButton"
 import StaffLay from "../Layout/StaffLay"
+import CheckOutInfo from "../../../components/shared/CheckOutInfo"
 
 
 
@@ -108,7 +109,7 @@ export default function Checkout() {
         const body = {
             id: id
         }
-        
+
         const reponse = await fetch("/api/staff/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
@@ -133,58 +134,58 @@ export default function Checkout() {
                 />
                 {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
-                {orders.map((order: {
-                    _id: string | null
-                    user: string
-                    product: string
-                    storename: string
-                    price: number
-                    quantity: number
-                    amount: number
-                    status: string
-                    p_status: string
-                    mod: string
-                }) =>
-                    <div
-                        key={order._id}
-                    >
 
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
+                >
+                    {orders.map((order: {
+                        _id: string | null
+                        user: string
+                        product: string
+                        storename: string
+                        price: number
+                        quantity: number
+                        amount: number
+                        status: string
+                        p_status: string
+                        mod: string
+                    }) =>
                         <div
-                            className="text-red-500 mt-10"
+                            key={order._id}
                         >
-                            Order Status: {order.status}  {"  "} ,Quantity:  {order.quantity} {"  "} ,Product name:  {order.product}
-                            <p>
-                                Paymneent Status:  {order.p_status} {" "}  ,Method of Delivery:{order.mod} {""} price: {order.amount}
-                            </p>
+
+
+
+                            <CheckOutInfo
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                                clickButton={() => delOne(order._id)}
+
+                            />
+
+
+
                         </div>
-
-                        <button className="w-full btn-primary btn "
-                            onClick={() => delOne(order._id)}
-                        >
-                            Delete Item
-
-                        </button>
+                    )}
+                </div>
 
 
-
-
-                    </div>
-                )}
 
 
 
 
                 <div
-                    className="text-slate-800 mt-5 mb-5"
+                    className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
-                    Total {total}
+                    Total: NGN {total}
                 </div>
 
 
 
                 <NavButton
-                  title="Select Method of Delivery"
+                    title="Select Method of Delivery"
                     uLink="/staff/checkout/deliveryMethod/"
                 />
 

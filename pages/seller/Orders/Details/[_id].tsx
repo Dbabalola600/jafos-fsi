@@ -148,7 +148,7 @@ export default function Index() {
             tot += Ordresponse[i].oriOrder.amount
             setTotal(tot)
         }
-      
+
         setOrderItem(Ordresponse)
 
         console.log(Ordresponse)
@@ -348,9 +348,44 @@ export default function Index() {
                 <div
                     className="underline text-primary text-xl"
                 >
-                    Products
+                    Order Details
                 </div>
-                
+
+
+
+
+                <div
+                    className="text-black space-x-4 lg:text-lg  text-[10px] mt-2 grid grid-cols-3 border-solid border-black break-words"
+
+                >
+
+                    <div
+                        className="bg-"
+                    >
+                        Quantity
+                    </div>
+
+                    <div
+                        className="bg-"
+                    >
+                        Product
+                    </div>
+
+
+                    <div>
+                        Price
+                    </div>
+
+
+
+                  
+                </div>
+
+
+
+                <hr
+                    className="w-full bg-primary "
+                />
                 <div
                     className="text-black text-lg   mt-2 "
 
@@ -380,8 +415,26 @@ export default function Index() {
                         >
 
 
-                            <div>
-                                {orderItem.oriOrder.quantity}  {orderItem.oriOrder.product} : NGN{orderItem.oriOrder.amount}
+                            <div
+                                className="text-black space-x-4 lg:text-lg  text-[10px] mt-2 grid grid-cols-3  border-solid border-black break-words"
+                            >
+
+
+
+                                <div
+                                    className="col-span-1"
+                                >
+
+                                    {orderItem.oriOrder.quantity}
+                                </div>
+                                <div>
+                                    {orderItem.oriOrder.product}
+                                </div>
+
+                                <div>
+                                    NGN {orderItem.oriOrder.amount}
+                                </div>
+
                             </div>
 
 
