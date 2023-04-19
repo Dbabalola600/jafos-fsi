@@ -403,7 +403,7 @@ export default function PayPortal() {
 
 
 
-                <button className="w-full btn-primary btn mt-5 "
+                {/* <button className="w-full btn-primary btn mt-5 "
                     onClick={() => {
                         orders.map((order: any) => {
                             Pay2(order._id)
@@ -412,7 +412,7 @@ export default function PayPortal() {
                     }}>
                     {isLoading ? "Loading..." : "Pay"}
 
-                </button>
+                </button> */}
 
 
                 {showtoast.show && <ErrMess title="insufficient funds" />}

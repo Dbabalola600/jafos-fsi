@@ -49,18 +49,18 @@ export default function CheckOutInfoPay(props: MyProps) {
             <div
                 className=" grid lg:grid-cols-2  gap-6 pt-5 grid-cols-1"
             >
-                {/* <div
+                <div
                     className="btn bg-black float-right text-white "
                     onClick={props.DelclickButton}
                 > Delete
-                </div> */}
+                </div>
 
 
 
                 <div
                  
                     className="btn bg-white float-right text-black hover:bg-white "
-                    onClick={props.DelclickButton}
+                    onClick={props.PayclickButton}
                 > Pay
                 </div>
             </div>
