@@ -54,7 +54,7 @@ function CreateAccount() {
             .then(res => {
 
                 if (res.status === 200) {
-                    router.push("/student/")
+                    router.push("/")
                 }
                else {
                     settoast({ message: " message", show: true })
