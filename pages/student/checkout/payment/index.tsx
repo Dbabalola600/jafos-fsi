@@ -32,12 +32,18 @@ type Orders = {
 }
 
 
+type DevFee = {
+    fee: number
+    n_store: any
+}
+
 
 export default function PayPortal() {
     const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const [devfee, setDevfee] = useState<number | null>()
+
+    const [devfee, setDevfee] = useState<DevFee | null>()
     const router = useRouter()
 
 
@@ -55,11 +61,16 @@ export default function PayPortal() {
             .then(res => res.json()) as Orders[]
 
 
+
         setOrders(response)
         console.log(response)
 
 
-        // let tot = response[0].amount + response[1].amount
+        // fetch dev fee amouunt 
+
+        const feeResponse = await fetch("/api/student/order/devfeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
 
 
         let l_tot = response.length.valueOf()
@@ -67,26 +78,13 @@ export default function PayPortal() {
 
 
 
-        let dev = 50
-
-        console.log(response[0].mod)
-
-        for (let i = 0; i < l_tot; i++) {
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
 
 
-            sum += response[i].amount
 
-            console.log(sum)
-            setTotal(sum + dev)
-        }
+
+
+
+
 
 
 
@@ -97,7 +95,25 @@ export default function PayPortal() {
         setStudent(response2)
 
 
+
+
+
+        for (let i = 0; i < l_tot; i++) {
+            sum += response[i].amount
+            console.log(sum)
+            setTotal(sum)
+
+        }
+
+
+
+        // total && devfee && m_setTotal(total + devfee?.fee)
+
+
     }
+
+
+
     useEffect(() => {
         showOrder()
     }, [])
@@ -127,8 +143,8 @@ export default function PayPortal() {
 
     //payment api
 
-
-
+    // total && devfee?.fee && console.log(total + devfee?.fee)
+    // total && devfee && m_setTotal(total + devfee?.fee)
 
 
 
@@ -151,12 +167,20 @@ export default function PayPortal() {
                     </div>
 
                     <div>
-                        Delivery Fee: NGN {devfee}
+                        Delivery Fee: NGN {devfee?.fee}
                     </div>
+
 
                     <div>
                         Available Balance: NGN {student?.account_bal}
                     </div>
+
+
+                    {/* <div
+                        className="text-slate-800 mt-5 mb-5 text-xl font-bold"
+                    >
+                        Total: NGN {total && devfee?.fee && (total + devfee?.fee)}
+                    </div> */}
                 </div>
 
 

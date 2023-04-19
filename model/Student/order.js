@@ -28,9 +28,15 @@ const OrderSchema = new Schema({
         unique: false
     },
 
+    devFee: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+
     orderList: {
-        type:  Array,
-       
+        type: Array,
+
         required: true,
         unique: false,
     }

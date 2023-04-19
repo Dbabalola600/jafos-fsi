@@ -18,43 +18,95 @@ export default async function deliveryFee(req, res) {
 
 
 
-        const { sen, devf } = JSON.parse(req.body)
+        const { _id } = JSON.parse(req.body)
+
+        const orders = await CheckOutItem.find({ user: _id })
+        const stu = await Student.findById(_id)
+        console.log("FETCHED CHECKOUT")
+
+
+        let store = []
+
+        for (let i = 0; i < orders.length; i++) {
+            store.push(orders[i].storename)
+
+        }
 
 
 
-        const sender = await Student.findById(sen)
+        const n_store = [... new Set(store)]
+
+
+        let fee = 0
 
 
 
-        if (devf > 0) {
-            const MainAdmin = await Admin.find({ AdminId: "Admin101" })
+        for (let i = 0; i < n_store.length; i++) {
 
-            const main_admin_bal = MainAdmin[0].account_bal + JSON.parse(devf)
-            const new_main_admin_bal = await Admin.findById(MainAdmin[0]._id).updateOne({ account_bal: main_admin_bal })
-
-            const dev_history = await TransferHistory.create({
-                sender: sender.firstname + sender.lastname,
-                reciever: MainAdmin[0].AdminId,
-                amount: devf,
-                trans_type: "DEBIT",
-                send_id: sen,
-                rec_id: MainAdmin[0]._id
-            })
-
-
-            // add delivery fee history for recipient
-
-            
-            return res.status(200).json({
-                message: "successful"
+            if (orders[i].mod === "PickUp") {
+                fee = 0
+            } else {
+                fee = fee + 100
             }
-            )
+
+        }
+
+        const o_fee = fee / n_store.length
+
+        if (fee > 0) {
+
+
+            const new_sender_bal = stu.account_bal - fee
+            const new_user_bal = await Student.findById(_id).updateOne({ account_bal: new_sender_bal })
+
+
+            const l_store = await Promise.all(n_store.map(async (name) => {
+                const o_store = Seller.findOne({ storename: name })
+                return (o_store)
+            }))
+
+            for (let i = 0; i < l_store.length; i++) {
+                const main_sell_bal = l_store[i].account_bal + o_fee
+
+                const new_main_sell_bal = await Seller.findById(l_store[i]._id).updateOne({ account_bal: main_sell_bal })
+
+                const dev_history = await TransferHistory.create({
+                    sender: stu.firstname + stu.lastname,
+                    reciever: l_store[i].storename,
+                    amount: o_fee,
+                    trans_type: "DEBIT",
+                    send_id: _id,
+                    rec_id: l_store[i]._id
+                })
+
+
+                const dev_history2 = await TransferHistory.create({
+                    sender: stu.firstname + stu.lastname,
+                    reciever: l_store[i].storename,
+                    amount: o_fee,
+                    trans_type: "CREDIT",
+                    send_id: _id,
+                    rec_id: l_store[i]._id
+                })
+            }
+
+
+
+            return res.status(200).json(l_store)
+
+
+
+
+
+
         } else {
             return res.status(200).json({
-                message: "successful no fee"
-            }
-            )
+                message: "no delivery fee but successful"
+            })
         }
+
+
+
 
     } else {
         return res.status(400).json({

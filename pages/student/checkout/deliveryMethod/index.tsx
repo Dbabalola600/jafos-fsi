@@ -185,7 +185,7 @@ export default function DeliveryMethod() {
             <>
 
                 <Header
-                    title="Update Mehtod of Delivery "
+                    title="Update Method of Delivery "
                     desc="delivery to any location attracts a fee"
                 />
 

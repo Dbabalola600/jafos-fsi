@@ -80,7 +80,7 @@ export default async function Login(req, res) {
 
     } else {
         return (
-            res.status(400).message("error")
+            res.status(400).json("error")
         )
     }
 }

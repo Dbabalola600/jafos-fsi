@@ -9,6 +9,7 @@ import NavButton from "../../../../components/shared/NavButton";
 import TextInput from "../../../../components/shared/TextInput";
 import StuLayout from "../../Layout/StuLayout";
 import CheckOutInfo from "../../../../components/shared/CheckOutInfo";
+import CheckOutInfoPay from "../../../../components/shared/CheckOutInfoPay";
 
 type Student = {
     _id: string;
@@ -32,13 +33,16 @@ type Orders = {
     mod: string
 }
 
-
+type DevFee = {
+    fee: number
+    n_store: any
+}
 
 export default function PayPortal() {
     const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const [devfee, setDevfee] = useState<number | null>()
+    const [devfee, setDevfee] = useState<DevFee | null>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
@@ -109,10 +113,15 @@ export default function PayPortal() {
 
 
         setOrders(response)
-        console.log(response)
 
 
-        // let tot = response[0].amount + response[1].amount
+
+
+        // fetch dev fee amouunt 
+
+        const feeResponse = await fetch("/api/student/order/devfeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
 
 
         let l_tot = response.length.valueOf()
@@ -120,26 +129,17 @@ export default function PayPortal() {
 
 
 
-        let dev = 50
 
-        console.log(response[0].mod)
+
 
         for (let i = 0; i < l_tot; i++) {
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
-
-
             sum += response[i].amount
-
             console.log(sum)
-            setTotal(sum + dev)
+            setTotal(sum)
+
         }
+
+
 
 
 
@@ -180,11 +180,11 @@ export default function PayPortal() {
 
     //payment api
 
+    console.log("this" + total)
 
 
 
-
-    const Pay2 = async (amount: any, _id: string) => {
+    const Pay2 = async (_id: any) => {
 
         setLoading(true)
 
@@ -194,23 +194,31 @@ export default function PayPortal() {
         const token = getCookie("Normuser")
         const body = {
             sen: token,
-            amt: amount,
+            // amt: amount,
             or_id: _id,
-            devf: devfee,
+            devf: devfee?.fee,
             tot: total
 
 
         }
 
 
+        const body2 = {
+            sen: token,
+            or_id: _id
+        }
 
-        const reponse = await fetch("/api/student/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-                if (res.status == 200) {
+
+
+        const reponse = await fetch("/api/student/transactions/checkPay", { method: "POST", body: JSON.stringify(body2) })
+            .then(async res => {
+                if (res.status === 200) {
 
                     setgoodtoast({ message: " message", show: true })
 
-                    router.push("/student/checkout/confirmOrder")
+                    // router.push("/student/checkout/confirmOrder")
+                    router.reload()
+
                 } if (res.status == 256) {
                     settoast({ message: " message", show: true })
                 }
@@ -232,124 +240,187 @@ export default function PayPortal() {
 
 
         setLoading(false)
-    
-
-}
 
 
-
-
-//delete one item 
-const delOne = async (id: any) => {
-
-
-    const body = {
-        id: id
     }
-    const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
-        .then(res => {
-            if (res.status == 200) {
-
-                router.reload()
-                console.log("DELETED")
-            }
-        })
-}
-
-return (
-    <StuLayout>
-        <>
-
-            <Header
-                title="Pay Now "
-            />
-            <div
-                className="text-red-500"
-            >
-
-
-            </div>
 
 
 
-            <div
-                className="pt-5 text-black text-xl "
-            >
 
-                <div>
-                    Amount Due: NGN {total}
+    const Pay3 = async (_id: any) => {
+        setLoading(true)
+
+        const token = getCookie("Normuser")
+
+        const body2 = {
+            sen: token,
+            or_id: _id
+        }
+
+
+
+        const reponse = await fetch("/api/student/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
+            .then(async res => {
+                if (res.status === 200) {
+
+                    setgoodtoast({ message: " message", show: true })
+
+                    // router.push("/student/checkout/confirmOrder")
+                    router.reload()
+
+                } if (res.status == 256) {
+                    settoast({ message: " message", show: true })
+                }
+                if (res.status == 245) {
+                    settoast2({ message: " message", show: true })
+                }
+                if (res.status == 259) {
+                    settoastp({ message: " message", show: true })
+
+                    router.push("/student/checkout/confirmOrder")
+                }
+                else {
+                    settoast3({ message: " message", show: true })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+
+
+
+
+
+        setLoading(false)
+
+    }
+
+
+
+    //delete one item 
+    const delOne = async (id: any) => {
+
+
+        const body = {
+            id: id
+        }
+        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+
+                    router.reload()
+                    console.log("DELETED")
+                }
+            })
+    }
+
+    return (
+        <StuLayout>
+            <>
+
+                <Header
+                    title="Pay Now "
+                />
+                <div
+                    className="text-red-500"
+                >
+
+
                 </div>
-                <div>
-                    Available Balance: NGN {student?.account_bal}
-                </div>
-                <div>
-                    Delivery Fee: NGN {devfee}
-                </div>
-
-                <div>
-                    Current Method of Delivery:  {orders[0]?.mod}
-                </div>
-
-            </div>
 
 
 
+                <div
+                    className="pt-5 text-black text-xl "
+                >
 
-            <div
-                className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-            >
-                {orders.map((order: {
-                    _id: string
-                    user: string
-                    product: string
-                    storename: string
-                    price: number
-                    quantity: number
-                    amount: number
-                    status: string
-                    p_status: string
-                    mod: string
-                }) =>
-                    <div
-                        key={order._id}
-                    >
-                        <CheckOutInfo
-                            amount={order.amount}
-                            product={order.product}
-                            quantity={order.quantity}
-                            clickButton={() => delOne(order._id)}
-
-                        />
-
-
+                    <div>
+                        Amount Due: NGN {total}
                     </div>
-                )}
-            </div>
+                    <div>
+                        Available Balance: NGN {student?.account_bal}
+                    </div>
+                    <div>
+                        Delivery Fee: NGN {devfee?.fee}
+                    </div>
+
+                    <div>
+                        Current Method of Delivery:  {orders[0]?.mod}
+                    </div>
+
+                </div>
 
 
 
 
-            <button className="w-full btn-primary btn mt-5 "
-                onClick={() => {
-                    orders.map((order: any) => {
-                        Pay2(order.amount, order._id)
-                    }
-                    )
-                }}>
-                {isLoading ? "Loading..." : "Pay"}
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-            </button>
+                >
+                    {orders.map((order: {
+                        _id: string
+                        user: string
+                        product: string
+                        storename: string
+                        price: number
+                        quantity: number
+                        amount: number
+                        status: string
+                        p_status: string
+                        mod: string
+                    }) =>
+                        <div
+                            key={order._id}
+                        >
+                            {/* <CheckOutInfo
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                                clickButton={() => delOne(order._id)}
+
+                            /> */}
+
+                            <CheckOutInfoPay
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                                status={order.p_status}
+                                DelclickButton={() => delOne(order._id)}
+                                PayclickButton={() => Pay3(order._id)}
+                            />
+
+                            {/* <button className="w-full btn-primary btn mt-5 "
+                                onClick={() => {
+                                    order._id
+                                }}>
+                                {isLoading ? "Loading..." : "Pay"}
+
+                            </button> */}
+
+                        </div>
+                    )}
+                </div>
 
 
-            {showtoast.show && <ErrMess title="insufficient funds" />}
-            {showtoast2.show && <ErrMess title="invalid pin" />}
-            {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
-
-            {showgoodtoast.show && <GoodMess title="payment successful" />}
-            {showtoastp.show && <ErrMess title="Payment Already Made" />}
 
 
+                <button className="w-full btn-primary btn mt-5 "
+                    onClick={() => {
+                        orders.map((order: any) => {
+                            Pay2(order._id)
+                        }
+                        )
+                    }}>
+                    {isLoading ? "Loading..." : "Pay"}
+
+                </button>
+
+
+                {showtoast.show && <ErrMess title="insufficient funds" />}
+                {showtoast2.show && <ErrMess title="invalid pin" />}
+                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
+
+                {showgoodtoast.show && <GoodMess title="payment successful" />}
+                {showtoastp.show && <ErrMess title="Payment Already Made" />}
 
 
 
@@ -360,9 +431,11 @@ return (
 
 
 
-        </>
-    </StuLayout>
-)
+
+
+            </>
+        </StuLayout>
+    )
 }
 
 

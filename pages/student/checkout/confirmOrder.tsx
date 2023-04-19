@@ -21,7 +21,10 @@ type Orders = {
     p_status: string
     mod: string
 }
-
+type DevFee = {
+    fee: number
+    n_store: any
+}
 
 
 
@@ -37,7 +40,7 @@ export default function ConfirmOrder() {
 
 
 
-    const [devfee, setDevfee] = useState<number | null>()
+    const [devfee, setDevfee] = useState<DevFee | null>()
 
 
     const showOrder = async () => {
@@ -57,33 +60,28 @@ export default function ConfirmOrder() {
         // console.log(response)
 
 
-        // let tot = response[0].amount + response[1].amount
+        // fetch dev fee amouunt 
+
+        const feeResponse = await fetch("/api/student/order/devfeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
 
 
         let l_tot = response.length.valueOf()
         let sum = 0
 
-        let dev = 50
+
+
+
 
         for (let i = 0; i < l_tot; i++) {
-
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
-
-
             sum += response[i].amount
-
             console.log(sum)
             setTotal(sum)
+
         }
 
-        console.log(total)
+
 
 
 
@@ -131,8 +129,16 @@ export default function ConfirmOrder() {
         const response = await fetch("/api/student/order/newOrderItem", { method: "Post", body: JSON.stringify(body) })
             .then(async res => {
                 console.log(res.status)
+                //delete entire cart 
+                if (res.status === 200) {
+                    // const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
+                    //     .then(res => {
+                    //         if (res.status == 200) {
+                    //             router.push("/student/Orders/")
+                    //             console.log("SUCCESS")
+                    //         }
+                    //     })
 
-                if (res.status == 200) {
 
                     // subtract delivery fee
                     const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body2) })
@@ -202,8 +208,12 @@ export default function ConfirmOrder() {
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
                     <div>
-                        Delivery Fee: {devfee}
+                        Delivery Fee: NGN {devfee?.fee}
                     </div>
+
+
+
+
                 </div>
 
 
@@ -250,15 +260,15 @@ export default function ConfirmOrder() {
 
 
 
-                <div
+                {/* <div
                     className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
-                    Total: NGN {total}
-                </div>
+                    Total: NGN {total && devfee?.fee && (total + devfee?.fee)}
+                </div> */}
 
 
 
-                <button className="w-full btn-primary btn "
+                <button className="w-full btn-primary btn mt-5 "
                     onClick={addOrderItem}
 
 
@@ -269,7 +279,7 @@ export default function ConfirmOrder() {
                 <div
                     className=" text-center text-sm mt-5"
                 >
-                  NOTE:  confirming and order with a delivery fee will see the amount deducted from your account
+                    NOTE:  confirming and order with a delivery fee will see the amount deducted from your account
                 </div>
 
             </>
