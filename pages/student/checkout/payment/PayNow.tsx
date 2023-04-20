@@ -313,6 +313,27 @@ export default function PayPortal() {
             })
     }
 
+
+
+
+
+    const delivery = async () => {
+
+        const token = getCookie("Normuser")
+        const body ={
+            _id: token
+        }
+
+        const fee = await fetch("/api/student/transactions/deliveryFee", {method: "POST", body:JSON.stringify(body)})
+        .then(res=>{
+            if(res.status==200){
+                router.reload()
+            }if (res.status ==256){
+                settoast({ message: " message", show: true })
+            }
+        })
+    }
+
     return (
         <StuLayout>
             <>
@@ -403,6 +424,15 @@ export default function PayPortal() {
 
 
 
+
+
+{/* 
+                <button className="w-full btn-primary btn mt-5 "
+                    onClick={() => delivery()}>
+                    {isLoading ? "Loading..." : "Pay for Delivery"}
+
+                </button> */}
+
                 {/* <button className="w-full btn-primary btn mt-5 "
                     onClick={() => {
                         orders.map((order: any) => {
@@ -413,6 +443,13 @@ export default function PayPortal() {
                     {isLoading ? "Loading..." : "Pay"}
 
                 </button> */}
+
+                <button className="w-full btn-primary btn mt-5 "
+                    onClick={() => router.push("/student/checkout/confirmOrder")}>
+                    {isLoading ? "Loading..." : "Confirm Order"}
+
+                </button>
+
 
 
                 {showtoast.show && <ErrMess title="insufficient funds" />}

@@ -6,6 +6,7 @@ import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
 import CheckOutConfirm from "../../../components/shared/CheckOutConfirm";
+import ErrMess from "../../../components/shared/ErrMess";
 
 
 
@@ -36,12 +37,24 @@ export default function ConfirmOrder() {
     const [total, setTotal] = useState<number | null>()
     const [isLoading, setLoading] = useState(false)
 
+    const [showtoast, settoast] = useState({ message: "", show: false })
     const router = useRouter()
 
 
 
     const [devfee, setDevfee] = useState<DevFee | null>()
 
+
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
     const showOrder = async () => {
         const token = getCookie("Normuser")
@@ -118,8 +131,7 @@ export default function ConfirmOrder() {
 
 
         const body2 = {
-            sen: user,
-            devf: devfee
+            _id: user
         }
 
         const body3 = {
@@ -152,6 +164,8 @@ export default function ConfirmOrder() {
                                             console.log("SUCCESS")
                                         }
                                     })
+                            }if (res.status ==256){
+                                settoast({ message: " message", show: true })
                             }
                         })
 
@@ -216,7 +230,7 @@ export default function ConfirmOrder() {
 
                 </div>
 
-
+                {showtoast.show && <ErrMess title="insufficient funds to pay for delivery" />}
 
                 <div
                     className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"

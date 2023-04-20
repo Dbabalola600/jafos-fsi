@@ -7,6 +7,7 @@ import Header from "../../../../components/shared/Header";
 import NavButton from "../../../../components/shared/NavButton";
 import StaffLay from "../../Layout/StaffLay";
 import CheckOutInfo from "../../../../components/shared/CheckOutInfo";
+import CheckOutInfoPay from "../../../../components/shared/CheckOutInfoPay";
 
 
 
@@ -39,12 +40,18 @@ type Orders = {
 }
 
 
+type DevFee = {
+    fee: number
+    n_store: any
+}
+
+
 
 export default function PayPortal() {
     const [staff, setStaff] = useState<Staff | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const [devfee, setDevfee] = useState<number | null>()
+    const [devfee, setDevfee] = useState<DevFee | null>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
@@ -121,30 +128,29 @@ export default function PayPortal() {
         // let tot = response[0].amount + response[1].amount
 
 
+
+
+
+        // fetch dev fee amouunt 
+
+        const feeResponse = await fetch("/api/staff/order/devFeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
+
+
         let l_tot = response.length.valueOf()
         let sum = 0
 
 
 
-        let dev = 50
 
-        console.log(response[0].mod)
+
 
         for (let i = 0; i < l_tot; i++) {
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
-
-
             sum += response[i].amount
-
             console.log(sum)
-            setTotal(sum + dev)
+            setTotal(sum)
+
         }
 
 
@@ -205,8 +211,8 @@ export default function PayPortal() {
         }
 
 
-       
-            const reponse = await fetch("/api/staff/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
+
+        const reponse = await fetch("/api/staff/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status === 200) {
                     setgoodtoast({ message: " message", show: true })
@@ -231,10 +237,58 @@ export default function PayPortal() {
 
 
         setLoading(false)
-    
-       
+
+
     }
 
+
+
+    const Pay3 = async (_id: any) => {
+        setLoading(true)
+
+        const token = getCookie("Staffuser")
+
+        const body2 = {
+            sen: token,
+            or_id: _id
+        }
+
+
+
+        const reponse = await fetch("/api/staff/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
+            .then(async res => {
+                if (res.status === 200) {
+
+                    setgoodtoast({ message: " message", show: true })
+
+                    // router.push("/staff/checkout/confirmOrder")
+                    router.reload()
+
+                } if (res.status == 256) {
+                    settoast({ message: " message", show: true })
+                }
+                if (res.status == 245) {
+                    settoast2({ message: " message", show: true })
+                }
+                if (res.status == 259) {
+                    settoastp({ message: " message", show: true })
+
+                    router.push("/staff/checkout/confirmOrder")
+                }
+                else {
+                    settoast3({ message: " message", show: true })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+
+
+
+
+
+        setLoading(false)
+
+    }
 
 
 
@@ -271,7 +325,7 @@ export default function PayPortal() {
                         Available Balance: NGN {staff?.account_bal}
                     </div>
                     <div>
-                        Delivery Fee: NGN {devfee}
+                        Delivery Fee: NGN {devfee?.fee}
                     </div>
 
                     <div>
@@ -306,14 +360,21 @@ export default function PayPortal() {
 
 
 
-                            <CheckOutInfo
+                            {/* <CheckOutInfo
                                 amount={order.amount}
                                 product={order.product}
                                 quantity={order.quantity}
                                 clickButton={() => delOne(order._id)}
 
+                            /> */}
+                            <CheckOutInfoPay
+                                amount={order.amount}
+                                product={order.product}
+                                quantity={order.quantity}
+                                status={order.p_status}
+                                DelclickButton={() => delOne(order._id)}
+                                PayclickButton={() => Pay3(order._id)}
                             />
-
 
 
 
@@ -329,7 +390,7 @@ export default function PayPortal() {
 
 
 
-                <button className="w-full btn-primary btn mt-5 "
+                {/* <button className="w-full btn-primary btn mt-5 "
                     onClick={() => {
                         orders.map((order: any) => {
                             Pay2(order.amount, order._id)
@@ -337,6 +398,13 @@ export default function PayPortal() {
                         )
                     }}>
                     {isLoading ? "Loading..." : "Pay"}
+
+                </button> */}
+
+
+                <button className="w-full btn-primary btn mt-5 "
+                    onClick={() => router.push("/staff/checkout/confirmOrder")}>
+                    {isLoading ? "Loading..." : "Confirm Order"}
 
                 </button>
 

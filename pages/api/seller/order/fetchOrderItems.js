@@ -31,7 +31,7 @@ export default async function fetchOrder(req, res) {
 
 
 
-        console.log(orders.orderList.length)
+        console.log(orders.devFee)
 
 
         let list_Id = []
@@ -71,18 +71,20 @@ export default async function fetchOrder(req, res) {
             if (existingUser === null) {
                 const existingUser = await Staff.findById(oriOrder.user).select("firstname lastname staffid")
                 if (!existingUser) {
-                    return { ...oriOrder, userObj: null };
+                    return { fee: orders.devFee,...oriOrder, userObj: null };
                 }
                 return ({
+                   fee: orders.devFee,
                     oriOrder,
                     userObj: existingUser
                 });
                
             } else {
                 if (!existingUser) {
-                    return { ...oriOrder, userObj: null };
+                    return { fee: orders.devFee,...oriOrder, userObj: null };
                 }
                 return ({
+                    fee: orders.devFee,
                     oriOrder,
                     userObj: existingUser
                 });

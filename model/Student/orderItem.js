@@ -50,6 +50,9 @@ const OrderItemSchema = new Schema({
         enum: ["Paid", "Unpaid", "Pay on Delivery"],
 
     },
+
+
+
     mod: {
         type: String,
         required: true,

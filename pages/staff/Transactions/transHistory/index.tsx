@@ -113,7 +113,7 @@ export default function TransHistory() {
                     >
 
                         <div
-                            className={"text-primary  mb-6 bg-black"}
+                            className={"text-primary  mb-6 bg-"}
                         >
                             <div>
                                 from {hist.sender} to {hist.reciever}

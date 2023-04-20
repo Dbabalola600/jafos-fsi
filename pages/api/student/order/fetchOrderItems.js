@@ -30,13 +30,17 @@ export default async function fetchOrder(req, res) {
 
         }
 
+
+        let fee = orders.devFee
+
         // console.log(MainOrder[0])
 
         const newOrderStruct = await Promise.all(MainOrder.map(async(n_id)=>{
             const l_order= await OrderItem.findById(n_id)
 
-            return(
-               l_order
+            return({
+                fee,
+               l_order}
             ) 
         }))
 
@@ -45,6 +49,7 @@ export default async function fetchOrder(req, res) {
 
 
         return res.json(
+            
             newOrderStruct
         )
 

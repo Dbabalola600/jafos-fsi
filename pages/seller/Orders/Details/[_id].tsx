@@ -40,6 +40,7 @@ type Seller = {
 
 
 type OrderItems = {
+    fee: number
     _doc: any
     oriOrder: {
         _id: string;
@@ -322,7 +323,7 @@ export default function Index() {
 
 
                 <div
-                    className="mb-5 mt-5 text-primary"
+                    className="mb- mt-5 text-primary"
                 >
                     <div>
                         Order Status:  {orderItems[0]?.oriOrder.status}
@@ -335,8 +336,18 @@ export default function Index() {
                         Devliery Information: {orderItems[0]?.oriOrder.mod}
                     </div>
                     <div>
-                        Amount Due: NGN {total}
+                        Delivery Fee: {orderItems[0]?.fee}
                     </div>
+                    <div>
+                        Amount Due: NGN {total&& total + orderItems[0]?.fee}
+                    </div>
+                </div>
+
+
+                <div
+                    className="pt-2 text-black text-left text-sm font-thin"
+                >
+                   Note: if an Payment Information is Paid, user has paid delivery fee
                 </div>
 
 
@@ -344,9 +355,8 @@ export default function Index() {
 
 
 
-
                 <div
-                    className="underline text-primary text-xl"
+                    className="underline text-primary text-xl mt-10"
                 >
                     Order Details
                 </div>
@@ -378,7 +388,7 @@ export default function Index() {
 
 
 
-                  
+
                 </div>
 
 
@@ -432,7 +442,7 @@ export default function Index() {
                                 </div>
 
                                 <div>
-                                    NGN {orderItem.oriOrder.amount}
+                                    NGN {orderItem.oriOrder.price}
                                 </div>
 
                             </div>
@@ -534,6 +544,8 @@ export default function Index() {
                         {isLoading ? "Loading..." : "Cancel Order"}
                     </div>
                 </div>
+
+
                 <div
                     className="pt-5 text-black text-center text-sm font-thin"
                 >

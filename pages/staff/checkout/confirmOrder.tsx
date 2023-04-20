@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Header from "../../../components/shared/Header"
 import StaffLay from "../Layout/StaffLay"
 import CheckOutConfirm from "../../../components/shared/CheckOutConfirm"
+import ErrMess from "../../../components/shared/ErrMess"
 
 
 
@@ -25,7 +26,10 @@ type Orders = {
     p_status: string
     mod: string
 }
-
+type DevFee = {
+    fee: number
+    n_store: any
+}
 
 
 
@@ -36,12 +40,22 @@ export default function ConfirmOrder() {
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
     const [isLoading, setLoading] = useState(false)
-
+    const [showtoast, settoast] = useState({ message: "", show: false })
     const router = useRouter()
 
 
 
-    const [devfee, setDevfee] = useState<number | null>()
+    const [devfee, setDevfee] = useState<DevFee | null>()
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
 
     const showOrder = async () => {
@@ -64,30 +78,30 @@ export default function ConfirmOrder() {
         // let tot = response[0].amount + response[1].amount
 
 
+        // fetch dev fee amouunt 
+
+        const feeResponse = await fetch("/api/staff/order/devFeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
+
+
+        console.log(feeResponse)
+
         let l_tot = response.length.valueOf()
         let sum = 0
 
-        let dev = 50
+
+
+
 
         for (let i = 0; i < l_tot; i++) {
-
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
-
-
             sum += response[i].amount
-
             console.log(sum)
             setTotal(sum)
+
         }
 
-        console.log(total)
+
 
 
 
@@ -124,8 +138,7 @@ export default function ConfirmOrder() {
 
 
         const body2 = {
-            sen: user,
-            devf: devfee
+            _id: user
         }
 
         const body3 = {
@@ -150,6 +163,8 @@ export default function ConfirmOrder() {
                                             console.log("SUCCESS")
                                         }
                                     })
+                            } if (res.status == 256) {
+                                settoast({ message: " message", show: true })
                             }
                         })
 
@@ -205,9 +220,10 @@ export default function ConfirmOrder() {
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
                     <div>
-                        Delivery Fee: {devfee}
+                        Delivery Fee: NGN {devfee?.fee}
                     </div>
                 </div>
+                {showtoast.show && <ErrMess title="insufficient funds to pay for delivery" />}
 
                 <div
                     className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
@@ -250,15 +266,15 @@ export default function ConfirmOrder() {
 
 
 
-                <div
+                {/* <div
                     className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
                     Total: NGN {total}
-                </div>
+                </div> */}
 
 
 
-                <button className="w-full btn-primary btn "
+                <button className="w-full btn-primary btn mt-5 "
                     onClick={addOrderItem}
 
 

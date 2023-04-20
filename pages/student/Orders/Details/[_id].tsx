@@ -20,7 +20,8 @@ type Orders = {
 
 
 type OrderItems = {
-    _doc: any
+    fee: number
+   l_order:{
     _id: string;
     product: string;
     storename: string;
@@ -32,6 +33,8 @@ type OrderItems = {
     mod: string;
     amount: number;
     user: string;
+   }
+    
     userObj: {
         firstname: string
         lastname: string
@@ -89,7 +92,7 @@ export default function Index() {
         let tot = 0
 
         for (let i = 0; i < response.length.valueOf(); i++) {
-            tot += response[i].amount
+            tot += response[i].l_order.amount
             setTotal(tot)
         }
 
@@ -109,7 +112,7 @@ export default function Index() {
         <StuLayout>
             <>
                 <Header
-                    title={"Order Number: " + orderItems[0]?.orderNum}
+                    title={"Order Number: " + orderItems[0]?.l_order.orderNum}
 
                 />
 
@@ -122,10 +125,16 @@ export default function Index() {
 
                   
                     <div>
-                        Devliery Information: {orderItems[0]?.mod}
+                        Devliery Information: {orderItems[0]?.l_order.mod}
                     </div>
                     <div>
                         Amount Due: NGN {total}
+                    </div>
+
+
+
+                    <div>
+                        Delivery Fee per Store : NGN {orderItems[0]?.fee}
                     </div>
                 </div>
 
@@ -170,27 +179,30 @@ export default function Index() {
                 className="w-full bg-primary "
                 />
                 {orderItems.map((orderItem: {
-                    _doc: any;
+                   fee: number
+                   l_order:{
                     _id: string;
-                    storename: string
-                    product: string
-                    orderNum: number
-                    user: string
+                    product: string;
+                    storename: string;
                     price: number;
+                    quantity: number;
+                    orderNum: number
                     status: string;
                     p_status: string;
                     mod: string;
-                    quantity: number;
                     amount: number;
+                    user: string;
+                   }
+                    
                     userObj: {
                         firstname: string
-                        _id: string
                         lastname: string
                         matricno: string
+                        _id: string
                     }
                 }) => (
                     <div
-                        key={orderItem._id}
+                        key={orderItem.l_order._id}
                     >
 
                         <div
@@ -199,38 +211,38 @@ export default function Index() {
                             <div
                                 className="col-span-1"
                             >
-                                {orderItem.quantity}
+                                {orderItem.l_order.quantity}
                             </div>
 
 
                             <div
 
                                 className="col-span-1">
-                                {orderItem.product}
+                                {orderItem.l_order.product}
                             </div>
 
                             <div
                                 className="col-span-1"
                             >
-                                NGN {orderItem.amount}
+                                NGN {orderItem.l_order.price}
 
                             </div>
 
                             <div
                                 className="col-span-1"
                             >
-                                {orderItem.storename}
+                                {orderItem.l_order.storename}
                             </div>
 
                             <div
                                 className="col-span-1"
                             >
-                                {orderItem.status}
+                                {orderItem.l_order.status}
                             </div>
                             <div
                                 className="col-span-1"
                             >
-                                {orderItem.p_status}
+                                {orderItem.l_order.p_status}
                             </div>
 
                         </div>

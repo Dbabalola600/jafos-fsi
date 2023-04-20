@@ -49,7 +49,7 @@ export default function HistBar(props: histProps) {
             </Link> */}
 
             <div
-                className="btn btn-primary text-white text-center"
+                className="btn btn-primary text-white text-center hover:bg-primary"
                 onClick={() => router.push(props.allLink)}
             >
 
@@ -64,7 +64,7 @@ export default function HistBar(props: histProps) {
 
 
             <div
-                className="btn bg-red-500 text-white text-center"
+                className="btn bg-black text-white text-center"
                 onClick={() => router.push(props.debitLink)}
             >
 
@@ -78,7 +78,7 @@ export default function HistBar(props: histProps) {
 
 
             <div
-                className="btn bg-green-500 text-white text-center"
+                className="btn bg-primary text-white text-cente hover:bg-primary"
                 onClick={() => router.push(props.creditLink)}
             >
 
@@ -90,7 +90,7 @@ export default function HistBar(props: histProps) {
 
             {/* token credit */}
             <div
-                className="btn bg-orange-500 text-white text-center"
+                className="btn bg-black text-white text-center"
                 onClick={() => router.push(props.tokenLink)}
             >
 
