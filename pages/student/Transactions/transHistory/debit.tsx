@@ -71,7 +71,7 @@ export default function TransDebit() {
 
 
 
-  
+
 
     return (
         <StuLayout>
@@ -93,60 +93,64 @@ export default function TransDebit() {
                     tokenLink={"/student/Transactions/transHistory/tokenCredit"}
                 />
 
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
 
-                {hists.map((hist: {
-                    sender: string,
-                    reciever: string,
-                    amount: number,
-                    trans_type: string,
-                    send_id: string,
-                    rec_id: string,
-                    _id: string,
-                    createdAt: string
+                    {hists.map((hist: {
+                        sender: string,
+                        reciever: string,
+                        amount: number,
+                        trans_type: string,
+                        send_id: string,
+                        rec_id: string,
+                        _id: string,
+                        createdAt: string
 
 
-                }, index) => (
-                    <div
-                        key={hist._id}
-                    // key={index}
-                    >
-
+                    }, index) => (
                         <div
-                            className={"text-red-600  mb-6 bg-black"}
-
+                            key={hist._id}
+                        // key={index}
                         >
-                            <div>
-                                from {hist.sender} to {hist.reciever}
-                            </div>
-
-
-                            <div>
-                                Amount: {hist.amount}
-                            </div>
-
-
 
                             <div
-                            //  className={
-                            //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
+                                className={"text-red-600  mb-6 bg-"}
 
-                            //     text-red-600`
-
-                            // } 
                             >
-                                Transfer Type: {hist.trans_type}
+                                <div>
+                                    from {hist.sender} to {hist.reciever}
+                                </div>
+
+
+                                <div>
+                                    Amount: {hist.amount}
+                                </div>
+
+
+
+                                <div
+                                //  className={
+                                //     `${hist.trans_type === "CREDIT"  ? " text-green-400"  : ""}
+
+                                //     text-red-600`
+
+                                // } 
+                                >
+                                    Transfer Type: {hist.trans_type}
+                                </div>
+
+                                <p
+                                    className="pb-5"
+                                >
+                                    on: {hist.createdAt}
+                                </p>
+
                             </div>
 
-                            <p
-                                className="pb-5"
-                            >
-                                on: {hist.createdAt}
-                            </p>
-
                         </div>
+                    ))}
 
-                    </div>
-                ))}
+
+                </div>
 
             </>
         </StuLayout >

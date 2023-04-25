@@ -2,6 +2,10 @@ import connectMongo from "../../../../utils/connectMongo";
 import Student from "../../../../model/Student/StudentModel";
 import TransferHistory from "../../../../model/Transactions/TransferHistory";
 
+
+
+
+
 export default async function TransUser(req, res) {
     if (req.method === "POST") {
 
@@ -34,7 +38,7 @@ export default async function TransUser(req, res) {
                     amount: amt,
                     trans_type: "DEBIT",
                     send_id: sen,
-                    rec_id: reciever[0].id
+                    rec_id: reciever[0]._id
                 })
 
 
@@ -54,7 +58,7 @@ export default async function TransUser(req, res) {
                     amount: amt,
                     trans_type: "CREDIT",
                     send_id: sen,
-                    rec_id: reciever[0].id
+                    rec_id: reciever[0]._id
                 })
 
                 return res.status(200).json({
