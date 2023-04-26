@@ -126,6 +126,13 @@ export default function NavBar2() {
 
 
 
+                        <Link href='/seller/Profile'>
+                            <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
+                                Profile
+                            </a>
+                        </Link>
+
+
                         <Link href='/seller/Products'>
                             <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-white hover:text-primaryColour '>
                                 Products
@@ -138,6 +145,12 @@ export default function NavBar2() {
                                 Orders
                             </a>
                         </Link>
+
+
+
+
+
+
 
 
                         <Link href='/seller/Transactions/'>

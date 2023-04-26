@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import AdminLayout from "../Layout/AdminLayout";
+import StoreButton from "../../../components/shared/storeButt";
 
 
 type Sellers = {
@@ -10,6 +11,8 @@ type Sellers = {
     storename: string;
     firstname: string
     lastname: string
+    status: string
+    store_desc: string
 }
 
 
@@ -43,10 +46,10 @@ export default function Index() {
                 <div className="grid grid-cols-2 space-x-10">
 
                     <div
-                        className=" bg-black  ">
+                        className=" bg-  ">
                         <div
                             className="text-center text-primaryColour font-bold mx-auto text-2xl">
-                            VIEW PRODUCTS
+                           All Sellers
                         </div>
                     </div>
 
@@ -68,24 +71,53 @@ export default function Index() {
 
                 </div>
 
-                {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
-                    <div
-                        key={seller._id}
-                    >
-                        <Link
-                            href={`/ADMIN2823/Sellers/${seller._id}`}
+                
+
+
+
+
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+
+
+                    {sellers.map((seller: {
+                        _id: string;
+                        status: string;
+                        storename: string;
+                        store_desc: string
+                    }) =>
+                        <div
+                            key={seller._id}
                         >
-                            <a>
-                                <Header
-                                    title={seller.storename}
-                                />
-                            </a>
 
-                        </Link>
 
-                    </div>
-                )}
 
+
+
+
+                            <StoreButton
+                                ulink={`/ADMIN2823/Sellers/${seller._id}`}
+                                name={seller.storename}
+                                status={seller.status}
+                                desc={seller.store_desc}
+                            />
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    )}
+
+
+
+                </div>
             </>
         </AdminLayout>
     )

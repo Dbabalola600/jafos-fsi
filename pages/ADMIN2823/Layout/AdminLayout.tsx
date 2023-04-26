@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Footer from "../../../components/layouts/Footer";
 
+import {IoMdArrowRoundBack} from "react-icons/io"
 
 
 
@@ -38,6 +39,14 @@ export default function AdminLayout({ children }: { children?: JSX.Element }) {
             <div className="bg-primaryColour md:space-y-20  min-h-screen">
                 <NavBar />
                 <div className="bg-white max-w-5xl mx-auto py-20  px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
+                    
+                <IoMdArrowRoundBack
+                   size=" 40"
+                   color="black"
+                   onClick={()=> history.back()}
+                   />
+                   
+                    
                     <main>
                         <Head>
                             <title>Jafos Admin</title>
