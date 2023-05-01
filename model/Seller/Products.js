@@ -7,6 +7,12 @@ const ProductSchema = new Schema({
         required: true,
         ref: 'Seller'
     },
+
+    store:{
+        type: String,
+        required:true,
+        unique: false
+    },
     title: {
         type: String,
         required: true,

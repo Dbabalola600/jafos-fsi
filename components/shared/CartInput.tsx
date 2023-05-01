@@ -113,7 +113,7 @@ export default function CartInput(props: CartInputProps) {
                     <p
                         className="text-gray-400"
                     >
-                        NGN {amount}
+                        ₦ {amount}
                     </p>
                 </div>
             </div>

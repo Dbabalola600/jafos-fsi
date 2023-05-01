@@ -10,24 +10,54 @@ import CatLayout from "../Layout/CatLayout";
 import { getCookie } from 'cookies-next'
 
 
+type Seller = {
+    _id: string
+    storename: string;
+    store_desc: string
+    account_bal: number
+    status: string
+}
+
 
 function NewOffer() {
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
+    const [seller, setSeller] = useState<Seller | null>(null);
+
+
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
         const user = getCookie("Selluser")
-        console.log(user)
+
         e.preventDefault()
         setLoading(true)
+
+
+
+
+
         const formElements = e.currentTarget.elements as typeof e.currentTarget.elements
 
         const form = e.currentTarget.elements as any
 
 
+
+
+        const body2 = {
+            _id: user
+        }
+
+        const Sellresponse = await fetch("/api/seller/fetchSeller", { method: "POST", body: JSON.stringify(body2) })
+            .then(res => res.json()) as Seller
+
+
+        setSeller(Sellresponse)
+
+
         const body = {
             owner: user,
             title: form.item(0).value,
+            store: Sellresponse?.storename,
             price: form.item(1).value,
             category: form.item(2).value,
             description: form.item(3).value,

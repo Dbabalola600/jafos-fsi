@@ -44,7 +44,7 @@ export default function UserDash(props: DashProps) {
                         <p
                             className="text-gray-400"
                         >
-                            NGN {props.accBal}
+                            ₦ {props.accBal}
                         </p>
                     </div>
                 </div>

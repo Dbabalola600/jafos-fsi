@@ -16,7 +16,7 @@ export default async function addProduct (req,res){
         console.log('CONNECTED TO MONGO');
         
         console.log('CREATING DOCUMENT');
-        const {owner, title, category, price, description} = JSON.parse(req.body)
+        const {owner, store, title, category, price, description} = JSON.parse(req.body)
         
 
 
@@ -25,6 +25,7 @@ export default async function addProduct (req,res){
         
         const product = await Product.create({
             owner,
+            store,
             title,
             category,
             price,
