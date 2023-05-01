@@ -1,9 +1,9 @@
 import Link from "next/link";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-
+import notifier from "node-notifier";
 
 
 
@@ -22,6 +22,7 @@ export default function Index() {
     let description = "damisi babalola"
 
     const router = useRouter()
+
 
 
 
@@ -46,6 +47,14 @@ export default function Index() {
     }
 
 
+    const aleting = async () => {
+        await fetch("/api/notifier")
+    }
+
+
+    useEffect(() => {
+        aleting()
+    }, [])
 
 
 

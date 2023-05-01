@@ -13,6 +13,11 @@ import { getCookie } from 'cookies-next'
 import Image from "next/image";
 import logo from "../public/logo.svg"
 
+
+
+
+
+
 const Home: NextPage = () => {
 
 
@@ -43,6 +48,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     connect()
   }, [])
+
 
 
 
@@ -120,7 +126,7 @@ const Home: NextPage = () => {
             className='lg:block hidden '
           >
             <div
-            className=' flex justify-center my-40 '
+              className=' flex justify-center my-40 '
             >
               <Image
                 src={logo}
