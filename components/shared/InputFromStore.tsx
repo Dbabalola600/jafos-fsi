@@ -4,6 +4,7 @@ type Props = {
     title: string
     category: string
     owner: string
+    store?: string
     load: any
 
 }
@@ -22,7 +23,12 @@ export default function InputFromStore(props: Props) {
 
                     <div className="text-black   font-bold text-lg">
                         {props.title}
+                        <p>
+                            {props.store}
+                        </p>
                     </div>
+
+                    
 
                     <p
                         className="text-gray-400"

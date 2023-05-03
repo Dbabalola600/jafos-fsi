@@ -156,7 +156,7 @@ export default function Stores() {
         <StuLayout>
             <>
                 <Header
-                    title={"store " + seller?.storename}
+                    title={  seller?.storename}
                 />
                 <form
                     onSubmit={search}

@@ -20,6 +20,7 @@ type Offers = {
     category: string
     price: number
     description: string
+    store: string
     owner: string
 }
 
@@ -169,8 +170,9 @@ export default function Found() {
                         category: string
                         description: string
                         price: number
-                        title: string;
                         owner: string
+                        title: string;
+                        store: string
                         _id: string | null | undefined
 
                     }) => (
@@ -190,6 +192,7 @@ export default function Found() {
                                     category={offer.category}
                                     price={offer.price}
                                     title={offer.title}
+                                    store={offer.store}
                                     owner={offer.owner}
                                     load={isLoading ? "ADDING..." : "ADD TO CART"}
                                 />
