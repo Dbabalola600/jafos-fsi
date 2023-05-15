@@ -175,7 +175,7 @@ export default function Checkout() {
                 <div
                     className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
-                    Total: NGN {total}
+                    Total:   ₦  {total}
                 </div>
 
 

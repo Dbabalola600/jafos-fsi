@@ -159,7 +159,7 @@ export default function Found() {
         <StaffLay>
             <>
                 <Header
-                    title={"search result for " + ssd.find}
+                    title={"search result for " + ssd.find +" in " + seller?.storename}
                 />
 
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}

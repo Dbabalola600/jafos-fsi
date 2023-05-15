@@ -27,7 +27,7 @@ export default function CheckOutInfo(props: MyProps) {
                     <p
                         className=""
                     >
-                        NGN {props.amount}
+                          ₦  {props.amount}
                     </p>
 
 

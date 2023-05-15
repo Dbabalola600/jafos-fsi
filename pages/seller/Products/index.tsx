@@ -27,17 +27,24 @@ type Seller = {
     lastname: string
 }
 
+
+
+type Categories = {
+    _id: string
+
+    category: string
+}
 function Offerings() {
     const router = useRouter()
 
     const [offers, SetOffers] = useState<Offers[]>([]);
-
+    const [category, Setcategory] = useState<[]>([])
 
     const showinfo = async () => {
 
         const token = getCookie("Selluser")
         console.log(token)
-
+        //fetch seller
         const body = {
             _id: token
         }
@@ -52,7 +59,7 @@ function Offerings() {
 
 
 
-
+        //fetch offers
         const body2 = {
             name: response.storename
         }
@@ -64,6 +71,22 @@ function Offerings() {
 
         SetOffers(Offerresponse)
         console.log(Offerresponse)
+
+
+
+        //fetch categories
+        const body3 = {
+            id: token
+        }
+
+
+
+        const CategoryResponse = await fetch("/api/seller/product/filter/findCategory", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json())
+
+    
+        Setcategory(CategoryResponse)
+
     }
 
     useEffect(() => {
@@ -189,14 +212,38 @@ function Offerings() {
                 </form>
 
 
-                <div>
+                {/* <div>
                     <ProductBar
                         allLink={"/seller/Products"}
                         drinkLink={"/seller/Products/category/drinks"}
                         foodLink={"/seller/Products/category/food"}
                         specialLink={"/seller/Products/category/special"}
                     />
+                </div> */}
+
+
+
+                <div
+                    className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
+
+                >
+
+                    {category.map((cat, index) => (
+                        <div
+                            key={index}
+                        >
+                            <ProductBar
+                                all={cat}
+                                allLink={`/seller/Products/category/${cat}`}
+                            />
+                        </div>
+                    ))}
+
                 </div>
+
+
+
+
 
 
 
@@ -234,7 +281,7 @@ function Offerings() {
                                         <p
                                             className="text-gray-400"
                                         >
-                                            NGN {offer.price}
+                                              ₦  {offer.price}
                                         </p>
                                     </div>
                                 </div>

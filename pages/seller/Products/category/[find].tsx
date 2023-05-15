@@ -1,8 +1,9 @@
-import { useRouter } from "next/router"
-import Header from "../../../../components/shared/Header"
-import CatLayout from "../../Layout/CatLayout"
-import { getCookie } from "cookies-next"
-import { useEffect, useState } from "react"
+import { useRouter } from "next/router";
+import CatLayout from "../../Layout/CatLayout";
+import { useEffect, useState } from "react";
+import Header from "../../../../components/shared/Header";
+import { getCookie } from "cookies-next";
+
 
 
 
@@ -17,12 +18,6 @@ type Offers = {
 }
 
 
-type Seller = {
-    _id: string
-    storename: string;
-    firstname: string
-    lastname: string
-}
 
 
 
@@ -32,7 +27,8 @@ type Seller = {
 
 
 
-export default function FinOffer() {
+export default function FindCateory() {
+
 
     const router = useRouter()
 
@@ -43,17 +39,14 @@ export default function FinOffer() {
 
     let ssd = router.query
 
-
-
-
     const showinfo = async () => {
 
         const token = getCookie("Selluser")
-        console.log(token)
 
 
 
-      
+
+
 
 
 
@@ -63,12 +56,12 @@ export default function FinOffer() {
         }
 
 
-        const Offerresponse = await fetch("/api/seller/product/searchProduct", { method: "POST", body: JSON.stringify(body2) })
+        const Offerresponse = await fetch("/api/seller/product/filter/findByCategory", { method: "POST", body: JSON.stringify(body2) })
             .then(res => res.json()) as Offers[]
 
 
         SetOffers(Offerresponse)
-        console.log(Offerresponse)
+
     }
 
     useEffect(() => {
@@ -76,10 +69,6 @@ export default function FinOffer() {
     }, []
     )
 
-
-
-
-    //delete a product 
 
     const del = async (_id: any) => {
 
@@ -98,16 +87,15 @@ export default function FinOffer() {
     }
 
 
+
+
     return (
         <CatLayout>
             <>
 
                 <Header
-                    title={"search result for " + ssd.find}
+                    title={"Category: " + ssd.find}
                 />
-
-
-
 
 
 
@@ -188,12 +176,7 @@ export default function FinOffer() {
                 </div>
 
 
-
             </>
-
-
         </CatLayout>
     )
 }
-
-

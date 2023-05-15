@@ -97,7 +97,7 @@ export default function Index() {
                                 <p
                                     className=""
                                 >
-                                    NGN {"55"}
+                                      ₦  {"55"}
                                 </p>
 
 
@@ -141,7 +141,7 @@ export default function Index() {
                                 <p
                                     className=""
                                 >
-                                    NGN {"55"}
+                                      ₦  {"55"}
                                 </p>
 
 
@@ -236,7 +236,7 @@ export default function Index() {
                                     <p
                                         className="text-gray-400"
                                     >
-                                        NGN 100
+                                          ₦  100
                                     </p>
                                 </div>
                             </div>

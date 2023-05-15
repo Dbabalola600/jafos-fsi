@@ -232,7 +232,7 @@ function DashBoard() {
                                 <p
                                     className="text-gray-400"
                                 >
-                                    NGN {seller?.account_bal}
+                                      ₦  {seller?.account_bal}
                                 </p>
                             </div>
                         </div>

@@ -21,20 +21,20 @@ type Orders = {
 
 type OrderItems = {
     fee: number
-   l_order:{
-    _id: string;
-    product: string;
-    storename: string;
-    price: number;
-    quantity: number;
-    orderNum: number
-    status: string;
-    p_status: string;
-    mod: string;
-    amount: number;
-    user: string;
-   }
-    
+    l_order: {
+        _id: string;
+        product: string;
+        storename: string;
+        price: number;
+        quantity: number;
+        orderNum: number
+        status: string;
+        p_status: string;
+        mod: string;
+        amount: number;
+        user: string;
+    }
+
     userObj: {
         firstname: string
         lastname: string
@@ -123,18 +123,18 @@ export default function Index() {
                     className="mb-5 mt-5 text-primary"
                 >
 
-                  
+
                     <div>
                         Devliery Information: {orderItems[0]?.l_order.mod}
                     </div>
                     <div>
-                        Amount Due: NGN {total}
+                        Amount Due:   ₦  {total}
                     </div>
 
 
 
                     <div>
-                        Delivery Fee per Store : NGN {orderItems[0]?.fee}
+                        Delivery Fee per Store :   ₦  {orderItems[0]?.fee}
                     </div>
                 </div>
 
@@ -176,24 +176,24 @@ export default function Index() {
                 </div>
 
                 <hr
-                className="w-full bg-primary "
+                    className="w-full bg-primary "
                 />
                 {orderItems.map((orderItem: {
-                   fee: number
-                   l_order:{
-                    _id: string;
-                    product: string;
-                    storename: string;
-                    price: number;
-                    quantity: number;
-                    orderNum: number
-                    status: string;
-                    p_status: string;
-                    mod: string;
-                    amount: number;
-                    user: string;
-                   }
-                    
+                    fee: number
+                    l_order: {
+                        _id: string;
+                        product: string;
+                        storename: string;
+                        price: number;
+                        quantity: number;
+                        orderNum: number
+                        status: string;
+                        p_status: string;
+                        mod: string;
+                        amount: number;
+                        user: string;
+                    }
+
                     userObj: {
                         firstname: string
                         lastname: string
@@ -224,7 +224,7 @@ export default function Index() {
                             <div
                                 className="col-span-1"
                             >
-                                NGN {orderItem.l_order.price}
+                                ₦  {orderItem.l_order.price}
 
                             </div>
 

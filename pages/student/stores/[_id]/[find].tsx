@@ -137,7 +137,7 @@ export default function Found() {
         <StuLayout>
             <>
                 <Header
-                    title={"Results for "+ssd.find +" in " + seller?.storename}
+                    title={"search result for " + ssd.find + " in " + seller?.storename}
                 />
 
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}

@@ -319,13 +319,13 @@ export default function PayPortal() {
                 >
 
                     <div>
-                        Amount Due: NGN {total}
+                        Amount Due:   ₦  {total}
                     </div>
                     <div>
-                        Available Balance: NGN {staff?.account_bal}
+                        Available Balance:   ₦  {staff?.account_bal}
                     </div>
                     <div>
-                        Delivery Fee: NGN {devfee?.fee}
+                        Delivery Fee:   ₦  {devfee?.fee}
                     </div>
 
                     <div>

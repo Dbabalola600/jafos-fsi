@@ -6,7 +6,7 @@ type MyProps = {
     product: string
     amount: any
     quantity: any
-   
+
 }
 
 
@@ -27,7 +27,7 @@ export default function CheckOutConfirm(props: MyProps) {
                     <p
                         className=""
                     >
-                        NGN {props.amount}
+                        ₦  {props.amount}
                     </p>
 
 
@@ -39,7 +39,7 @@ export default function CheckOutConfirm(props: MyProps) {
             </div>
 
 
-          
+
 
 
 

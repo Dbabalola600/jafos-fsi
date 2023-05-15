@@ -164,7 +164,7 @@ export default function ConfirmOrder() {
                                             console.log("SUCCESS")
                                         }
                                     })
-                            }if (res.status ==256){
+                            } if (res.status == 256) {
                                 settoast({ message: " message", show: true })
                             }
                         })
@@ -213,7 +213,7 @@ export default function ConfirmOrder() {
                 >
 
                     <div>
-                        Amount Due: NGN {total}
+                        Amount Due:   ₦  {total}
                     </div>
                     <div>
                         Payment Status: {orders[0]?.p_status}
@@ -222,7 +222,7 @@ export default function ConfirmOrder() {
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
                     <div>
-                        Delivery Fee: NGN {devfee?.fee}
+                        Delivery Fee:   ₦  {devfee?.fee}
                     </div>
 
 
@@ -277,7 +277,7 @@ export default function ConfirmOrder() {
                 {/* <div
                     className="text-slate-800 mt-5 mb-5 text-xl font-bold"
                 >
-                    Total: NGN {total && devfee?.fee && (total + devfee?.fee)}
+                    Total:   ₦  {total && devfee?.fee && (total + devfee?.fee)}
                 </div> */}
 
 

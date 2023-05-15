@@ -128,13 +128,13 @@ export default function Index() {
                         Devliery Information: {orderItems[0]?.l_order.mod}
                     </div>
                     <div>
-                        Amount Due: NGN {total}
+                        Amount Due:   ₦  {total}
                     </div>
 
 
 
                     <div>
-                        Delivery Fee per Store : NGN {orderItems[0]?.fee}
+                        Delivery Fee per Store :   ₦  {orderItems[0]?.fee}
                     </div>
                 </div>
 
@@ -224,7 +224,7 @@ export default function Index() {
                             <div
                                 className="col-span-1"
                             >
-                                NGN {orderItem.l_order.price}
+                                  ₦  {orderItem.l_order.price}
 
                             </div>
 

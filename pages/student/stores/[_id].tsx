@@ -5,6 +5,7 @@ import GoodMess from "../../../components/shared/GoodMess"
 import Header from "../../../components/shared/Header"
 import StuLayout from "../Layout/StuLayout"
 import InputFromStore from "../../../components/shared/InputFromStore"
+import ProductBar from "../../../components/shared/ProductsBar"
 
 
 
@@ -38,7 +39,7 @@ export default function Stores() {
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
 
-
+    const [category, Setcategory] = useState<[]>([])
 
     let ssd = router.query
 
@@ -79,6 +80,20 @@ export default function Stores() {
         SetOffers(Offerresponse)
         // console.log(Offerresponse[0].description)
 
+
+
+        //fetch categories uses seller api since no information is being leaked
+        const body3 = {
+            id: ssd._id
+        }
+
+
+
+        const CategoryResponse = await fetch("/api/seller/product/filter/findCategory", { method: "POST", body: JSON.stringify(body3) })
+            .then(res => res.json())
+
+
+        Setcategory(CategoryResponse)
 
 
     }
@@ -149,14 +164,14 @@ export default function Stores() {
         router.push(`/student/stores/${ssd._id}/${form.item(0).value}`)
 
 
-       
+
     }
 
     return (
         <StuLayout>
             <>
                 <Header
-                    title={  seller?.storename}
+                    title={seller?.storename}
                 />
                 <form
                     onSubmit={search}
@@ -197,7 +212,23 @@ export default function Stores() {
                 </form>
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
 
+                <div
+                    className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
 
+                >
+
+                    {category.map((cat, index) => (
+                        <div
+                            key={index}
+                        >
+                            <ProductBar
+                                all={cat}
+                                allLink={`/student/stores/${ssd._id}/${cat}`}
+                            />
+                        </div>
+                    ))}
+
+                </div>
 
                 <div
                     className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"

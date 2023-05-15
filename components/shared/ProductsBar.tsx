@@ -2,13 +2,16 @@ import router from "next/router";
 
 
 
-type BarProps ={
+type BarProps = {
 
     allLink: any
-    drinkLink: any
-    foodLink:any
-    specialLink: any
+    // drinkLink: any
+    // foodLink:any
+    // specialLink: any
 
+
+
+    all: string
 }
 
 
@@ -16,31 +19,34 @@ type BarProps ={
 
 
 
-export default function ProductBar(props: BarProps){
-    return(
+export default function ProductBar(props: BarProps) {
+    return (
         <div
-        className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
-    >
+            className="grid grid-flow-col     "
 
+        //className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
 
-       
-
-        <div
-            className="btn btn-primary text-white text-center"
-            onClick={() => router.push(props.allLink)}
         >
 
-            All {"   "} 
-        </div>
 
 
 
-  
+            <div
+                className="btn btn-primary text-white text-center"
+                onClick={() => router.push(props.allLink)}
+            >
+
+                {/* All {"   "}  */} {props.all}
+            </div>
 
 
 
 
-        <div
+
+
+
+
+            {/* <div
             className="btn bg-black text-white text-center"
             onClick={() => router.push(props.foodLink)}
         >
@@ -70,9 +76,9 @@ export default function ProductBar(props: BarProps){
         >
 
           Special
+        </div> */}
+
+
         </div>
-
-
-    </div>
     )
 }

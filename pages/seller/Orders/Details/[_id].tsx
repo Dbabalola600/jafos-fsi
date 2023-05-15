@@ -339,7 +339,7 @@ export default function Index() {
                         Delivery Fee: {orderItems[0]?.fee}
                     </div>
                     <div>
-                        Amount Due: NGN {total&& total + orderItems[0]?.fee}
+                        Amount Due:   ₦  {total&& total + orderItems[0]?.fee}
                     </div>
                 </div>
 
@@ -442,7 +442,7 @@ export default function Index() {
                                 </div>
 
                                 <div>
-                                    NGN {orderItem.oriOrder.price}
+                                ₦  {orderItem.oriOrder.price}
                                 </div>
 
                             </div>

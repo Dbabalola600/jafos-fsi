@@ -8,7 +8,7 @@ type MyProps = {
     quantity: any
     status: any
     DelclickButton?: MouseEventHandler<HTMLDivElement> | any
-    PayclickButton :  MouseEventHandler<HTMLDivElement> | any
+    PayclickButton: MouseEventHandler<HTMLDivElement> | any
 }
 
 
@@ -29,14 +29,14 @@ export default function CheckOutInfoPay(props: MyProps) {
                     <p
                         className=""
                     >
-                        NGN {props.amount}
+                        ₦  {props.amount}
                     </p>
 
 
                     <p
                         className=""
                     >
-                     {props.status}
+                        {props.status}
                     </p>
                     <p
                     >
@@ -58,7 +58,7 @@ export default function CheckOutInfoPay(props: MyProps) {
 
 
                 <div
-                 
+
                     className="btn bg-white float-right text-black hover:bg-white "
                     onClick={props.PayclickButton}
                 > Pay

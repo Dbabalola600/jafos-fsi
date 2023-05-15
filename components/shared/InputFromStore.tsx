@@ -33,7 +33,7 @@ export default function InputFromStore(props: Props) {
                     <p
                         className="text-gray-400"
                     >
-                        NGN {props.price}
+                          ₦  {props.price}
                     </p>
                 </div>
             </div>
