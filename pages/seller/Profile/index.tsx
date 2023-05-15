@@ -83,12 +83,7 @@ export default function Index() {
 
                 </div>
 
-                <div
-                    onClick={() => history.back()}
-                >
-
-                    back
-                </div>
+             
 
 
 
