@@ -186,16 +186,23 @@ function DashBoard() {
 
 
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
 
 
-                    <div className="text-primary rounded-lg  lg:text-3xl  text-lg">
-                        Welcome {seller?.storename}{"  "}
-                        <p>
-                            Currently: {seller?.status}
-                        </p>
-                        <p
-                            className="space-y-5 mt-1 lg:space-x-5"
+                    <div className="grid grid-cols-2 lg:grid-cols-1 text-primary rounded-lg  lg:text-3xl  text-lg">
+
+                        <div>
+
+                            Welcome {seller?.storename}{"  "}
+                            <p>
+                                Currently: {seller?.status}
+                            </p>
+                        </div>
+
+                        <div
+                            className="grid grid-cols-2 lg:grid-cols-2 lg:mt-10 gap-6"
+
+                        // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
                         >
                             <div
                                 className="text-green-500 btn btn-primary"
@@ -205,12 +212,12 @@ function DashBoard() {
                             </div>
 
                             <div
-                                className="text-red-500 btn btn-primary"
+                                className="text-red-500 btn btn-primary "
                                 onClick={closeStat}
                             >
                                 Closed
                             </div>
-                        </p>
+                        </div>
 
 
                     </div>
@@ -232,7 +239,7 @@ function DashBoard() {
                                 <p
                                     className="text-gray-400"
                                 >
-                                      ₦  {seller?.account_bal}
+                                    ₦  {seller?.account_bal}
                                 </p>
                             </div>
                         </div>

@@ -12,17 +12,18 @@ type DashProps = {
 
 export default function UserDash(props: DashProps) {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
 
-            <div className=" rounded-lg ">
+            <div className=" grid grid-cols-2 lg:grid-cols-1 rounded-lg   lg:text-3xl  text-lg  ">
 
                 <div className="text-primary lg:text-3xl  text-lg">
                     Welcome {props.name}{"  "}
-                    <p>
-                        {props.AccId}
-                    </p>
+                </div>
 
-
+                <div
+                className="text-primary text-right lg:text-left"
+                >
+                    {props.AccId}
                 </div>
             </div>
 

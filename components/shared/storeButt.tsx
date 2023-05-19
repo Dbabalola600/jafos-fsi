@@ -31,7 +31,7 @@ export default function StoreButton(props: StoreProps) {
                     </div>
                     <div className="flex items-end space-x-3">
 
-                        <div className="w-1/2  text-left relative">
+                        <div className="w-1/2  relative">
 
 
                             <div className="text-black   font-bold text-lg">
