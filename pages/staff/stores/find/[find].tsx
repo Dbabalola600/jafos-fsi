@@ -18,6 +18,7 @@ type Offers = {
     title: string
     category: string
     price: number
+    store: string
     description: string
     owner: string
 }
@@ -44,7 +45,7 @@ export default function Found() {
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
-   
+
 
 
     let ssd = router.query
@@ -138,8 +139,8 @@ export default function Found() {
                     // router.reload()
                     router.push("/staff/Cart")
                 }
-                if (res.status == 500){
-                    settoast({message :"error", show: true})
+                if (res.status == 201) {
+                    settoast({ message: "nope", show: true })
                 }
             }).catch(err => {
                 console.log(err)
@@ -156,12 +157,12 @@ export default function Found() {
         <StaffLay>
             <>
                 <Header
-                    title={"search result for "+ssd.find}
+                    title={"search result for " + ssd.find}
                 />
 
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="Not Found" />}
-                   
+                {showtoast.show && <ErrMess title="store is currently closed" />}
+
 
 
                 <div
@@ -174,6 +175,7 @@ export default function Found() {
                         description: string
                         price: number
                         title: string;
+                        store: string;
                         owner: string
                         _id: string | null | undefined
 
@@ -184,9 +186,9 @@ export default function Found() {
                             <form
                                 className=""
 
-                            onSubmit={
-                                 addCart
-                            }
+                                onSubmit={
+                                    addCart
+                                }
                             >
 
 
@@ -194,6 +196,7 @@ export default function Found() {
                                     category={offer.category}
                                     price={offer.price}
                                     title={offer.title}
+                                    store={offer.store}
                                     owner={offer.owner}
                                     load={isLoading ? "ADDING..." : "ADD TO CART"}
                                 />

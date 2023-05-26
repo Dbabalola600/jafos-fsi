@@ -6,6 +6,7 @@ import Header from "../../../components/shared/Header"
 import StuLayout from "../Layout/StuLayout"
 import InputFromStore from "../../../components/shared/InputFromStore"
 import ProductBar from "../../../components/shared/ProductsBar"
+import ErrMess from "../../../components/shared/ErrMess"
 
 
 
@@ -35,6 +36,7 @@ export default function Stores() {
     const router = useRouter()
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
+    const [showtoast, settoast] = useState({ message: "", show: false })
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
@@ -43,6 +45,9 @@ export default function Stores() {
 
     let ssd = router.query
 
+   
+   
+   
     useEffect(() => {
         if (showgoodtoast.show) {
             setTimeout(() => {
@@ -51,6 +56,18 @@ export default function Stores() {
         }
 
     }, [showgoodtoast.show])
+
+
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
 
 
@@ -121,13 +138,13 @@ export default function Stores() {
 
         const reponse = await fetch("/api/student/cart/newCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
-
+                if (res.status === 201) {
+                    settoast({ message: "not good", show: true })
+                }
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
                     // router.reload()
                     router.push("/student/Cart")
-
-
                 }
             }).catch(err => {
                 console.log(err)
@@ -211,7 +228,8 @@ export default function Stores() {
 
                 </form>
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-
+                {showtoast.show && <ErrMess title="store is currently closed" />}
+                  
                 <div
                     className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
 

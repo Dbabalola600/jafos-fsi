@@ -229,7 +229,7 @@ function DashBoard() {
 
                         <div className="flex items-end space-x-3">
 
-                            <div className=" relative">
+                            <div className=" relative   ">
 
 
                                 <div className="text-black   font-bold  text-xl">
@@ -264,6 +264,8 @@ function DashBoard() {
                     </div>
 
                 </div>
+
+
 
                 <div
                     className=" text-center text-primary  text-2xl font-bold mt-10 "

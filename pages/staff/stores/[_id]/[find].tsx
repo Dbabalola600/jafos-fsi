@@ -136,7 +136,9 @@ export default function Found() {
 
         const reponse = await fetch("/api/staff/cart/newCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
-
+                if (res.status === 201) {
+                    settoast({ message: "not good", show: true })
+                }
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
                     // router.reload()
@@ -159,11 +161,12 @@ export default function Found() {
         <StaffLay>
             <>
                 <Header
-                    title={"search result for " + ssd.find +" in " + seller?.storename}
+                    title={"search result for " + ssd.find + " in " + seller?.storename}
                 />
 
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="Not Found" />}
+                {showtoast.show && <ErrMess title="store is currently closed" />}
+
 
 
 

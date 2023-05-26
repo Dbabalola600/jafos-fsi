@@ -38,6 +38,9 @@ export default function Found() {
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
 
+
+
+    
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
@@ -135,8 +138,8 @@ export default function Found() {
                     // router.reload()
                     router.push("/student/Cart")
                 }
-                if (res.status == 500){
-                    settoast({message :"error", show: true})
+                if (res.status == 201){
+                    settoast({message :"nope", show: true})
                 }
             }).catch(err => {
                 console.log(err)
@@ -157,8 +160,8 @@ export default function Found() {
                 />
 
                 {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="Not Found" />}
-                   
+                {showtoast.show && <ErrMess title="store is currently closed" />}
+                 
 
 
                 <div

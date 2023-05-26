@@ -7,6 +7,7 @@ import StaffLay from "../Layout/StaffLay";
 import GoodMess from "../../../components/shared/GoodMess";
 import InputFromStore from "../../../components/shared/InputFromStore";
 import ProductBar from "../../../components/shared/ProductsBar";
+import ErrMess from "../../../components/shared/ErrMess";
 
 
 
@@ -33,9 +34,7 @@ export default function Stores() {
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
 
-
-
-
+    const [showtoast, settoast] = useState({ message: "", show: false })
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
 
@@ -53,6 +52,16 @@ export default function Stores() {
 
     }, [showgoodtoast.show])
 
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
 
     const showinfo = async () => {
 
@@ -122,6 +131,9 @@ export default function Stores() {
 
         const reponse = await fetch("/api/staff/cart/newCart", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
+                if (res.status === 201) {
+                    settoast({ message: "not good", show: true })
+                }
                 if (res.status == 200) {
                     setgoodtoast({ message: " message", show: true })
                     // router.reload()
@@ -171,7 +183,6 @@ export default function Stores() {
                     title={seller?.storename}
                 />
 
-                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
                 <form
                     onSubmit={search}
 
@@ -210,6 +221,13 @@ export default function Stores() {
 
                 </form>
 
+
+
+
+
+                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
+                {showtoast.show && <ErrMess title="store is currently closed" />}
+                  
                 <div
                     className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
 
