@@ -200,7 +200,7 @@ function DashBoard() {
                         </div>
 
                         <div
-                            className="grid grid-cols-2 lg:grid-cols-2 lg:mt-10 gap-6"
+                            className="grid grid-cols-2 lg:grid-cols-2 lg:mt-2 gap-6"
 
                         // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
                         >
