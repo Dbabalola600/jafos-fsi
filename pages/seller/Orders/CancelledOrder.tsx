@@ -173,7 +173,7 @@ function Orders() {
 
 
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
 
                     {orders.map((order: {
                         "0": {
@@ -194,7 +194,7 @@ function Orders() {
                             key={order[0]._id}
                         >
 
-                            <div className="grid mt-10 ">
+                            <div className="grid mt-5 ">
                                 <OrderCard2
                                     OrderNum={order[0].orderNum}
 

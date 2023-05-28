@@ -34,6 +34,7 @@ type Orders = {
 }
 
 type DevFee = {
+    _id: string
     fee: number
     n_store: any
 }
@@ -42,7 +43,7 @@ export default function PayPortal() {
     const [student, setStudent] = useState<Student | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const [devfee, setDevfee] = useState<DevFee | null>()
+    const [devfee, setDevfee] = useState<DevFee>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
@@ -156,24 +157,10 @@ export default function PayPortal() {
     }, [])
 
 
-    //orderid
-    const massId: string[] = []
 
-    for (let i = 0; i < orders.length; i++) {
-        massId.push(orders[i]._id)
-    }
 
     // console.log(massId)
 
-
-    //store name
-    const massStore: string[] = []
-
-    for (let i = 0; i < orders.length; i++) {
-        massStore.push(orders[i].storename)
-    }
-
-    // console.log(massStore)
 
 
 
@@ -184,118 +171,14 @@ export default function PayPortal() {
 
 
 
-    const Pay2 = async () => {
-
-        setLoading(true)
-
-
-
-
-        const token = getCookie("Normuser")
-
-
-
-        const body2 = {
-            sen: token
-        }
-
-
-
-        const reponse = await fetch("/api/student/transactions/checkPay", { method: "POST", body: JSON.stringify(body2) })
-            .then(async res => {
-                if (res.status === 200) {
-
-                    setgoodtoast({ message: " message", show: true })
-
-                    router.push("/student/checkout/payment/PayDelivery")
-                
-
-                } if (res.status == 256) {
-                    settoast({ message: " message", show: true })
-                }
-                if (res.status == 245) {
-                    settoast2({ message: " message", show: true })
-                }
-             
-            }).catch(err => {
-                console.log(err)
-            })
-
-
-
-        setLoading(false)
-
-
-    }
-
-
-
-
-    const Pay3 = async (_id: any) => {
-        setLoading(true)
-
-        const token = getCookie("Normuser")
-
-        const body2 = {
-            sen: token,
-            or_id: _id
-        }
-
-
-
-        const reponse = await fetch("/api/student/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
-            .then(async res => {
-                if (res.status === 200) {
-
-                    setgoodtoast({ message: " message", show: true })
-
-                    // router.push("/student/checkout/confirmOrder")
-                    router.reload()
-
-                } if (res.status == 256) {
-                    settoast({ message: " message", show: true })
-                }
-                if (res.status == 245) {
-                    settoast2({ message: " message", show: true })
-                }
-                if (res.status == 259) {
-                    settoastp({ message: " message", show: true })
-
-                    router.push("/student/checkout/confirmOrder")
-                }
-                else {
-                    settoast3({ message: " message", show: true })
-                }
-            }).catch(err => {
-                console.log(err)
-            })
 
 
 
 
 
-        setLoading(false)
-
-    }
 
 
 
-    //delete one item 
-    const delOne = async (id: any) => {
-
-
-        const body = {
-            id: id
-        }
-        const reponse = await fetch("/api/student/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-                if (res.status == 200) {
-
-                    router.reload()
-                    console.log("DELETED")
-                }
-            })
-    }
 
 
 
@@ -311,7 +194,7 @@ export default function PayPortal() {
         const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
-                    router.reload()
+                    router.push("/student/checkout/confirmOrder")
                 } if (res.status == 256) {
                     settoast({ message: " message", show: true })
                 }
@@ -323,14 +206,9 @@ export default function PayPortal() {
             <>
 
                 <Header
-                    title="Pay Now "
+                    title="Pay Delivery Fee "
                 />
-                <div
-                    className="text-red-500"
-                >
 
-
-                </div>
 
 
 
@@ -357,79 +235,61 @@ export default function PayPortal() {
 
 
 
-                <div
+
+
+
+
+
+                {/* <div
                     className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
                 >
-                    {orders.map((order: {
-                        _id: string
-                        user: string
-                        product: string
-                        storename: string
-                        price: number
-                        quantity: number
-                        amount: number
-                        status: string
-                        p_status: string
-                        mod: string
-                    }) =>
+
+
+
+
+                    {devfee?.n_store.map((store: any, index: any) => (
                         <div
-                            key={order._id}
+                            key={index}
                         >
-                            <CheckOutInfo
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                clickButton={() => delOne(order._id)}
-
-                            />
-
-                            {/* <CheckOutInfoPay
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                status={order.p_status}
-                                DelclickButton={() => delOne(order._id)}
-                                PayclickButton={() => Pay3(order._id)}
-                            /> */}
-
-
+                            {store}
 
                         </div>
-                    )}
-                </div>
+                    ))}
+
+                </div> */}
 
 
 
-
-
-
-                {/* 
-                <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => delivery()}>
-                    {isLoading ? "Loading..." : "Pay for Delivery"}
-
-                </button> */}
 
                 <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => {Pay2()}}>
-                    {isLoading ? "Loading..." : "Pay"}
+                    onClick={delivery}
+
+
+                >
+                    {isLoading ? "Loading..." : "Pay for delivery"}
 
                 </button>
 
+
+
+
+
                 {/* <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => router.push("/student/checkout/payment/PayDelivery")}>
-                    {isLoading ? "Loading..." : "Pay Delivery Fee"}
+                    onClick={() => router.push("/student/checkout/confirmOrder")}>
+                    {isLoading ? "Loading..." : "Confirm Order"}
 
                 </button> */}
 
 
 
                 {showtoast.show && <ErrMess title="insufficient funds" />}
-               
-            
+                {showtoast2.show && <ErrMess title="invalid pin" />}
+                {showtoast3.show && <ErrMess title="something went wrong please try again later" />}
+
                 {showgoodtoast.show && <GoodMess title="payment successful" />}
-             
+                {showtoastp.show && <ErrMess title="Payment Already Made" />}
+
 
 
 
@@ -447,43 +307,5 @@ export default function PayPortal() {
 }
 
 
-
-{/* <form
-className="w-full py-20 space-y-12  text-black text-base md:text-xl"
-onSubmit={Pay}
->
-{showtoast.show && <ErrMess title="insufficient funds" />}
-{showtoast2.show && <ErrMess title="invalid pin" />}
-{showtoast3.show && <ErrMess title="invalid USER" />}
-
-
-<div className="mx-auto  w-full ">
-    <TextInput
-        placeholder="Pin"
-        name="Pin"
-        type='text'
-
-    />
-</div>
-
-
-
-
-
-
-
-<div className=" w-full  space-y-6">
-
-    <button className="w-full btn-primary btn "
-        type="submit">
-        {isLoading ? "Loading..." : "Pay"}
-
-    </button>
-
-
-
-</div>
-
-</form> */}
 
 

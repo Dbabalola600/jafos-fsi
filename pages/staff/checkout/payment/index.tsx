@@ -38,12 +38,15 @@ type Orders = {
 }
 
 
-
+type DevFee = {
+    fee: number
+    n_store: any
+}
 export default function PayPortal() {
     const [staff, setStaff] = useState<Staff | null>(null);
     const [orders, setOrders] = useState<Orders[]>([])
     const [total, setTotal] = useState<number | null>()
-    const [devfee, setDevfee] = useState<number | null>()
+    const [devfee, setDevfee] = useState<DevFee | null>()
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
 
@@ -71,34 +74,16 @@ export default function PayPortal() {
         console.log(response)
 
 
-        // let tot = response[0].amount + response[1].amount
+        // fetch dev fee amount
+        const feeResponse = await fetch("/api/student/order/devfeeAmt", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as DevFee
+        setDevfee(feeResponse)
 
 
-        let l_tot = response.length.valueOf()
-        let sum = 0
 
 
 
-        let dev = 50
 
-        console.log(response[0].mod)
-
-        for (let i = 0; i < l_tot; i++) {
-
-            if (response[i].mod === "PickUp") {
-                dev = 0;
-                setDevfee(dev)
-            } else {
-                dev = 50;
-                setDevfee(dev)
-            }
-
-
-            sum += response[i].amount
-
-            console.log(sum)
-            setTotal(sum + dev)
-        }
 
 
 
@@ -108,6 +93,17 @@ export default function PayPortal() {
 
         setStaff(response2)
 
+
+        let l_tot = response.length.valueOf()
+        let sum = 0
+
+
+        for (let i = 0; i < l_tot; i++) {
+            sum += response[i].amount
+            console.log(sum)
+            setTotal(sum)
+
+        }
 
     }
     useEffect(() => {
@@ -150,7 +146,7 @@ export default function PayPortal() {
                     </div>
 
                     <div>
-                        Delivery Fee:   ₦  {devfee}
+                        Delivery Fee:   ₦  {devfee?.fee}
                     </div>
 
                     <div>

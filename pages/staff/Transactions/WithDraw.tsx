@@ -1,6 +1,6 @@
 import { getCookie } from "cookies-next"
 import { useRouter } from "next/router"
-import { FormEventHandler, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
 import ErrMess from "../../../components/shared/ErrMess"
 import GoodMess from "../../../components/shared/GoodMess"
 import Header from "../../../components/shared/Header"
@@ -26,9 +26,48 @@ export default function Withdraw(){
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+    const [showtoast3, settoast3] = useState({ message: "", show: false })
 
 
 
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast2({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast2.show])
+
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast3.show])
 
 
 
@@ -69,6 +108,9 @@ export default function Withdraw(){
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
                 }
+                if (res.status == 240) {
+                    settoast3({ message: " message", show: true })
+                }
             })
 
 
@@ -92,7 +134,8 @@ export default function Withdraw(){
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
-
+                    {showtoast3.show && <ErrMess title="invalid Creder" />}
+                    
 
 
 

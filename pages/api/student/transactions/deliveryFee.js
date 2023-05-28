@@ -19,37 +19,49 @@ export default async function deliveryFee(req, res) {
 
 
         const { _id } = JSON.parse(req.body)
-
+        //get user and checkout items 
         const orders = await CheckOutItem.find({ user: _id })
         const stu = await Student.findById(_id)
         console.log("FETCHED CHECKOUT")
 
 
+
+
+        //get stores
         let store = []
 
         for (let i = 0; i < orders.length; i++) {
             store.push(orders[i].storename)
 
         }
-
-
-
         const n_store = [... new Set(store)]
 
 
+
+        //determine delivery fee by the method of delivery and delivery fee status
         let fee = 0
-
-
-
         for (let i = 0; i < n_store.length; i++) {
 
-            if (orders[i].mod === "PickUp") {
-                fee = 0
-            } else {
+            if (orders[i].mod != "PickUp" && orders[i].dev_fee_status === "Unpaid") {
                 fee = fee + 100
+            } else {
+                fee = 0
             }
 
         }
+
+        // for (let i = 0; i < n_store.length; i++) {
+
+        //     if (orders[i].dev_fee_status === "Paid") {
+        //         fee = fee
+        //     } else {
+        //         fee = fee + 100
+        //     }
+
+        // }
+
+
+        // return res.status(200).json(orders[1]._id)
 
         const o_fee = fee / n_store.length
 
@@ -68,6 +80,7 @@ export default async function deliveryFee(req, res) {
                     message: "insufficient funds"
                 })
             } else {
+                //subtract from the user
                 const new_sender_bal = stu.account_bal - fee
                 const new_user_bal = await Student.findById(_id).updateOne({ account_bal: new_sender_bal })
 
@@ -77,10 +90,20 @@ export default async function deliveryFee(req, res) {
                     return (o_store)
                 }))
 
+                //update each checkout item 
+                for (let i = 0; i < orders.length; i++) {
+                    const new_orders = await CheckOutItem.findById(orders[i]._id).updateOne({ dev_fee_status: "Paid" })
+                }
+
                 for (let i = 0; i < l_store.length; i++) {
+
                     const main_sell_bal = l_store[i].account_bal + o_fee
 
                     const new_main_sell_bal = await Seller.findById(l_store[i]._id).updateOne({ account_bal: main_sell_bal })
+
+
+
+
 
                     const dev_history = await TransferHistory.create({
                         sender: stu.firstname + stu.lastname,

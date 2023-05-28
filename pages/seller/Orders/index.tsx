@@ -178,7 +178,7 @@ function Orders() {
                 />
 
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
 
 
                     {orders.map((order: {
@@ -215,7 +215,7 @@ function Orders() {
                             key={order.oriOrder._id}
                         >
 
-                            <div className="grid mt-10 ">
+                            <div className="grid mt-5 ">
                                 <OrderCard
                                     OrderNum={order.oriOrder.orderNum}
                                     User={order.userObj.firstname + order.userObj.lastname}

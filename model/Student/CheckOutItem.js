@@ -42,10 +42,16 @@ const CheckOutItemSchema = new Schema({
     p_status: {
         type: String,
         required: true,
-        enum: ["Paid", "Unpaid","Pay on Delivery"],
+        enum: ["Paid", "Unpaid", "Pay on Delivery"],
         default: "Pay on Delivery"
     },
-    mod:{
+    dev_fee_status: {
+        type: String,
+        required: true,
+        default: "Unpaid",
+        enum: ["Paid", "Unpaid"]
+    },
+    mod: {
         type: String,
         required: true,
         // enum:["PickUp", "NDH","D1", "NEH","ADMIN", "E1", "E2" ],

@@ -95,7 +95,7 @@ export default function PinUpdate() {
                     <div className="mx-auto  w-full ">
                         <TextInput
                             placeholder="* * * *"
-                            name="Current Pin"
+                            name="Current Pin (default pin is 1234)"
                             type='number'
 
                         />

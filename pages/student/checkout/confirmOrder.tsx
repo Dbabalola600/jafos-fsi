@@ -143,31 +143,32 @@ export default function ConfirmOrder() {
                 console.log(res.status)
                 //delete entire cart 
                 if (res.status === 200) {
-                    // const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
-                    //     .then(res => {
-                    //         if (res.status == 200) {
-                    //             router.push("/student/Orders/")
-                    //             console.log("SUCCESS")
-                    //         }
-                    //     })
+                    const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
+                        .then(res => {
+                            if (res.status == 200) {
+                                router.push("/student/Orders/")
+                                console.log("SUCCESS")
+                            }
+                        })
 
 
                     // subtract delivery fee
-                    const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body2) })
-                        .then(async res => {
-                            if (res.status === 200) {
-                                //delete entire cart
-                                const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
-                                    .then(res => {
-                                        if (res.status == 200) {
-                                            router.push("/student/Orders/")
-                                            console.log("SUCCESS")
-                                        }
-                                    })
-                            } if (res.status == 256) {
-                                settoast({ message: " message", show: true })
-                            }
-                        })
+                    // const fee = await fetch("/api/student/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body2) })
+                    //     .then(async res => {
+                    //         if (res.status === 200) {
+                    //             //delete entire cart
+
+                    //             const del = await fetch("/api/student/order/deleteCheck", { method: "POST", body: JSON.stringify(body3) })
+                    //                 .then(res => {
+                    //                     if (res.status == 200) {
+                    //                         router.push("/student/Orders/")
+                    //                         console.log("SUCCESS")
+                    //                     }
+                    //                 })
+                    //         } if (res.status == 256) {
+                    //             settoast({ message: " message", show: true })
+                    //         }
+                    //     })
 
 
                 }

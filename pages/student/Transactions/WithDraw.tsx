@@ -15,6 +15,8 @@ export default function Withdraw(){
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
+    const [showtoast3, settoast3] = useState({ message: "", show: false })
+
 
 
 
@@ -42,7 +44,7 @@ export default function Withdraw(){
 
 
     useEffect(() => {
-        if (showtoast.show) {
+        if (showtoast2.show) {
             setTimeout(() => {
                 settoast2({ message: "", show: false })
             }, 5000)
@@ -50,6 +52,15 @@ export default function Withdraw(){
 
     }, [showtoast2.show])
 
+
+    useEffect(() => {
+        if (showtoast3.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast3.show])
 
 
 
@@ -86,6 +97,9 @@ export default function Withdraw(){
                 if (res.status == 245) {
                     settoast2({ message: " message", show: true })
                 }
+                if (res.status == 240) {
+                    settoast3({ message: " message", show: true })
+                }
             })
 
 
@@ -105,7 +119,7 @@ export default function Withdraw(){
         <StuLayout>
             <>
             <Header
-            title="WithDraw"
+            title="Withdraw"
             />
             
 
@@ -116,7 +130,8 @@ export default function Withdraw(){
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
-
+                    {showtoast3.show && <ErrMess title="invalid Creder" />}
+                    
 
 
 

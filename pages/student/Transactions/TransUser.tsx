@@ -20,6 +20,8 @@ export default function TransferBtwUser() {
     const [showtoast3, settoast3] = useState({ message: "", show: false })
 
     const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+    const [showtoast4, settoast4] = useState({ message: "", show: false })
+    const [showtoast5, settoast5] = useState({ message: "", show: false })
 
 
 
@@ -63,6 +65,24 @@ export default function TransferBtwUser() {
 
     }, [showtoast2.show])
 
+    useEffect(() => {
+        if (showtoast4.show) {
+            setTimeout(() => {
+                settoast4({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast4.show])
+
+    useEffect(() => {
+        if (showtoast5.show) {
+            setTimeout(() => {
+                settoast5({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast5.show])
+
 
     const trans: FormEventHandler<HTMLFormElement> = async (e) => {
 
@@ -100,6 +120,12 @@ export default function TransferBtwUser() {
                 if(res.status == 500){
                     settoast3({ message: " message", show: true })
                 }
+                if(res.status == 240){
+                    settoast4({ message: " message", show: true })
+                }
+                if(res.status == 242){
+                    settoast5({ message: " message", show: true })
+                }
             })
 
 
@@ -122,6 +148,10 @@ export default function TransferBtwUser() {
                     {showtoast.show && <ErrMess title="insufficient funds" />}
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showtoast3.show && <ErrMess title="invalid USER" />}
+                    {showtoast4.show && <ErrMess title="invalid USER" />}
+                    {showtoast5.show && <ErrMess title="same USER" />}
+                   
+                  
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
 
 

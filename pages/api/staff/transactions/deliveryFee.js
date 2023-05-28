@@ -60,13 +60,11 @@ export default async function deliveryFee(req, res) {
         let total = sum + fee
 
         if (fee > 0) {
-
-
-            // if (stu.account_bal < total) {
-            //     return res.status(256).json({
-            //         message: "insufficient funds"
-            //     })
-            // } else {
+            if (stu.account_bal < total) {
+                return res.status(256).json({
+                    message: "insufficient funds"
+                })
+            } else {
                 const new_sender_bal = stu.account_bal - fee
                 const new_user_bal = await Staff.findById(_id).updateOne({ account_bal: new_sender_bal })
 
@@ -102,7 +100,7 @@ export default async function deliveryFee(req, res) {
                 }
 
                 return res.status(200).json(l_store)
-            // }
+            }
 
 
 
