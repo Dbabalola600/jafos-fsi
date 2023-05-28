@@ -231,52 +231,52 @@ export default function PayPortal() {
 
 
 
-    const Pay3 = async (_id: any) => {
-        setLoading(true)
+    // const Pay3 = async (_id: any) => {
+    //     setLoading(true)
 
-        const token = getCookie("Normuser")
+    //     const token = getCookie("Normuser")
 
-        const body2 = {
-            sen: token,
-            or_id: _id
-        }
-
-
-
-        const reponse = await fetch("/api/student/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
-            .then(async res => {
-                if (res.status === 200) {
-
-                    setgoodtoast({ message: " message", show: true })
-
-                    // router.push("/student/checkout/confirmOrder")
-                    router.reload()
-
-                } if (res.status == 256) {
-                    settoast({ message: " message", show: true })
-                }
-                if (res.status == 245) {
-                    settoast2({ message: " message", show: true })
-                }
-                if (res.status == 259) {
-                    settoastp({ message: " message", show: true })
-
-                    router.push("/student/checkout/confirmOrder")
-                }
-                else {
-                    settoast3({ message: " message", show: true })
-                }
-            }).catch(err => {
-                console.log(err)
-            })
+    //     const body2 = {
+    //         sen: token,
+    //         or_id: _id
+    //     }
 
 
 
+    //     const reponse = await fetch("/api/student/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
+    //         .then(async res => {
+    //             if (res.status === 200) {
+
+    //                 setgoodtoast({ message: " message", show: true })
+
+    //                 // router.push("/student/checkout/confirmOrder")
+    //                 router.reload()
+
+    //             } if (res.status == 256) {
+    //                 settoast({ message: " message", show: true })
+    //             }
+    //             if (res.status == 245) {
+    //                 settoast2({ message: " message", show: true })
+    //             }
+    //             if (res.status == 259) {
+    //                 settoastp({ message: " message", show: true })
+
+    //                 router.push("/student/checkout/confirmOrder")
+    //             }
+    //             else {
+    //                 settoast3({ message: " message", show: true })
+    //             }
+    //         }).catch(err => {
+    //             console.log(err)
+    //         })
 
 
-        setLoading(false)
 
-    }
+
+
+    //     setLoading(false)
+
+    // }
 
 
 
@@ -417,11 +417,7 @@ export default function PayPortal() {
 
                 </button>
 
-                {/* <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => router.push("/student/checkout/payment/PayDelivery")}>
-                    {isLoading ? "Loading..." : "Pay Delivery Fee"}
-
-                </button> */}
+           
 
 
 
@@ -446,44 +442,5 @@ export default function PayPortal() {
     )
 }
 
-
-
-{/* <form
-className="w-full py-20 space-y-12  text-black text-base md:text-xl"
-onSubmit={Pay}
->
-{showtoast.show && <ErrMess title="insufficient funds" />}
-{showtoast2.show && <ErrMess title="invalid pin" />}
-{showtoast3.show && <ErrMess title="invalid USER" />}
-
-
-<div className="mx-auto  w-full ">
-    <TextInput
-        placeholder="Pin"
-        name="Pin"
-        type='text'
-
-    />
-</div>
-
-
-
-
-
-
-
-<div className=" w-full  space-y-6">
-
-    <button className="w-full btn-primary btn "
-        type="submit">
-        {isLoading ? "Loading..." : "Pay"}
-
-    </button>
-
-
-
-</div>
-
-</form> */}
 
 

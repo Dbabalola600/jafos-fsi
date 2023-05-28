@@ -23,29 +23,26 @@ export default async function deliveryFee(req, res) {
         const stu = await Staff.findById(_id)
         console.log("FETCHED CHECKOUT")
 
-
+        //get stores
         let store = []
-
         for (let i = 0; i < orders.length; i++) {
             store.push(orders[i].storename)
 
         }
-
-
-
         const n_store = [... new Set(store)]
 
 
+
+
+
+        //determine delivery fee by the method of delivery and delivery fee status
         let fee = 0
-
-
-
         for (let i = 0; i < n_store.length; i++) {
 
-            if (orders[i].mod === "PickUp") {
-                fee = 0
-            } else {
+            if (orders[i].mod != "PickUp" && orders[i].dev_fee_status === "Unpaid") {
                 fee = fee + 100
+            } else {
+                fee = 0
             }
 
         }
@@ -65,6 +62,7 @@ export default async function deliveryFee(req, res) {
                     message: "insufficient funds"
                 })
             } else {
+                //subtract from the user
                 const new_sender_bal = stu.account_bal - fee
                 const new_user_bal = await Staff.findById(_id).updateOne({ account_bal: new_sender_bal })
 
@@ -73,6 +71,11 @@ export default async function deliveryFee(req, res) {
                     const o_store = Seller.findOne({ storename: name })
                     return (o_store)
                 }))
+
+                //update each checkout item 
+                for (let i = 0; i < orders.length; i++) {
+                    const new_orders = await CheckOutItem.findById(orders[i]._id).updateOne({ dev_fee_status: "Paid" })
+                }
 
                 for (let i = 0; i < l_store.length; i++) {
                     const main_sell_bal = l_store[i].account_bal + o_fee

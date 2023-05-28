@@ -191,116 +191,30 @@ export default function PayPortal() {
 
 
     //payment api
-
-    const Pay2 = async () => {
-
-        setLoading(true)
-
-
-
+    const delivery = async () => {
 
         const token = getCookie("Staffuser")
         const body = {
-            sen: token
+            _id: token
         }
 
-
-
-        const reponse = await fetch("/api/staff/transactions/checkPay", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-                if (res.status === 200) {
-                    setgoodtoast({ message: " message", show: true })
-                    router.push("/staff/checkout/payment/PayDelivery")
-                } if (res.status === 256) {
-                    settoast({ message: " message", show: true })
-                }
-                if (res.status === 245) {
-                    settoast2({ message: " message", show: true })
-                }
-
-            }).catch(err => {
-                console.log(err)
-            })
-
-
-
-        setLoading(false)
-
-
-    }
-
-
-
-    // const Pay3 = async (_id: any) => {
-    //     setLoading(true)
-
-    //     const token = getCookie("Staffuser")
-
-    //     const body2 = {
-    //         sen: token,
-    //         or_id: _id
-    //     }
-
-
-
-    //     const reponse = await fetch("/api/staff/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
-    //         .then(async res => {
-    //             if (res.status === 200) {
-
-    //                 setgoodtoast({ message: " message", show: true })
-
-    //                 // router.push("/staff/checkout/confirmOrder")
-    //                 router.reload()
-
-    //             } if (res.status == 256) {
-    //                 settoast({ message: " message", show: true })
-    //             }
-    //             if (res.status == 245) {
-    //                 settoast2({ message: " message", show: true })
-    //             }
-    //             if (res.status == 259) {
-    //                 settoastp({ message: " message", show: true })
-
-    //                 router.push("/staff/checkout/confirmOrder")
-    //             }
-    //             else {
-    //                 settoast3({ message: " message", show: true })
-    //             }
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-
-
-
-
-
-    //     setLoading(false)
-
-    // }
-
-
-
-    //delete one item 
-    const delOne = async (id: any) => {
-        const body = {
-            id: id
-        }
-        const reponse = await fetch("/api/staff/order/deleteFromCheck", { method: "POST", body: JSON.stringify(body) })
+        const fee = await fetch("/api/staff/transactions/deliveryFee", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
-
-                    router.reload()
-                    console.log("DELETED")
+                    router.push("/staff/checkout/confirmOrder")
+                } if (res.status == 256) {
+                    settoast({ message: " message", show: true })
                 }
             })
     }
+
 
     return (
         <StaffLay>
             <>
 
                 <Header
-                    title="Pay Now "
+                    title="Pay Delivery Fee"
                 />
                 <div
                     className="pt-5 text-black text-xl "
@@ -324,76 +238,19 @@ export default function PayPortal() {
 
 
 
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-                >
-                    {orders.map((order: {
-                        _id: string
-                        user: string
-                        product: string
-                        storename: string
-                        price: number
-                        quantity: number
-                        amount: number
-                        status: string
-                        p_status: string
-                        mod: string
-                    }) =>
-                        <div
-                            key={order._id}
-                        >
 
 
 
 
 
-                            <CheckOutInfo
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                clickButton={() => delOne(order._id)}
-
-                            />
-                            {/* <CheckOutInfoPay
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                status={order.p_status}
-                                DelclickButton={() => delOne(order._id)}
-                                PayclickButton={() => Pay3(order._id)}
-                            /> */}
-
-
-
-
-
-
-
-                        </div>
-                    )}
-
-                </div>
-
-
-
-
-                {/* <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => {
-                        orders.map((order: any) => {
-                            Pay2(order.amount, order._id)
-                        }
-                        )
-                    }}>
-                    {isLoading ? "Loading..." : "Pay"}
-
-                </button> */}
+             
 
 
 
                 <button className="w-full btn-primary btn mt-5 "
-                    onClick={() => { Pay2() }}>
-                    {isLoading ? "Loading..." : "Pay"}
+                    onClick={delivery}
+                >
+                    {isLoading ? "Loading..." : "Pay for delivery"}
 
                 </button>
 
