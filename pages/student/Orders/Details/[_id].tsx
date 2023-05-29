@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../../../components/shared/Header";
 import StuLayout from "../../Layout/StuLayout";
+import Money_Format from "../../../../components/shared/money_format";
 
 
 type Orders = {
@@ -128,13 +129,13 @@ export default function Index() {
                         Devliery Information: {orderItems[0]?.l_order.mod}
                     </div>
                     <div>
-                        Amount Due:   ₦  {total}
+                        Amount Due:    <Money_Format amount=  {total}/>
                     </div>
 
 
 
                     <div>
-                        Delivery Fee per Store :   ₦  {orderItems[0]?.fee}
+                        Delivery Fee per Store :    <Money_Format amount=   {orderItems[0]?.fee}/>
                     </div>
                 </div>
 
@@ -224,7 +225,7 @@ export default function Index() {
                             <div
                                 className="col-span-1"
                             >
-                                ₦  {orderItem.l_order.price}
+                                 <Money_Format amount=  {orderItem.l_order.price}/>
 
                             </div>
 

@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react"
+import Money_Format from "./money_format"
 
 
 
@@ -27,7 +28,7 @@ export default function CheckOutInfo(props: MyProps) {
                     <p
                         className=""
                     >
-                          ₦  {props.amount}
+                        <Money_Format amount={props.amount}/>
                     </p>
 
 

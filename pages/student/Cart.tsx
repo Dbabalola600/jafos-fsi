@@ -10,6 +10,7 @@ import CartInput from "../../components/shared/CartInput";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import GoodMess from "../../components/shared/GoodMess";
+import EmptyCart from "../../components/shared/Empty States/EmptyCart";
 
 
 
@@ -171,89 +172,115 @@ export default function Cart() {
     }
 
 
+    if (carts[0] === undefined) {
+        return (
 
-    return (
-
-        <StuLayout>
-            <>
-                <div
-                    className="">
-                    <Header
-                        title="CART"
-                    />
-                </div>
-
-                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
-
-
-
-
-
-                <form
-                    onSubmit={
-                        addCheckoutItem
-                    }
-                >
+            <StuLayout>
+                <>
                     <div
-
-                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6 "
-
-                    >
-                        {carts.map((cart: {
-                            _id: string | null | undefined;
-                            title: string
-                            price: number
-                            storename: string
-
-                        }, index) => (
-                            <div
-                                key={cart._id}
-
-                            >
-
-
-
-                                <CartInput
-                                    id={cart._id || ""}
-                                    cartList={cartList}
-                                    setCartList={setCartList}
-                                    product={cart.title}
-                                    storename={cart.storename}
-                                    price={cart.price}
-                                    index={index}
-                                    clickButton={() => delOne(cart._id)}
-
-                                />
-
-                            </div>
-
-
-
-
-                        ))}
-
+                        className="">
+                        <Header
+                            title="CART"
+                        />
                     </div>
 
+                    <EmptyCart />
 
-                    <button
-                        className="btn btn-primary w-full mt-10 col-span-2"
-                        onClick={() => addCheckoutItem}
-                        type="submit"
+
+
+
+
+
+
+                </>
+
+            </StuLayout >
+        )
+    } else {
+        return (
+
+            <StuLayout>
+                <>
+                    <div
+                        className="">
+                        <Header
+                            title="CART"
+                        />
+                    </div>
+
+                    {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
+
+
+
+
+
+                    <form
+                        onSubmit={
+                            addCheckoutItem
+                        }
                     >
-                        {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
-                    </button>
+                        <div
+
+                            className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6 "
+
+                        >
+                            {carts.map((cart: {
+                                _id: string | null | undefined;
+                                title: string
+                                price: number
+                                storename: string
+
+                            }, index) => (
+                                <div
+                                    key={cart._id}
+
+                                >
+
+
+
+                                    <CartInput
+                                        id={cart._id || ""}
+                                        cartList={cartList}
+                                        setCartList={setCartList}
+                                        product={cart.title}
+                                        storename={cart.storename}
+                                        price={cart.price}
+                                        index={index}
+                                        clickButton={() => delOne(cart._id)}
+
+                                    />
+
+                                </div>
 
 
 
 
-                </form>
+                            ))}
+
+                        </div>
+
+
+                        <button
+                            className="btn btn-primary w-full mt-10 col-span-2"
+                            onClick={() => addCheckoutItem}
+                            type="submit"
+                        >
+                            {isLoading ? "Loading..." : "PROCEED TO CHECKOUT"}
+                        </button>
 
 
 
-            </>
 
-        </StuLayout >
-    )
+                    </form>
+
+
+
+                </>
+
+            </StuLayout >
+        )
+    }
+
 
 
 

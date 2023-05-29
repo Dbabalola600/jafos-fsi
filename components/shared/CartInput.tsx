@@ -3,6 +3,7 @@ import { Dispatch, MouseEventHandler, SetStateAction, useEffect, useState } from
 
 
 import { cartListType } from "../../pages/student/Cart";
+import Money_Format from "./money_format";
 
 
 type CartInputProps = {
@@ -113,7 +114,7 @@ export default function CartInput(props: CartInputProps) {
                     <p
                         className="text-gray-400"
                     >
-                        ₦ {amount}
+                        <Money_Format amount={amount} />
                     </p>
                 </div>
             </div>

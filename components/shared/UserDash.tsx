@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Money_Format from "./money_format";
 
 
 type DashProps = {
@@ -21,7 +22,7 @@ export default function UserDash(props: DashProps) {
                 </div>
 
                 <div
-                className="text-primary text-right lg:text-left"
+                    className="text-primary text-right lg:text-left"
                 >
                     {props.AccId}
                 </div>
@@ -45,7 +46,9 @@ export default function UserDash(props: DashProps) {
                         <p
                             className="text-gray-400"
                         >
-                            ₦ {props.accBal}
+                            <Money_Format
+                                amount={props.accBal}
+                            />
                         </p>
                     </div>
                 </div>

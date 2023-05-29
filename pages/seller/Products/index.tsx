@@ -9,6 +9,7 @@ import CatLayout from "../Layout/CatLayout";
 
 import { useRouter } from "next/router"
 import ProductBar from "../../../components/shared/ProductsBar";
+import EmptyCart from "../../../components/shared/Empty States/EmptyCart";
 
 
 type Offers = {
@@ -134,10 +135,69 @@ function Offerings() {
     }
 
 
+if (offers[0]=== undefined){
 
 
 
 
+
+
+    return (
+        <CatLayout>
+            <>
+
+
+
+                <div className="grid grid-cols-2 space-x-10">
+
+                    <div
+                        className=" ">
+                        <div
+                            className="text-center text-primaryColour font-bold mx-auto text-2xl">
+                            All Products
+                        </div>
+                    </div>
+
+
+
+
+                    <div className='  mx-auto'>
+                        <Link
+                            href="/seller/Products/newProduct">
+                            <button className="btn btn-lg btn-primary btn-block">
+                                Add Product
+                            </button>
+                        </Link>
+                    </div>
+
+
+
+
+
+                </div>
+
+
+              <EmptyCart/>
+
+
+               
+
+
+
+               
+
+
+
+
+
+
+
+               
+
+            </>
+        </CatLayout>
+    )
+}else{
     return (
         <CatLayout>
             <>
@@ -325,6 +385,11 @@ function Offerings() {
             </>
         </CatLayout>
     )
+}
+
+
+
+   
 }
 
 export default Offerings;

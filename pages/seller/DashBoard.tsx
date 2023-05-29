@@ -8,7 +8,7 @@ import Header from "../../components/shared/Header";
 import CatLayout from "./Layout/CatLayout";
 import OrderCard from "../../components/shared/OrderCard";
 
-
+import EmptyOrder from "../../components/shared/Empty States/EmptyOrder";
 
 type Seller = {
     _id: string
@@ -109,7 +109,7 @@ function DashBoard() {
             .then(res => res.json()) as Order[]
 
 
-        console.log(specOrder)
+
         setOrders(specOrder)
 
 
@@ -178,173 +178,292 @@ function DashBoard() {
 
 
 
+    console.log(orders[0])
 
-
-    return (
-        <CatLayout>
-            <>
-
-
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
-
-
-                    <div className="grid grid-cols-2 lg:grid-cols-1 text-primary rounded-lg  lg:text-3xl  text-lg">
-
-                        <div>
-
-                            Welcome {seller?.storename}{"  "}
-                            <p>
-                                Currently: {seller?.status}
-                            </p>
-                        </div>
-
-                        <div
-                            className="grid grid-cols-2 lg:grid-cols-2 lg:mt-2 gap-6"
-
-                        // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
-                        >
-                            <div
-                                className="text-green-500 btn btn-primary"
-                                onClick={OpStat}
-                            >
-                                OPEN
-                            </div>
-
-                            <div
-                                className="text-red-500 btn btn-primary "
-                                onClick={closeStat}
-                            >
-                                Closed
-                            </div>
-                        </div>
-
-
-                    </div>
+    if (orders[0]?.oriOrder._id === undefined) {
+        return (
+            <CatLayout>
+                <>
 
 
 
-                    <div className="bg-primary rounded-lg  p-3">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
 
 
-                        <div className="flex items-end space-x-3">
+                        <div className="grid grid-cols-2 lg:grid-cols-1 text-primary rounded-lg  lg:text-3xl  text-lg">
 
-                            <div className=" relative   ">
+                            <div>
 
-
-                                <div className="text-black   font-bold  text-xl">
-                                    Available Balance
-                                </div>
-
-                                <p
-                                    className="text-gray-400"
-                                >
-                                    ₦  {seller?.account_bal}
+                                Welcome {seller?.storename}{"  "}
+                                <p>
+                                    Currently: {seller?.status}
                                 </p>
                             </div>
-                        </div>
 
-                        <div
-                            className="pt-2 float-right w-1/2 hover:cursor-pointer "
-                        >
+                            <div
+                                className="grid grid-cols-2 lg:grid-cols-2 lg:mt-2 gap-6"
 
-                            <Link
-                                href="/seller/Products/newProduct"
+                            // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
                             >
                                 <div
-                                    className="rounded-xl text-center text-sm  bg-black text-white "
+                                    className="text-green-500 btn btn-primary"
+                                    onClick={OpStat}
                                 >
-                                    Add new product
+                                    OPEN
                                 </div>
 
-                            </Link>
+                                <div
+                                    className="text-red-500 btn btn-primary "
+                                    onClick={closeStat}
+                                >
+                                    Closed
+                                </div>
+                            </div>
 
 
                         </div>
-                    </div>
-
-                </div>
 
 
 
-                <div
-                    className=" text-center text-primary  text-2xl font-bold mt-10 "
-
-                >
-                    <a
-                        className="text-center hover:underline hover:cursor-pointer"
-                        onClick={() => router.push("/seller/Orders")}
-                    >
-                        Orders
-                    </a>
-
-                </div>
+                        <div className="bg-primary rounded-lg  p-3">
 
 
+                            <div className="flex items-end space-x-3">
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt- gap-6">
-
-                    {orders.map((order: {
-                        userObj: {
-                            firstname: string
-                            _id: string
-                            lastname: string
-                        }
-
-                        orderObj: {
-                            "0": {
-                                _id: string;
-                                storename: string
-                                product: string
-                                orderNum: number
-                                user: string
-                                price: number;
-                                quantity: number;
-                                amount: number;
-                                status: string
-                            }
-                        }
-
-                        oriOrder: {
-                            stores: string
-                            orderList: OrderItems
-                            orderNum: number
-                            user: string
-                            _id: string
-
-                        }
-                    }, index) => (
-                        <div
-                            key={order.oriOrder._id}
-                        >
-
-                            <div className="grid mt-5 ">
-                                <OrderCard
-                                    OrderNum={order.oriOrder.orderNum}
-                                    User={order.userObj.firstname + order.userObj.lastname}
-                                    status={order.orderObj[0].status}
-                                    ulink={`Orders/Details/${order.oriOrder._id}`}
+                                <div className=" relative   ">
 
 
+                                    <div className="text-black   font-bold  text-xl">
+                                        Available Balance
+                                    </div>
 
-                                />
+                                    <p
+                                        className="text-gray-400"
+                                    >
+                                        ₦  {seller?.account_bal}
+                                    </p>
+                                </div>
+                            </div>
 
+                            <div
+                                className="pt-2 float-right w-1/2 hover:cursor-pointer "
+                            >
+
+                                <Link
+                                    href="/seller/Products/newProduct"
+                                >
+                                    <div
+                                        className="rounded-xl text-center text-sm  bg-black text-white "
+                                    >
+                                        Add new product
+                                    </div>
+
+                                </Link>
 
 
                             </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        className=" text-center text-primary  text-2xl font-bold mt-10 "
+
+                    >
+                        <a
+                            className="text-center hover:underline hover:cursor-pointer"
+                            onClick={() => router.push("/seller/Orders")}
+                        >
+                            Orders
+                        </a>
+
+
+
+
+                    </div>
+
+
+                   <EmptyOrder/>
+
+
+
+
+
+                </>
+            </CatLayout>
+        )
+    } else {
+
+
+
+        return (
+            <CatLayout>
+                <>
+
+
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
+
+
+                        <div className="grid grid-cols-2 lg:grid-cols-1 text-primary rounded-lg  lg:text-3xl  text-lg">
+
+                            <div>
+
+                                Welcome {seller?.storename}{"  "}
+                                <p>
+                                    Currently: {seller?.status}
+                                </p>
+                            </div>
+
+                            <div
+                                className="grid grid-cols-2 lg:grid-cols-2 lg:mt-2 gap-6"
+
+                            // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
+                            >
+                                <div
+                                    className="text-green-500 btn btn-primary"
+                                    onClick={OpStat}
+                                >
+                                    OPEN
+                                </div>
+
+                                <div
+                                    className="text-red-500 btn btn-primary "
+                                    onClick={closeStat}
+                                >
+                                    Closed
+                                </div>
+                            </div>
+
 
                         </div>
-                    ))}
-                </div>
+
+
+
+                        <div className="bg-primary rounded-lg  p-3">
+
+
+                            <div className="flex items-end space-x-3">
+
+                                <div className=" relative   ">
+
+
+                                    <div className="text-black   font-bold  text-xl">
+                                        Available Balance
+                                    </div>
+
+                                    <p
+                                        className="text-gray-400"
+                                    >
+                                        ₦  {seller?.account_bal}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                className="pt-2 float-right w-1/2 hover:cursor-pointer "
+                            >
+
+                                <Link
+                                    href="/seller/Products/newProduct"
+                                >
+                                    <div
+                                        className="rounded-xl text-center text-sm  bg-black text-white "
+                                    >
+                                        Add new product
+                                    </div>
+
+                                </Link>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        className=" text-center text-primary  text-2xl font-bold mt-10 "
+
+                    >
+                        <a
+                            className="text-center hover:underline hover:cursor-pointer"
+                            onClick={() => router.push("/seller/Orders")}
+                        >
+                            Orders
+                        </a>
+
+                    </div>
+
+
+
+                    <div className="grid grid-cols-2 lg:grid-cols-2 mt- gap-6">
+
+                        {orders.map((order: {
+                            userObj: {
+                                firstname: string
+                                _id: string
+                                lastname: string
+                            }
+
+                            orderObj: {
+                                "0": {
+                                    _id: string;
+                                    storename: string
+                                    product: string
+                                    orderNum: number
+                                    user: string
+                                    price: number;
+                                    quantity: number;
+                                    amount: number;
+                                    status: string
+                                }
+                            }
+
+                            oriOrder: {
+                                stores: string
+                                orderList: OrderItems
+                                orderNum: number
+                                user: string
+                                _id: string
+
+                            }
+                        }, index) => (
+                            <div
+                                key={order.oriOrder._id}
+                            >
+
+                                <div className="grid mt-5 ">
+                                    <OrderCard
+                                        OrderNum={order.oriOrder.orderNum}
+                                        User={order.userObj.firstname + order.userObj.lastname}
+                                        status={order.orderObj[0].status}
+                                        ulink={`Orders/Details/${order.oriOrder._id}`}
+
+
+
+                                    />
+
+
+
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
 
 
 
 
 
 
-            </>
-        </CatLayout>
-    )
+                </>
+            </CatLayout>
+        )
+    }
 }
 
 export default DashBoard;

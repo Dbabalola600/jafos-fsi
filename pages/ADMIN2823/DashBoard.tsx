@@ -57,12 +57,16 @@ export default function DashBoard() {
 
 
                 <div
-                    className=" bg-black md:w-60">
+                    className=" ">
                     <div className="text-primary text-3xl">
-                        Welcome {admin?.firstname}
-                        <p>
+                        Welcome {admin?.firstname} {" "} {admin?.lastname}
+
+                        <div>
+                            {admin?.AdminId}
+                        </div>
+                        {/* <p>
                         Balance: {admin?.account_bal}
-                        </p>
+                        </p> */}
                     </div>
                   
                 </div>
@@ -114,14 +118,14 @@ export default function DashBoard() {
                 </div>
 
 
-                <div className='  mx-auto'>
+                {/* <div className='  mx-auto'>
                     <Link
                         href="/ADMIN2823/Tokens">
                         <button className="btn btn-lg btn-primary btn-block">
                             Tokens
                         </button>
                     </Link>
-                </div>
+                </div> */}
 
 
             </div>

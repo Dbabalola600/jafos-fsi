@@ -4,6 +4,7 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import notifier from "node-notifier";
+import Money_Format from "../../components/shared/money_format";
 
 
 
@@ -84,45 +85,31 @@ export default function Index() {
 
 
 
-                    <div className="bg-primary rounded-lg p-3 pb-5 ">
-                        <div className="flex items-end break-words  text-white">
+                    <Link
+                        href={"/"}
+                    >
 
-                            <div className="w-full  grid grid-cols-2 lg:grid-cols-2    text-left relative">
-
-
-                                <p className="">
-                                    {"second product"}
-                                </p>
-
-                                <p
-                                    className=""
-                                >
-                                      ₦  {"55"}
-                                </p>
+                        <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
 
 
-                                <p
-                                >
-                                    Quantity:   {"2"}
-                                </p>
+                            <div className="flex items-end space-x-3">
+
+                                <div className="w-1/2  relative">
+
+
+                                    <div className="text-black   font-bold text-lg">
+                                        babalola oluwadamisi
+                                    </div>
+
+                                    <p
+                                        className="text-gray-400"
+                                    >
+                                        18010301079
+                                    </p>
+                                </div>
                             </div>
                         </div>
-
-
-                        <div
-                            className=" grid lg:grid-cols-1 gap-6 pt-5 grid-cols-1"
-                        >
-                            <button
-                                type="submit"
-                                className="btn bg-black float-right text-white "
-                            > Delete
-                            </button>
-                        </div>
-
-
-
-
-                    </div>
+                    </Link>
 
 
 
@@ -141,7 +128,10 @@ export default function Index() {
                                 <p
                                     className=""
                                 >
-                                      ₦  {"55"}
+
+                                    <Money_Format
+                                        amount={4000}
+                                    />
                                 </p>
 
 
@@ -176,7 +166,9 @@ export default function Index() {
 
 
 
-
+                <Money_Format
+                    amount={4000}
+                />
 
 
 

@@ -3,18 +3,22 @@ import { useState, useEffect } from "react"
 import Header from "../../../components/shared/Header"
 
 import AdminLayout from "../Layout/AdminLayout"
+import Money_Format from "../../../components/shared/money_format"
 
 
 
 
 
 
-type Staff ={
+type Staff = {
     _id: string
     firstname: string
     staffid: string
     lastname: string
+    account_bal: number
 }
+
+
 
 
 
@@ -43,7 +47,7 @@ export default function Users() {
         setStaff(response)
 
 
-     
+
 
     }
 
@@ -83,9 +87,34 @@ export default function Users() {
                     title={staff?.firstname}
                 />
 
+
+
+                <div className=" text-primary mt-5 space-y-5 w-full ">
+
+                    <div>
+                        Name:  {staff?.firstname} {" "} {staff?.lastname}
+
+
+                    </div>
+
+                    <div>
+                        Staff No: {staff?.staffid}
+
+
+                    </div>
+
+
+
+                    <div>
+                        Account Balance: <Money_Format amount={staff?.account_bal} />
+                    </div>
+
+
+                </div>
+
                 <button
                     className="btn btn-primary w-full mt-10"
-                    onClick={()=>delOne()}
+                    onClick={() => delOne()}
                 // type="submit"
                 >
 

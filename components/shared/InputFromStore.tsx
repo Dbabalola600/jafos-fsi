@@ -1,3 +1,4 @@
+import Money_Format from "./money_format"
 
 type Props = {
     price: number
@@ -28,12 +29,15 @@ export default function InputFromStore(props: Props) {
                         </p>
                     </div>
 
-                    
+
 
                     <p
                         className="text-gray-400"
                     >
-                          ₦  {props.price}
+                        <Money_Format
+                            amount={props.price}
+                        />
+
                     </p>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import OrderCard from "../../../components/shared/OrderCard";
 import OrderNav from "../../../components/shared/OrderNav";
+import EmptyOrder from "../../../components/shared/Empty States/EmptyOrder";
 
 
 
@@ -151,121 +152,136 @@ function Orders() {
     )
 
 
+    if (orders[0]?.oriOrder._id === undefined) {
 
-    return (
-        <CatLayout>
-            <>
-                <Header
-                    title="All Orders"
-                />
-
-
-               
+        return (
+            <CatLayout>
+                <>
+                    <Header
+                        title="All Orders"
+                    />
 
 
-                <OrderNav
-                all={Amt?.all}
-                allLink="/seller/Orders/"
-                canc={Amt?.cance}
-                cancLink="/seller/Orders/CancelledOrder"
-                comp={Amt?.comp}
-                compLink="/seller/Orders/CompletedOrder"
-                del={Amt?.del}
-                delLink="/seller/Orders/DeliveredOrder"
-                pend={Amt?.pend}
-                pendLink="/seller/Orders/PendingOrder"
-
-                />
 
 
-                <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
+
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/seller/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/seller/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/seller/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/seller/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/seller/Orders/PendingOrder"
+
+                    />
 
 
-                    {orders.map((order: {
-                        userObj: {
-                            firstname: string
-                            _id: string
-                            lastname: string
-                        }
+                    <EmptyOrder />
 
-                        orderObj: {
-                            "0": {
-                                _id: string;
-                                storename: string
-                                product: string
+
+
+
+
+                </>
+            </CatLayout>
+        )
+    } else {
+        return (
+            <CatLayout>
+                <>
+                    <Header
+                        title="All Orders"
+                    />
+
+
+
+
+
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/seller/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/seller/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/seller/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/seller/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/seller/Orders/PendingOrder"
+
+                    />
+
+
+                    <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
+
+
+                        {orders.map((order: {
+                            userObj: {
+                                firstname: string
+                                _id: string
+                                lastname: string
+                            }
+
+                            orderObj: {
+                                "0": {
+                                    _id: string;
+                                    storename: string
+                                    product: string
+                                    orderNum: number
+                                    user: string
+                                    price: number;
+                                    quantity: number;
+                                    amount: number;
+                                    status: string
+                                }
+                            }
+
+                            oriOrder: {
+                                stores: string
+                                orderList: OrderItems
                                 orderNum: number
                                 user: string
-                                price: number;
-                                quantity: number;
-                                amount: number;
-                                status: string
+                                _id: string
+
                             }
-                        }
+                        }, index) => (
+                            <div
+                                key={order.oriOrder._id}
+                            >
 
-                        oriOrder: {
-                            stores: string
-                            orderList: OrderItems
-                            orderNum: number
-                            user: string
-                            _id: string
-
-                        }
-                    }, index) => (
-                        <div
-                            key={order.oriOrder._id}
-                        >
-
-                            <div className="grid mt-5 ">
-                                <OrderCard
-                                    OrderNum={order.oriOrder.orderNum}
-                                    User={order.userObj.firstname + order.userObj.lastname}
-                                    status={order.orderObj[0].status}
-                                    ulink={`Orders/Details/${order.oriOrder._id}`}
+                                <div className="grid mt-5 ">
+                                    <OrderCard
+                                        OrderNum={order.oriOrder.orderNum}
+                                        User={order.userObj.firstname + order.userObj.lastname}
+                                        status={order.orderObj[0].status}
+                                        ulink={`Orders/Details/${order.oriOrder._id}`}
 
 
 
-                                />
+                                    />
 
 
+
+                                </div>
 
                             </div>
-
-                        </div>
-                    ))}
-                </div>
-
-
-                {/* {orderItems.map((orderItem: {
-                    _doc: any;
-                    _id: string;
-                    storename: string
-                    product: string
-                    user: string
-                    price: number;
-                    quantity: number;
-                    amount: number;
-                    userObj: {
-                        firstname: string
-                        _id: string
-                        lastname: string
-                        matricno: string
-                    }
-                }) => (
-                    <div
-                        key={orderItem._id}
-                    >
-                        <CusCollapse
-                            title={orderItem._doc.product}
-                            info={orderItem?.userObj?.firstname}
-                            clickButton={() => router.push(`/seller/Orders/Details/${orderItem._doc._id}`)}
-                        />
+                        ))}
                     </div>
-                ))} */}
 
 
-            </>
-        </CatLayout>
-    )
+
+
+
+                </>
+            </CatLayout>
+        )
+    }
+
+
 }
 
 export default Orders;

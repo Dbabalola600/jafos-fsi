@@ -8,6 +8,7 @@ import Header from "../../../../components/shared/Header";
 import NavButton from "../../../../components/shared/NavButton";
 import TextInput from "../../../../components/shared/TextInput";
 import StuLayout from "../../Layout/StuLayout";
+import Money_Format from "../../../../components/shared/money_format";
 
 type Student = {
     _id: string;
@@ -163,16 +164,16 @@ export default function PayPortal() {
                 >
 
                     <div>
-                        Amount Due:   ₦  {total}
+                        Amount Due:    <Money_Format amount= {total}/>
                     </div>
 
                     <div>
-                        Delivery Fee:   ₦  {devfee?.fee}
+                        Delivery Fee:    <Money_Format amount=  {devfee?.fee}/>
                     </div>
 
 
                     <div>
-                        Available Balance:   ₦  {student?.account_bal}
+                        Available Balance:    <Money_Format amount=  {student?.account_bal}/>
                     </div>
 
 

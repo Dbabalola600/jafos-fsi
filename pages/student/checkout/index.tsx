@@ -7,6 +7,8 @@ import Header from "../../../components/shared/Header";
 import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
 import CheckOutInfo from "../../../components/shared/CheckOutInfo";
+import Money_Format from "../../../components/shared/money_format";
+import EmptyCheckout from "../../../components/shared/Empty States/EmptyCheckOut";
 
 
 
@@ -116,77 +118,97 @@ export default function Checkout() {
 
 
 
-
-    return (
-        <StuLayout>
-            <>
-
-
-                <Header
-                    title="Checkout"
-                />
-                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
+    if (orders[0] === undefined) {
+        return (
+            <StuLayout>
+                <>
 
 
+                    <Header
+                        title="Checkout"
+                    />
+                  
 
 
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+                    <EmptyCheckout />
 
-                >
 
-                    {orders.map((order: {
-                        _id: string | null
-                        user: string
-                        product: string
-                        storename: string
-                        price: number
-                        quantity: number
-                        amount: number
-                        status: string
-                        p_status: string
-                        mod: string
-                    }) =>
-                        <div
-                            key={order._id}
-                        >
+                </>
+            </StuLayout>
+        )
+    } else {
+        return (
+            <StuLayout>
+                <>
+
+
+                    <Header
+                        title="Checkout"
+                    />
+                    {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
 
 
 
-                            <CheckOutInfo
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                clickButton={() => delOne(order._id)}
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                            />
+                    >
 
-
-                        </div>
-                    )}
-
-
-
-                </div>
-
-
-
-                <div
-                    className="text-slate-800 mt-5 mb-5 text-xl font-bold"
-                >
-                    Total:   ₦  {total}
-                </div>
+                        {orders.map((order: {
+                            _id: string | null
+                            user: string
+                            product: string
+                            storename: string
+                            price: number
+                            quantity: number
+                            amount: number
+                            status: string
+                            p_status: string
+                            mod: string
+                        }) =>
+                            <div
+                                key={order._id}
+                            >
 
 
 
-                <NavButton
-                    title="Select Method of Delivery"
-                    uLink="/student/checkout/deliveryMethod/"
-                />
+
+                                <CheckOutInfo
+                                    amount={order.amount}
+                                    product={order.product}
+                                    quantity={order.quantity}
+                                    clickButton={() => delOne(order._id)}
+
+                                />
 
 
-            </>
-        </StuLayout>
-    )
+                            </div>
+                        )}
+
+
+
+                    </div>
+
+
+
+                    <div
+                        className="text-slate-800 mt-5 mb-5 text-xl font-bold"
+                    >
+                        Total:  <Money_Format amount={total} />
+                    </div>
+
+
+
+                    <NavButton
+                        title="Select Method of Delivery"
+                        uLink="/student/checkout/deliveryMethod/"
+                    />
+
+
+                </>
+            </StuLayout>
+        )
+    }
+
 }

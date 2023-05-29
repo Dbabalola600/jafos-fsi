@@ -7,6 +7,7 @@ import NavButton from "../../../components/shared/NavButton";
 import StuLayout from "../Layout/StuLayout";
 import CheckOutConfirm from "../../../components/shared/CheckOutConfirm";
 import ErrMess from "../../../components/shared/ErrMess";
+import Money_Format from "../../../components/shared/money_format";
 
 
 
@@ -214,7 +215,7 @@ export default function ConfirmOrder() {
                 >
 
                     <div>
-                        Amount Due:   ₦  {total}
+                        Amount Due:    <Money_Format amount=  {total}/>
                     </div>
                     <div>
                         Payment Status: {orders[0]?.p_status}
@@ -223,7 +224,7 @@ export default function ConfirmOrder() {
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
                     <div>
-                        Delivery Fee:   ₦  {devfee?.fee}
+                        Delivery Fee:    <Money_Format amount=  {devfee?.fee}/>
                     </div>
 
 

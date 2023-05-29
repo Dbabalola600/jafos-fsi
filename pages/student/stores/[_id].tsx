@@ -7,6 +7,7 @@ import StuLayout from "../Layout/StuLayout"
 import InputFromStore from "../../../components/shared/InputFromStore"
 import ProductBar from "../../../components/shared/ProductsBar"
 import ErrMess from "../../../components/shared/ErrMess"
+import EmptyCart from "../../../components/shared/Empty States/EmptyCart"
 
 
 
@@ -184,124 +185,151 @@ export default function Stores() {
 
     }
 
-    return (
-        <StuLayout>
-            <>
-                <Header
-                    title={seller?.storename}
-                />
-                <form
-                    onSubmit={search}
 
-                >
-                    <div
-                        className="text-center text-primary mb-3"
+
+    if(offers[0] === undefined){
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title={seller?.storename}
+                    />
+                  
+
+                  <EmptyCart/>
+                   
+    
+                   
+    
+    
+    
+                </>
+    
+            </StuLayout>
+        )
+    }else{
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title={seller?.storename}
+                    />
+                    <form
+                        onSubmit={search}
+    
                     >
-                        search for a product or category(eg. food, water, mouse pad etc)
-                    </div>
-
-                    <div className="flex justify-center">
-                        <div className="mb-3 xl:w-96">
-                            <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input
-                                    type="search"
-                                    className="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-black font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    aria-describedby="button-addon3"
-
-
-                                />
-                                <button
-
-
-                                    className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-                                    type="submit"
-                                    id="button-addon3"
-                                    data-te-ripple-init>
-                                    Search
-                                </button>
+                        <div
+                            className="text-center text-primary mb-3"
+                        >
+                            search for a product or category(eg. food, water, mouse pad etc)
+                        </div>
+    
+                        <div className="flex justify-center">
+                            <div className="mb-3 xl:w-96">
+                                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                                    <input
+                                        type="search"
+                                        className="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-black font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
+                                        placeholder="Search"
+                                        aria-label="Search"
+                                        aria-describedby="button-addon3"
+    
+    
+                                    />
+                                    <button
+    
+    
+                                        className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+                                        type="submit"
+                                        id="button-addon3"
+                                        data-te-ripple-init>
+                                        Search
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-
-                </form>
-                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="store is currently closed" />}
-                  
-                <div
-                    className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
-
-                >
-
-                    {category.map((cat, index) => (
-                        <div
-                            key={index}
-                        >
-                            <ProductBar
-                                all={cat}
-                                allLink={`/student/stores/${ssd._id}/${cat}`}
-                            />
-                        </div>
-                    ))}
-
-                </div>
-
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-                >
-
-                    {offers.map((offer: {
-                        category: string
-                        description: string
-                        price: number
-                        title: string;
-                        owner: string
-                        _id: string | null | undefined
-
-                    }) => (
-                        <div
-                            key={offer._id}
-                        >
-                            <form
-                                className=""
-
-                                onSubmit={
-                                    addCart
-                                }
+    
+    
+                    </form>
+                    {showgoodtoast.show && <GoodMess title="Added to Cart" />}
+                    {showtoast.show && <ErrMess title="store is currently closed" />}
+                      
+                    <div
+                        className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
+    
+                    >
+    
+                        {category.map((cat, index) => (
+                            <div
+                                key={index}
                             >
-
-
-                                <InputFromStore
-                                    category={offer.category}
-                                    price={offer.price}
-                                    title={offer.title}
-                                    owner={offer.owner}
-                                    load={isLoading ? "ADDING..." : "ADD TO CART"}
+                                <ProductBar
+                                    all={cat}
+                                    allLink={`/student/stores/${ssd._id}/${cat}`}
                                 />
+                            </div>
+                        ))}
+    
+                    </div>
+    
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+    
+                    >
+    
+                        {offers.map((offer: {
+                            category: string
+                            description: string
+                            price: number
+                            title: string;
+                            owner: string
+                            _id: string | null | undefined
+    
+                        }) => (
+                            <div
+                                key={offer._id}
+                            >
+                                <form
+                                    className=""
+    
+                                    onSubmit={
+                                        addCart
+                                    }
+                                >
+    
+    
+                                    <InputFromStore
+                                        category={offer.category}
+                                        price={offer.price}
+                                        title={offer.title}
+                                        owner={offer.owner}
+                                        load={isLoading ? "ADDING..." : "ADD TO CART"}
+                                    />
+    
+    
+    
+    
+                                    {/* 
+                                    <button
+    
+                                        type="submit"
+                                        className="btn bg-black"
+                                    > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
+    
+    
+                                </form>
+                            </div>
+                        ))}
+                    </div>
+    
+    
+    
+                </>
+    
+            </StuLayout>
+        )
 
+    }
 
-
-
-                                {/* 
-                                <button
-
-                                    type="submit"
-                                    className="btn bg-black"
-                                > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
-
-
-                            </form>
-                        </div>
-                    ))}
-                </div>
-
-
-
-            </>
-
-        </StuLayout>
-    )
+   
 }

@@ -8,6 +8,7 @@ import Link from "next/link";
 import OrderCard from "../../../components/shared/OrderCard";
 import OrderCard2 from "../../../components/shared/OrderCard2";
 import OrderNav from "../../../components/shared/OrderNav";
+import EmptyOrder from "../../../components/shared/Empty States/EmptyOrder";
 
 
 
@@ -145,107 +146,145 @@ function Orders() {
     )
 
 
-
-    return (
-        <CatLayout>
-            <>
-                <Header
-                    title="Pending Orders"
-                />
+    
 
 
-                <OrderNav
-                    all={Amt?.all}
-                    allLink="/seller/Orders/"
-                    canc={Amt?.cance}
-                    cancLink="/seller/Orders/CancelledOrder"
-                    comp={Amt?.comp}
-                    compLink="/seller/Orders/CompletedOrder"
-                    del={Amt?.del}
-                    delLink="/seller/Orders/DeliveredOrder"
-                    pend={Amt?.pend}
-                    pendLink="/seller/Orders/PendingOrder"
-
-                />
-
-
-
-
-
-                <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
-
-                    {orders.map((order: {
-                        "0": {
-                            _id: string;
-                            orderNum: number
-                            user: string
-                            price: number;
-                            quantity: number;
-                            amount: number;
-                            status: string;
-                            orderList: string
-
-                        }
-
-
-                    }, index) => (
-                        <div
-                            key={order[0]._id}
-                        >
-
-                            <div className="grid mt-5 ">
-                                <OrderCard2
-                                    OrderNum={order[0].orderNum}
-
-                                    status={"Pending"}
-                                    ulink={`/seller/Orders/Details/${order[0]._id}`}
-
-
-
-                                />
-
-
-
+    if (orders[0] === undefined){
+        return (
+            <CatLayout>
+                <>
+                    <Header
+                        title="Pending Orders"
+                    />
+    
+    
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/seller/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/seller/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/seller/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/seller/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/seller/Orders/PendingOrder"
+    
+                    />
+    
+    
+    
+    
+    
+                  <EmptyOrder/>
+    
+    
+                </>
+            </CatLayout>
+        )
+    }else{
+        return (
+            <CatLayout>
+                <>
+                    <Header
+                        title="Pending Orders"
+                    />
+    
+    
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/seller/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/seller/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/seller/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/seller/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/seller/Orders/PendingOrder"
+    
+                    />
+    
+    
+    
+    
+    
+                    <div className="grid grid-cols-2 lg:grid-cols-2  gap-6">
+    
+                        {orders.map((order: {
+                            "0": {
+                                _id: string;
+                                orderNum: number
+                                user: string
+                                price: number;
+                                quantity: number;
+                                amount: number;
+                                status: string;
+                                orderList: string
+    
+                            }
+    
+    
+                        }, index) => (
+                            <div
+                                key={order[0]._id}
+                            >
+    
+                                <div className="grid mt-5 ">
+                                    <OrderCard2
+                                        OrderNum={order[0].orderNum}
+    
+                                        status={"Pending"}
+                                        ulink={`/seller/Orders/Details/${order[0]._id}`}
+    
+    
+    
+                                    />
+    
+    
+    
+                                </div>
+    
                             </div>
-
-                        </div>
-                    ))}
-                </div>
-
-
-
-
-                {/* {orderItems.map((orderItem: {
-                    _doc: any;
-                    _id: string;
-                    storename: string
-                    product: string
-                    user: string
-                    price: number;
-                    quantity: number;
-                    amount: number;
-                    userObj: {
-                        firstname: string
-                        _id: string
-                        lastname: string
-                        matricno: string
-                    }
-                }) => (
-                    <div
-                        key={orderItem._id}
-                    >
-                        <CusCollapse
-                            title={orderItem._doc.product}
-                            info={orderItem?.userObj?.firstname}
-                            clickButton={() => router.push(`/seller/Orders/Details/${orderItem._doc._id}`)}
-                        />
+                        ))}
                     </div>
-                ))} */}
-
-
-            </>
-        </CatLayout>
-    )
+    
+    
+    
+    
+                    {/* {orderItems.map((orderItem: {
+                        _doc: any;
+                        _id: string;
+                        storename: string
+                        product: string
+                        user: string
+                        price: number;
+                        quantity: number;
+                        amount: number;
+                        userObj: {
+                            firstname: string
+                            _id: string
+                            lastname: string
+                            matricno: string
+                        }
+                    }) => (
+                        <div
+                            key={orderItem._id}
+                        >
+                            <CusCollapse
+                                title={orderItem._doc.product}
+                                info={orderItem?.userObj?.firstname}
+                                clickButton={() => router.push(`/seller/Orders/Details/${orderItem._doc._id}`)}
+                            />
+                        </div>
+                    ))} */}
+    
+    
+                </>
+            </CatLayout>
+        )
+    }
+   
 }
 
 export default Orders;
