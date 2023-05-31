@@ -8,6 +8,7 @@ import OrderCard2 from "../../../components/shared/OrderCard2";
 import OrderCardUser from "../../../components/shared/OrderCardUser";
 import OrderCardUser2 from "../../../components/shared/OrderCardUser2";
 import OrderNav from "../../../components/shared/OrderNav";
+import EmptyOrder from "../../../components/shared/Empty States/EmptyOrder";
 
 
 
@@ -101,73 +102,110 @@ export default function CompletedOrder() {
     }, [])
 
 
-    return (
-        <StuLayout>
-            <>
-                <Header
-                    title="Completed Orders"
+    if (orders[0] === undefined) {
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title="Completed Orders"
 
-                />
-
-
-
-                <OrderNav
-                    all={Amt?.all}
-                    allLink="/student/Orders/"
-                    canc={Amt?.cance}
-                    cancLink="/student/Orders/CancelledOrder"
-                    comp={Amt?.comp}
-                    compLink="/student/Orders/CompletedOrder"
-                    del={Amt?.del}
-                    delLink="/student/Orders/DeliveredOrder"
-                    pend={Amt?.pend}
-                    pendLink="/student/Orders/PendingOrder"
-                />
+                    />
 
 
 
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/student/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/student/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/student/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/student/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/student/Orders/PendingOrder"
+                    />
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
 
-                {orders.map((order: {
-                         "0": {
-                            _id: string;
-                            orderNum: number
-                            user: string
-                            price: number;
-                            quantity: number;
-                            amount: number;
-                            status: string;
-                            orderList: string
 
-                        }
-                    }) => (
-                        <div
-                            key={order[0]._id}
-                        >
-                            {/* <OrderCard2
+                    <EmptyOrder />
+                </>
+            </StuLayout>
+        )
+
+    } else {
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title="Completed Orders"
+
+                    />
+
+
+
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/student/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/student/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/student/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/student/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/student/Orders/PendingOrder"
+                    />
+
+
+
+
+                    <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+
+                        {orders.map((order: {
+                            "0": {
+                                _id: string;
+                                orderNum: number
+                                user: string
+                                price: number;
+                                quantity: number;
+                                amount: number;
+                                status: string;
+                                orderList: string
+
+                            }
+                        }) => (
+                            <div
+                                key={order[0]._id}
+                            >
+                                {/* <OrderCard2
                             OrderNum={order.oriOrder.orderNum}
                             status={order.orderObj.status}
                             ulink={`Orders/Details/${order.oriOrder._id}`}
                         /> */}
 
-                            <OrderCardUser
-                                OrderNum={order[0].orderNum}
+                                <OrderCardUser
+                                    OrderNum={order[0].orderNum}
 
-                                status="Completed"
-                                ulink={`/student/Orders/Details/${order[0]._id}`}
+                                    status="Completed"
+                                    ulink={`/student/Orders/Details/${order[0]._id}`}
 
 
-                            />
+                                />
 
-                        </div>
-                    ))}
-                </div>
+                            </div>
+                        ))}
+                    </div>
 
-            </>
-        </StuLayout>
-    )
+                </>
+            </StuLayout>
+        )
+
+
+    }
+
 
 
 

@@ -4,6 +4,7 @@ import { json } from "stream/consumers";
 import Header from "../../../components/shared/Header";
 import AdminLayout from "../Layout/AdminLayout";
 import Money_Format from "../../../components/shared/money_format";
+import CusModal from "../../../components/shared/modal";
 
 
 
@@ -108,19 +109,27 @@ export default function Users() {
 
 
                     <div>
-                        Account Balance:<Money_Format amount= {student?.account_bal}/>
+                        Account Balance:<Money_Format amount={student?.account_bal} />
                     </div>
 
                 </div>
-                <button
-                    className="btn btn-primary w-full mt-10"
-                    onClick={() => delOne()}
-                // type="submit"
+                <div
+                className="mt-10"
                 >
 
+                    <CusModal
+                        mainButtonTitle="Delete User"
+                        smButtonTitle="Delete"
+                        modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
+                        clickButton={() => delOne()}
+                    />
 
-                    {isLoading ? "Loading..." : "DELETE USER"}
-                </button>
+                </div>
+
+
+
+
+
 
             </>
         </AdminLayout >

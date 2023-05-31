@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import CusModal from "../../../components/shared/modal";
 import AdminLayout from "../Layout/AdminLayout";
+import Money_Format from "../../../components/shared/money_format";
 
 
 
@@ -19,8 +20,9 @@ type Offers = {
 type Seller = {
     _id: string
     storename: string;
-    firstname: string
-    lastname: string
+    store_desc: string;
+    account_bal: number
+    status: string
 }
 
 
@@ -60,40 +62,55 @@ export default function Stores() {
                     title={seller?.storename}
                 />
 
+
+
+
+
+
                 <div
-                    className="w-full py-20 space-y-12"
+                    className="w-full  space-y-12"
                 >
 
 
+                    <div className=" text-primary mt-5 space-y-5 w-full ">
 
-                    <div className='  mx-auto'>
-                        <Link
-                            href="/ADMIN2823/Sellers/orders/">
-                            <button className="btn btn-lg btn-primary btn-block">
-                                Orders
-                            </button>
-                        </Link>
+                        <div>
+                            Name: {seller?.storename}
+
+
+                        </div>
+
+                        <div>
+                            About: {seller?.store_desc}
+
+
+                        </div>
+
+
+                        <div>
+                            Currently:  {seller?.status}
+
+                        </div>
+
+
+                        <div>
+                            Account Balance:<Money_Format amount={seller?.account_bal} />
+                        </div>
+
                     </div>
 
 
-
-                    <div className='  mx-auto'>
-                        <Link
-                            href="/ADMIN2823/Sellers/products/">
-                            <button className="btn btn-lg btn-primary btn-block">
-                                Products
-                            </button>
-                        </Link>
+                    <div
+                        className="mt-10"
+                    >
+                        <CusModal
+                            mainButtonTitle="Delete User"
+                            smButtonTitle="Delete"
+                            modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
+                            clickButton={() => { }}
+                        />
                     </div>
 
-
-
-                    <CusModal
-                        mainButtonTitle="Delete User"
-                        smButtonTitle="Delete"
-                        modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
-                        clickButton={() => { }}
-                    />
                 </div>
 
             </>

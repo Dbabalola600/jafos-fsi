@@ -64,17 +64,20 @@ export default function TransStore() {
 
 
 
-                {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
-                    <div
-                        key={seller._id}
-                    >
-                      
-                        <NavButton
-                        uLink={`/student/Transactions/store/${seller._id}`}
-                        title={seller.storename}
-                    />
-                    </div>
-                )}
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                    {sellers.map((seller: { _id: string | null | undefined; storename: string; }) =>
+                        <div
+                            key={seller._id}
+                        >
+
+                            <NavButton
+                                uLink={`/student/Transactions/store/${seller._id}`}
+                                title={seller.storename}
+                            />
+                        </div>
+                    )}
+                </div>
+
 
             </>
         </StuLayout>

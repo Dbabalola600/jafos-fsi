@@ -17,7 +17,7 @@ export default function CusModal(props: ModalProps) {
         <>
             <label
                 htmlFor="my-modal"
-                className="btn modal-buton btn-primary"
+                className=" rounded-lg p-3 mt-10 w-full modal-buton btn-primary"
             >  {props.mainButtonTitle}</label>
 
             <input type="checkbox" id="my-modal" className="modal-toggle" />

@@ -50,13 +50,13 @@ export default function Index() {
             <>
                 <div className="grid grid-cols-2 space-x-10">
 
-                    <div
-                        className=" bg-black  ">
-                        <div
-                            className="text-center text-primaryColour font-bold mx-auto text-2xl">
-                            VIEW Tokens
-                        </div>
-                    </div>
+
+
+                    <Header
+                        title="All Creders"
+                    />
+
+
 
 
 
@@ -79,31 +79,58 @@ export default function Index() {
 
 
 
+                <div
+                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                {creders.map((creder: {
-                    _id: string
-                    creder_no: string;
-                    firstname: string
-                    lastname: string
-                    account_bal: number
-                }) =>
-                    <div
-                        key={creder._id}
-                    >
-                        <Link
-                            href={`/ADMIN2823/Creder/${creder._id}`}
+                >
+
+                    {creders.map((creder: {
+                        _id: string
+                        creder_no: string;
+                        firstname: string
+                        lastname: string
+                        account_bal: number
+                    }) =>
+                        <div
+                            key={creder._id}
                         >
-                            <a>
-                                <Header
-                                    title={creder.creder_no}
-                                    desc={creder.firstname}
-                                />
-                            </a>
-                        </Link>
-                    </div>
+                            <Link
+                                href={`/ADMIN2823/Creder/${creder._id}`}
+                            >
 
 
-                )}
+
+
+                                <div className="bg-primary rounded-lg  p-3 hover:bg-primary/80">
+
+
+                                    <div className="flex items-end space-x-3">
+
+                                        <div className="w-1/2  relative">
+
+
+                                            <div className="text-black   font-bold text-lg">
+                                                {creder.firstname} {creder.lastname}
+                                            </div>
+
+                                            <p
+                                                className="text-gray-400"
+                                            >
+                                                {creder.creder_no}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </Link>
+                        </div>
+
+
+                    )}
+
+                </div>
+
+
             </>
         </AdminLayout>
     )
