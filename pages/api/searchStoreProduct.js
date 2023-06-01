@@ -27,26 +27,13 @@ export default async function SearchStoreProduct(req, res) {
         const target = await Product.find({owner: id}).find({ title: { $regex: find, $options: "i" } })
         if (target[0] === undefined) {
             const target = await Product.find({owner: id}).find({ category: { $regex: find, $options: "i" } })
-            if (target[0] === undefined) {
-                return res.json(
-
-                    [{
-                        title: "null",
-                        price: "null",
-                        category: "null",
-                        description: "null",
-                        _id: "0"
-                    }]
-
-
-                )
-            } else {
+         
                 return res.status(200).json(
 
                     target,
 
                 )
-            }
+          
 
         } else {
             return res.status(200).json(

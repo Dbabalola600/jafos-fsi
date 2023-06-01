@@ -6,6 +6,7 @@ import InputFromStore from "../../../../components/shared/InputFromStore"
 import StaffLay from "../../Layout/StaffLay"
 import { FormEventHandler, useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import EmptyCart from "../../../../components/shared/Empty States/EmptyCart"
 
 
 
@@ -156,58 +157,71 @@ export default function Found() {
 
 
 
+    if (offers[0] === undefined) {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title={"search result for " + ssd.find + " in " + seller?.storename}
+                    />
 
-    return (
-        <StaffLay>
-            <>
-                <Header
-                    title={"search result for " + ssd.find + " in " + seller?.storename}
-                />
+                    <EmptyCart />
+                </>
 
-                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="store is currently closed" />}
+            </StaffLay>
+        )
+    } else {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title={"search result for " + ssd.find + " in " + seller?.storename}
+                    />
+
+                    {showgoodtoast.show && <GoodMess title="Added to Cart" />}
+                    {showtoast.show && <ErrMess title="store is currently closed" />}
 
 
 
 
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                >
+                    >
 
-                    {offers.map((offer: {
-                        category: string
-                        description: string
-                        price: number
-                        title: string;
-                        owner: string
-                        _id: string | null | undefined
+                        {offers.map((offer: {
+                            category: string
+                            description: string
+                            price: number
+                            title: string;
+                            owner: string
+                            _id: string | null | undefined
 
-                    }) => (
-                        <div
-                            key={offer._id}
-                        >
-                            <form
-                                className=""
-
-                                onSubmit={
-                                    addCart
-                                }
+                        }) => (
+                            <div
+                                key={offer._id}
                             >
+                                <form
+                                    className=""
+
+                                    onSubmit={
+                                        addCart
+                                    }
+                                >
 
 
-                                <InputFromStore
-                                    category={offer.category}
-                                    price={offer.price}
-                                    title={offer.title}
-                                    owner={offer.owner}
-                                    load={isLoading ? "ADDING..." : "ADD TO CART"}
-                                />
+                                    <InputFromStore
+                                        category={offer.category}
+                                        price={offer.price}
+                                        title={offer.title}
+                                        owner={offer.owner}
+                                        load={isLoading ? "ADDING..." : "ADD TO CART"}
+                                    />
 
 
 
 
-                                {/* 
+                                    {/* 
                                 <button
 
                                     type="submit"
@@ -215,12 +229,15 @@ export default function Found() {
                                 > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
 
 
-                            </form>
-                        </div>
-                    ))}
-                </div>
-            </>
+                                </form>
+                            </div>
+                        ))}
+                    </div>
+                </>
 
-        </StaffLay>
-    )
+            </StaffLay>
+        )
+    }
+
+
 }

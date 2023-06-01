@@ -6,6 +6,8 @@ import Header from "../../../components/shared/Header"
 import NavButton from "../../../components/shared/NavButton"
 import StaffLay from "../Layout/StaffLay"
 import CheckOutInfo from "../../../components/shared/CheckOutInfo"
+import Money_Format from "../../../components/shared/money_format"
+import EmptyCheckout from "../../../components/shared/Empty States/EmptyCheckOut"
 
 
 
@@ -122,75 +124,92 @@ export default function Checkout() {
     }
 
 
+    if (orders[0] === undefined) {
+        return (
+            <StaffLay>
+                <>
 
 
-    return (
-        <StaffLay>
-            <>
+                    <Header
+                        title="Checkout"
+                    />
+                    <EmptyCheckout />
 
 
-                <Header
-                    title="Checkout"
-                />
-                {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
+                </>
+            </StaffLay>
+        )
+    } else {
+        return (
+            <StaffLay>
+                <>
 
 
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-                >
-                    {orders.map((order: {
-                        _id: string | null
-                        user: string
-                        product: string
-                        storename: string
-                        price: number
-                        quantity: number
-                        amount: number
-                        status: string
-                        p_status: string
-                        mod: string
-                    }) =>
-                        <div
-                            key={order._id}
-                        >
+                    <Header
+                        title="Checkout"
+                    />
+                    {showgoodtoast.show && <GoodMess title="Deleted Sucessfully" />}
 
 
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                            <CheckOutInfo
-                                amount={order.amount}
-                                product={order.product}
-                                quantity={order.quantity}
-                                clickButton={() => delOne(order._id)}
-
-                            />
-
-
-
-                        </div>
-                    )}
-                </div>
-
+                    >
+                        {orders.map((order: {
+                            _id: string | null
+                            user: string
+                            product: string
+                            storename: string
+                            price: number
+                            quantity: number
+                            amount: number
+                            status: string
+                            p_status: string
+                            mod: string
+                        }) =>
+                            <div
+                                key={order._id}
+                            >
 
 
 
+                                <CheckOutInfo
+                                    amount={order.amount}
+                                    product={order.product}
+                                    quantity={order.quantity}
+                                    clickButton={() => delOne(order._id)}
+
+                                />
 
 
-                <div
-                    className="text-slate-800 mt-5 mb-5 text-xl font-bold"
-                >
-                    Total:   ₦  {total}
-                </div>
+
+                            </div>
+                        )}
+                    </div>
 
 
 
-                <NavButton
-                    title="Select Method of Delivery"
-                    uLink="/staff/checkout/deliveryMethod/"
-                />
 
 
-            </>
-        </StaffLay>
-    )
+
+                    <div
+                        className="text-slate-800 mt-5 mb-5 text-xl font-bold"
+                    >
+                        Total:   <Money_Format amount={total} />
+                    </div>
+
+
+
+                    <NavButton
+                        title="Select Method of Delivery"
+                        uLink="/staff/checkout/deliveryMethod/"
+                    />
+
+
+                </>
+            </StaffLay>
+        )
+    }
+
+
 }

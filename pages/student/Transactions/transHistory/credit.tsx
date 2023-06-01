@@ -6,6 +6,7 @@ import StuLayout from "../../Layout/StuLayout";
 import Link from "next/link";
 import HistBar from "../../../../components/shared/historyBar";
 import EmptyTrans from "../../../../components/shared/Empty States/EmptyTrans";
+import Money_Format from "../../../../components/shared/money_format";
 
 
 
@@ -146,7 +147,7 @@ export default function TransCredit() {
 
 
                                     <div>
-                                        Amount: {hist.amount}
+                                        Amount:<Money_Format amount=  {hist.amount}/>
                                     </div>
 
 

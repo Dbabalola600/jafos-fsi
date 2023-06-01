@@ -6,6 +6,7 @@ import Header from "../../../components/shared/Header"
 import StaffLay from "../Layout/StaffLay"
 import OrderNav from "../../../components/shared/OrderNav"
 import OrderCardUser2 from "../../../components/shared/OrderCardUser2"
+import EmptyOrder from "../../../components/shared/Empty States/EmptyOrder"
 
 
 
@@ -110,12 +111,28 @@ export default function Index() {
     }, [])
 
 
-    return (
-        <StaffLay>
-            <>
-                <Header
-                    title="Orders"
-                />
+
+
+    if (orders[0] === undefined) {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title="Orders"
+                    />
+
+                    <EmptyOrder />
+
+                </>
+            </StaffLay>
+        )
+    } else {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title="Orders"
+                    />
 
 
 
@@ -123,18 +140,18 @@ export default function Index() {
 
 
 
-                <OrderNav
-                    all={Amt?.all}
-                    allLink="/staff/Orders/"
-                    canc={Amt?.cance}
-                    cancLink="/staff/Orders/CancelledOrder"
-                    comp={Amt?.comp}
-                    compLink="/staff/Orders/CompletedOrder"
-                    del={Amt?.del}
-                    delLink="/staff/Orders/DeliveredOrder"
-                    pend={Amt?.pend}
-                    pendLink="/staff/Orders/PendingOrder"
-                />
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/staff/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/staff/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/staff/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/staff/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/staff/Orders/PendingOrder"
+                    />
 
 
 
@@ -142,44 +159,46 @@ export default function Index() {
 
 
 
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
-                    {orders.map((order: {
-                        _id: string;
-                        storename: string
-                        product: string
-                        orderNum: number
-                        user: string
-                        price: number;
-                        quantity: number;
-                        amount: number;
-                        status: string
-                        p_status: string;
-                    }) => (
-                        <div
-                            key={order._id}
-                        >
+                    <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+                        {orders.map((order: {
+                            _id: string;
+                            storename: string
+                            product: string
+                            orderNum: number
+                            user: string
+                            price: number;
+                            quantity: number;
+                            amount: number;
+                            status: string
+                            p_status: string;
+                        }) => (
+                            <div
+                                key={order._id}
+                            >
 
 
-                            <OrderCardUser2
-                                OrderNum={order.orderNum}
-                                store={order.storename}
-                                ulink={`Orders/Details/${order._id}`}
-
-
-
-
-                            />
-                           
-
-                        </div>
-                    ))}
-                </div>
+                                <OrderCardUser2
+                                    OrderNum={order.orderNum}
+                                    store={order.storename}
+                                    ulink={`Orders/Details/${order._id}`}
 
 
 
-            </>
-        </StaffLay>
-    )
+
+                                />
+
+
+                            </div>
+                        ))}
+                    </div>
+
+
+
+                </>
+            </StaffLay>
+        )
+    }
+
 
 
 

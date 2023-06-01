@@ -6,6 +6,7 @@ import Header from "../../../../components/shared/Header"
 import StuLayout from "../../Layout/StuLayout"
 import InputFromStore from "../../../../components/shared/InputFromStore"
 import ErrMess from "../../../../components/shared/ErrMess"
+import EmptyCart from "../../../../components/shared/Empty States/EmptyCart"
 
 
 
@@ -40,11 +41,11 @@ export default function Found() {
 
 
 
-    
+
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
-   
+
 
 
     let ssd = router.query
@@ -138,8 +139,8 @@ export default function Found() {
                     // router.reload()
                     router.push("/student/Cart")
                 }
-                if (res.status == 201){
-                    settoast({message :"nope", show: true})
+                if (res.status == 201) {
+                    settoast({ message: "nope", show: true })
                 }
             }).catch(err => {
                 console.log(err)
@@ -149,61 +150,76 @@ export default function Found() {
         setLoading(false)
     }
 
+    if (offers[0] === undefined) {
+
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title={"No result for " + ssd.find}
+                    />
+
+
+                    <EmptyCart />
+
+
+                </>
+
+            </StuLayout>
+        )
+    } else {
+        return (
+            <StuLayout>
+                <>
+                    <Header
+                        title={"search result for " + ssd.find}
+                    />
+
+                    {showgoodtoast.show && <GoodMess title="Added to Cart" />}
+                    {showtoast.show && <ErrMess title="store is currently closed" />}
 
 
 
-    return (
-        <StuLayout>
-            <>
-                <Header
-                    title={"search result for "+ssd.find}
-                />
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
 
-                {showgoodtoast.show && <GoodMess title="Added to Cart" />}
-                {showtoast.show && <ErrMess title="store is currently closed" />}
-                 
+                    >
 
+                        {offers.map((offer: {
+                            category: string
+                            description: string
+                            price: number
+                            owner: string
+                            title: string;
+                            store: string
+                            _id: string | null | undefined
 
-                <div
-                    className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-
-                >
-
-                    {offers.map((offer: {
-                        category: string
-                        description: string
-                        price: number
-                        owner: string
-                        title: string;
-                        store: string
-                        _id: string | null | undefined
-
-                    }) => (
-                        <div
-                            key={offer._id}
-                        >
-                            <form
-                                className=""
-
-                            onSubmit={
-                                 addCart
-                            }
+                        }) => (
+                            <div
+                                key={offer._id}
                             >
+                                <form
+                                    className=""
+
+                                    onSubmit={
+                                        addCart
+                                    }
+                                >
 
 
-                                <InputFromStore
-                                    category={offer.category}
-                                    price={offer.price}
-                                    title={offer.title}
-                                    store={offer.store}
-                                    owner={offer.owner}
-                                    load={isLoading ? "ADDING..." : "ADD TO CART"}
-                                />
+                                    <InputFromStore
+                                        category={offer.category}
+                                        price={offer.price}
+                                        title={offer.title}
+                                        store={offer.store}
+                                        owner={offer.owner}
+                                        load={isLoading ? "ADDING..." : "ADD TO CART"}
+                                    />
 
 
 
 
-                                {/* 
+                                    {/* 
                                 <button
 
                                     type="submit"
@@ -211,12 +227,16 @@ export default function Found() {
                                 > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
 
 
-                            </form>
-                        </div>
-                    ))}
-                </div>
-            </>
+                                </form>
+                            </div>
+                        ))}
+                    </div>
+                </>
 
-        </StuLayout>
-    )
+            </StuLayout>
+        )
+    }
+
+
+
 }

@@ -5,6 +5,7 @@ import OrderNav from "../../../components/shared/OrderNav";
 import StaffLay from "../Layout/StaffLay";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
+import EmptyOrder from "../../../components/shared/Empty States/EmptyOrder";
 
 
 
@@ -85,7 +86,7 @@ export default function CompletedOrder() {
 
         const Amtresponse = await fetch("/api/staff/order/fetchOrderAmt", { method: "POST", body: JSON.stringify(body3) })
             .then(res => res.json()) as OrderAmt
-       
+
         setAmt(Amtresponse)
 
 
@@ -95,67 +96,99 @@ export default function CompletedOrder() {
         showOrder()
     }, [])
 
+    if (orders[0] === undefined) {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title="Pending Orders"
+                    />
 
 
-    return (
-        <StaffLay>
-            <>
-                <Header
-                    title="Pending Orders"
-                />
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/staff/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/staff/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/staff/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/staff/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/staff/Orders/PendingOrder"
+                    />
 
 
-                <OrderNav
-                    all={Amt?.all}
-                    allLink="/staff/Orders/"
-                    canc={Amt?.cance}
-                    cancLink="/staff/Orders/CancelledOrder"
-                    comp={Amt?.comp}
-                    compLink="/staff/Orders/CompletedOrder"
-                    del={Amt?.del}
-                    delLink="/staff/Orders/DeliveredOrder"
-                    pend={Amt?.pend}
-                    pendLink="/staff/Orders/PendingOrder"
-                />
-
-
-                <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
-
-
-                    {orders.map((order: {
-                        "0": {
-                            _id: string;
-                            orderNum: number
-                            user: string
-                            price: number;
-                            quantity: number;
-                            amount: number;
-                            status: string;
-                            orderList: string
-
-                        }
-                    }) => (
-                        <div
-                            key={order[0]._id}
-                        >
-
-
-                            <OrderCardUser
-                                OrderNum={order[0].orderNum}
-
-                                status="Pending"
-                                ulink={`/staff/Orders/Details/${order[0]._id}`}
-
-
-                            />
-
-                        </div>
-                    ))}
-                </div>
+                    <EmptyOrder />
 
 
 
-            </>
-        </StaffLay>
-    )
+                </>
+            </StaffLay>
+        )
+    } else {
+        return (
+            <StaffLay>
+                <>
+                    <Header
+                        title="Pending Orders"
+                    />
+
+
+                    <OrderNav
+                        all={Amt?.all}
+                        allLink="/staff/Orders/"
+                        canc={Amt?.cance}
+                        cancLink="/staff/Orders/CancelledOrder"
+                        comp={Amt?.comp}
+                        compLink="/staff/Orders/CompletedOrder"
+                        del={Amt?.del}
+                        delLink="/staff/Orders/DeliveredOrder"
+                        pend={Amt?.pend}
+                        pendLink="/staff/Orders/PendingOrder"
+                    />
+
+
+                    <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
+
+
+                        {orders.map((order: {
+                            "0": {
+                                _id: string;
+                                orderNum: number
+                                user: string
+                                price: number;
+                                quantity: number;
+                                amount: number;
+                                status: string;
+                                orderList: string
+
+                            }
+                        }) => (
+                            <div
+                                key={order[0]._id}
+                            >
+
+
+                                <OrderCardUser
+                                    OrderNum={order[0].orderNum}
+
+                                    status="Pending"
+                                    ulink={`/staff/Orders/Details/${order[0]._id}`}
+
+
+                                />
+
+                            </div>
+                        ))}
+                    </div>
+
+
+
+                </>
+            </StaffLay>
+        )
+    }
+
+
 }

@@ -7,6 +7,8 @@ import Header from "../../../../components/shared/Header";
 import TextInput from "../../../../components/shared/TextInput";
 import StaffLay from "../../Layout/StaffLay";
 import HistBar from "../../../../components/shared/historyBar";
+import Money_Format from "../../../../components/shared/money_format";
+import EmptyTrans from "../../../../components/shared/Empty States/EmptyTrans";
 
 
 type TransHists = {
@@ -69,82 +71,101 @@ export default function TransHistory() {
 
 
 
+    if (hists[0] === undefined) {
+        return (
+            <StaffLay>
+                <>
 
 
 
+                    <Header
+                        title=" Transactions History"
+                    />
 
-    return (
-        <StaffLay>
-            <>
-
-               
-
-                <Header
-                    title=" Transactions History"
-                />
-
-                <HistBar
-                    allAmt={histAmt?.all}
-                    allLink={"/staff/Transactions/transHistory/"}
-                    creditAmt={histAmt?.credit}
-                    creditLink={"/staff/Transactions/transHistory/credit"}
-                    debitAmt={histAmt?.debit}
-                    debitLink={"/staff/Transactions/transHistory/debit"}
-                    tokenAmt={histAmt?.tok}
-                    tokenLink={"/staff/Transactions/transHistory/tokenCredit"}
-                />
+                    <EmptyTrans />
 
 
-                {hists.map((hist: {
-                    sender: string,
-                    reciever: string,
-                    amount: number,
-                    trans_type: string,
-                    send_id: string,
-                    rec_id: string,
-                    _id: string,
-                    createdAt: string
+                </>
+            </StaffLay>
+        )
+    } else {
+        return (
+            <StaffLay>
+                <>
 
 
-                }, index) => (
-                    <div
-                        key={hist._id}
-                    // key={index}
-                    >
 
+                    <Header
+                        title=" Transactions History"
+                    />
+
+                    <HistBar
+                        allAmt={histAmt?.all}
+                        allLink={"/staff/Transactions/transHistory/"}
+                        creditAmt={histAmt?.credit}
+                        creditLink={"/staff/Transactions/transHistory/credit"}
+                        debitAmt={histAmt?.debit}
+                        debitLink={"/staff/Transactions/transHistory/debit"}
+                        tokenAmt={histAmt?.tok}
+                        tokenLink={"/staff/Transactions/transHistory/tokenCredit"}
+                    />
+
+
+                    {hists.map((hist: {
+                        sender: string,
+                        reciever: string,
+                        amount: number,
+                        trans_type: string,
+                        send_id: string,
+                        rec_id: string,
+                        _id: string,
+                        createdAt: string
+
+
+                    }, index) => (
                         <div
-                            className={"text-primary  mb-6 bg-"}
+                            key={hist._id}
+                        // key={index}
                         >
-                            <div>
-                                from {hist.sender} to {hist.reciever}
-                            </div>
-
-
-                            <div>
-                                Amount: {hist.amount}
-                            </div>
-
-
 
                             <div
-
+                                className={"text-primary  mb-6 bg-"}
                             >
-                                Transfer Type: {hist.trans_type}
+                                <div>
+                                    from {hist.sender} to {hist.reciever}
+                                </div>
+
+
+                                <div>
+                                    Amount: <Money_Format amount={hist.amount} />
+                                </div>
+
+
+
+                                <div
+
+                                >
+                                    Transfer Type: {hist.trans_type}
+                                </div>
+
+                                <p
+                                    className="pb-5"
+                                >
+                                    on: {hist.createdAt}
+                                </p>
+
                             </div>
 
-                            <p
-                                className="pb-5"
-                            >
-                                on: {hist.createdAt}
-                            </p>
-
                         </div>
-
-                    </div>
-                ))}
+                    ))}
 
 
-            </>
-        </StaffLay>
-    )
+                </>
+            </StaffLay>
+        )
+    }
+
+
+
+
 }
