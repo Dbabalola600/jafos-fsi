@@ -20,6 +20,7 @@ function CreateAccount() {
     const [data, setData] = useState(null)
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
+    const [showtoast2, settoast2] = useState({ message: "", show: false })
 
 
     useEffect(() => {
@@ -30,6 +31,14 @@ function CreateAccount() {
         }
 
     }, [showtoast.show])
+    useEffect(() => {
+        if (showtoast2.show) {
+            setTimeout(() => {
+                settoast2({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast2.show])
 
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -55,6 +64,9 @@ function CreateAccount() {
 
                 if (res.status === 200) {
                     router.push("/")
+                }
+                if(res.status === 256){
+                    settoast2({message: "", show: true})
                 }
                else {
                     settoast({ message: " message", show: true })
@@ -158,7 +170,9 @@ function CreateAccount() {
 
 
                 {showtoast.show && <ErrMess title="invalid credentials specified" />}
+                {showtoast2.show && <ErrMess title="Already exits, please login" />}
                    
+
 
                 <div className=" w-full  space-y-6">
                   
