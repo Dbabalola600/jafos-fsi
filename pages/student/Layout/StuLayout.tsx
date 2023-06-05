@@ -34,7 +34,7 @@ export default function StuLayout({ children }: { children?: JSX.Element }) {
 
     return (
         <div>
-            <div className="bg-primaryColour md:space-y-20  min-h-screen">
+            <div className="bg-gray-200 md:space-y-20  min-h-screen">
                 <NavBar />
                 <div className="bg-white max-w-5xl mx-auto py-20  px-10 md:py-20 md:px-20 min-h-screen md:min-h-0">
                    <IoMdArrowRoundBack
