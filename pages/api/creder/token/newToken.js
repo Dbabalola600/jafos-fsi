@@ -1,8 +1,8 @@
 import connectMongo from "../../../../utils/connectMongo";
 import Token from "../../../../model/Creder/Token";
 import Creder from "../../../../model/Creder/Creder";
-
-
+import Student from "../../../../model/Student/StudentModel"
+import Staff from "../../../../model/Staff/StaffModel"
 
 export default async function createToken(req, res) {
     if (req.method === "POST") {
@@ -12,7 +12,7 @@ export default async function createToken(req, res) {
         console.log('CONNECTED TO MONGO');
 
 
-        const { amount, credid, pin } = JSON.parse(req.body)
+        const { amount, credid, pin, userId } = JSON.parse(req.body)
 
 
         const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789"
@@ -30,29 +30,58 @@ export default async function createToken(req, res) {
 
         const cred_det = await Creder.findById(credid)
 
-        if (pin === cred_det.pin) {
-            const new_tok = await Token.create({
-                token: generateToken(6),
-                amount,
-                madeBy: credid
-            })
+        const user = await Student.find({ matricno: userId })
+        if (user[0] === undefined) {
+            const user = await Staff.find({ staffid: userId })
+            if (user[0] === undefined) {
+                return res.status(256).json({
+                    messgae: "user not found"
+                })
+            } else {
+                if (pin === cred_det.pin) {
+                    const new_tok = await Token.create({
+                        token: generateToken(6),
+                        amount,
+                        user: userId,
+                        madeBy: credid
+                    })
 
-            console.log("CREATED TOKEN")
-            res.json({ new_tok })
+                    console.log("CREATED TOKEN")
+                    res.json({ new_tok })
+                } else {
+                    return res.status(245).json({
+                        message: "incorrect pin"
+                    })
+                }
+            }
         } else {
-            return res.status(245).json({
-                message: "incorrect pin"
-            })
+            if (pin === cred_det.pin) {
+                const new_tok = await Token.create({
+                    token: generateToken(6),
+                    amount,
+                    user: userId,
+                    madeBy: credid
+                })
+
+                console.log("CREATED TOKEN")
+                res.json({ new_tok })
+            } else {
+                return res.status(245).json({
+                    message: "incorrect pin"
+                })
+            }
         }
 
 
 
-        } else {
 
-            return res.status(400).json({
-                message: "wrong request",
-            });
 
-        }
+    } else {
+
+        return res.status(400).json({
+            message: "wrong request",
+        });
+
     }
+}
 

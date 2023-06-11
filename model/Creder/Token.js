@@ -5,34 +5,38 @@ import { Schema, model, models } from 'mongoose';
 
 
 const TokenSchema = new Schema({
-    token:{
+    token: {
         type: String,
         required: true,
         unique: true
     },
-    amount:{
+    amount: {
         type: Number,
         required: true,
         unique: false
     },
-    status:{
+    status: {
         type: String,
-        enum:["used", "available", "Master"],
+        enum: ["used", "available", "Master"],
         default: "available"
     },
-    usedBy:{
-        type:String,
-        default:"N/A",
+    user: {
+        type: String,
+        required: true
+    },
+    usedBy: {
+        type: String,
+        default: "N/A",
         required: true,
         unique: false
     },
-    madeBy:{
-        type:String,
+    madeBy: {
+        type: String,
         required: true,
         unique: false
     }
 },
-{ timestamps: true }
+    { timestamps: true }
 )
 
 

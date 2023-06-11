@@ -22,7 +22,7 @@ export default async function TokenCredit(req, res) {
 
 
         const tok_val = await Token.find({ token: tok })
-
+        console.log(tok)
 
 
         if (tok_val[0].status === "available") {

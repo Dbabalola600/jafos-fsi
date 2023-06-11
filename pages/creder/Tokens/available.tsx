@@ -15,6 +15,7 @@ type Tokens = {
     status: string
     usedBy: string
     madeBy: string
+    user: string
 }
 
 
@@ -59,28 +60,60 @@ export default function Available() {
                 <Header
                     title=" Available Tokens"
                 />
-                {tokens.map((token: {
-                    _id: string
-                    token: string
-                    amount: number
-                    status: string
-                    usedBy: string
-                    madeBy: string
-                }) =>
-                    <div
-                        key={token._id}
-                    >
 
-                        <Header
-                            title={token.token}
-                            desc={token.amount}
-                        />
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
+                    {tokens.map((token: {
+                        _id: string
+                        token: string
+                        amount: number
+                        status: string
+                        usedBy: string
+                        madeBy: string
+                        user: string
+                    }) =>
+                        <div
+                            key={token._id}
+                        >
+                            <div className="bg-primary rounded-lg  p-3 ">
 
-                    </div>
+                                <div
+                                    className="items-center justify-center "
+                                >
+
+
+                                </div>
+                                <div className="flex items-end space-x-3">
+
+                                    <div className="w-1/2  text-left relative">
+
+
+                                        <div className="text-black   font-bold text-lg">
+                                            Token:  {token.token}
+                                        </div>
+
+                                        <p
+                                            className="text-gray-400"
+                                        >
+                                            Amount:{token.amount}
+                                        </p>
+                                        <p
+                                            className="text-gray-400"
+                                        >
+                                            User:{token.user}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
 
 
 
-                )}
+                    )}
+                </div>
+
 
 
 

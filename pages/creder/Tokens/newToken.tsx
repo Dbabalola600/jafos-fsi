@@ -58,7 +58,8 @@ export default function NewToken() {
 
         const body = {
             amount: form.item(0).value,
-            pin: form.item(1).value,
+            userId: form.item(1).value,
+            pin: form.item(2).value,
             credid: token
         }
 
@@ -68,7 +69,11 @@ export default function NewToken() {
                     router.push("/creder/Tokens/available")
                 } if (res.status == 245) {
                     settoast({ message: " message", show: true })
-                } 
+                }
+                if (res.status === 256) {
+                    settoast2({ message: " message", show: true })
+
+                }
 
             }).catch(err => {
                 console.log(err)
@@ -81,6 +86,9 @@ export default function NewToken() {
             .catch(err => {
                 console.log(err)
             })
+
+
+        setLoading(false)
     }
 
     return (
@@ -91,11 +99,11 @@ export default function NewToken() {
                 />
 
                 <form
-                   className="w-full py-20 space-y-12  text-black text-base md:text-xl"
-                onSubmit={newTok}
+                    className="w-full py-20 space-y-12  text-black text-base md:text-xl"
+                    onSubmit={newTok}
                 >
                     {showtoast.show && <ErrMess title="invalid pin" />}
-                    {showtoast2.show && <ErrMess title="Try again Later" />}
+                    {showtoast2.show && <ErrMess title="User Does not exist" />}
 
 
 
@@ -116,12 +124,24 @@ export default function NewToken() {
 
                     <div className="mx-auto  w-full ">
                         <TextInput
+                            placeholder="UserID"
+                            name="UserID"
+                            type='text'
+
+                        />
+                    </div>
+
+                    <div className="mx-auto  w-full ">
+                        <TextInput
                             placeholder=" Pin"
                             name="Pin"
                             type='number'
 
                         />
                     </div>
+
+
+
 
 
 
