@@ -2,7 +2,7 @@ import Link from "next/link";
 
 
 type DashProps = {
-    accBal: string | any;
+    accBal?: string | any;
     name: string | any;
     AccId: string | any;
 

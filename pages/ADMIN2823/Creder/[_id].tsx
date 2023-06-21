@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import CusModal from "../../../components/shared/modal";
 import AdminLayout from "../Layout/AdminLayout";
+import Money_Format from "../../../components/shared/money_format";
 
 
 
@@ -28,6 +29,7 @@ type Creder = {
 export default function Creders() {
     const router = useRouter()
     const [creder, SetCreder] = useState<Creder | null>(null)
+    const [isLoading, setLoading] = useState(false)
 
 
     let ssd = router.query
@@ -50,6 +52,23 @@ export default function Creders() {
     }, []
     )
 
+    const delOne = async () => {
+        setLoading(true)
+        const body = {
+            user: ssd._id
+        }
+
+        const response = await fetch("/api/admin/creder/deleteCreder", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+                    router.push("/ADMIN2823/Creder")
+                }
+            })
+
+
+
+        setLoading(false)
+    }
 
     return (
         <AdminLayout>
@@ -59,17 +78,43 @@ export default function Creders() {
                 />
 
 
+                <div className=" text-primary mt-5 space-y-5 w-full ">
+
+                    <div>
+                        Name: {creder?.firstname} {creder?.lastname}
+
+
+                    </div>
+
+                    <div>
+                        Creder Id: {creder?.creder_no}
+
+
+                    </div>
 
 
 
 
 
-                <CusModal
-                    mainButtonTitle="Delete User"
-                    smButtonTitle="Delete"
-                    modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
-                    clickButton={() => { }}
-                />
+                    <div>
+                        Account Balance:<Money_Format amount={creder?.account_bal} />
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    className="mt-10"
+                >
+                    <CusModal
+                        mainButtonTitle="Delete User"
+                        smButtonTitle="Delete"
+                        modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
+                        clickButton={() => { }}
+                    />
+                </div>
+
 
 
 

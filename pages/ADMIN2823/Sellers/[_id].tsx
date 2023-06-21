@@ -31,6 +31,7 @@ export default function Stores() {
     const router = useRouter()
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
+    const [isLoading, setLoading] = useState(false)
 
     let ssd = router.query
 
@@ -55,6 +56,27 @@ export default function Stores() {
 
 
 
+    const delOne = async () => {
+        setLoading(true)
+        const body = {
+            user: ssd._id
+        }
+
+        const response = await fetch("/api/admin/seller/deleteSeller", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status == 200) {
+                    router.push("/ADMIN2823/Sellers")
+                }
+            })
+
+
+
+        setLoading(false)
+    }
+
+
+
+
     return (
         <AdminLayout>
             <>
@@ -67,51 +89,49 @@ export default function Stores() {
 
 
 
-                <div
-                    className="w-full  space-y-12"
-                >
 
 
-                    <div className=" text-primary mt-5 space-y-5 w-full ">
+                <div className=" text-primary mt-5 space-y-5 w-full ">
 
-                        <div>
-                            Name: {seller?.storename}
-
-
-                        </div>
-
-                        <div>
-                            About: {seller?.store_desc}
+                    <div>
+                        Name: {seller?.storename}
 
 
-                        </div>
+                    </div>
 
+                    <div>
+                        About: {seller?.store_desc}
 
-                        <div>
-                            Currently:  {seller?.status}
-
-                        </div>
-
-
-                        <div>
-                            Account Balance:<Money_Format amount={seller?.account_bal} />
-                        </div>
 
                     </div>
 
 
-                    <div
-                        className="mt-10"
-                    >
-                        <CusModal
-                            mainButtonTitle="Delete User"
-                            smButtonTitle="Delete"
-                            modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
-                            clickButton={() => { }}
-                        />
+                    <div>
+                        Currently:  {seller?.status}
+
+                    </div>
+
+
+                    <div>
+                        Account Balance:<Money_Format amount={seller?.account_bal} />
                     </div>
 
                 </div>
+
+
+                <div
+                    className="mt-10"
+                >
+                    <CusModal
+                        mainButtonTitle="Delete User"
+                        smButtonTitle="Delete"
+                        modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
+                        clickButton={() => delOne()}
+                    />
+                </div>
+
+
+            
 
             </>
 

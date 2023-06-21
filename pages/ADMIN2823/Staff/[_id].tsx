@@ -4,6 +4,7 @@ import Header from "../../../components/shared/Header"
 
 import AdminLayout from "../Layout/AdminLayout"
 import Money_Format from "../../../components/shared/money_format"
+import CusModal from "../../../components/shared/modal"
 
 
 
@@ -64,7 +65,7 @@ export default function Users() {
             user: ssd._id
         }
 
-        const response = await fetch("/api/admin/staff/deleteStaff", { method: "POST", body: JSON.stringify(body) })
+        const response = await fetch("/api/admin/staff/ridStaff", { method: "POST", body: JSON.stringify(body) })
             .then(res => {
                 if (res.status == 200) {
                     router.push("/ADMIN2823/Staff")
@@ -112,7 +113,20 @@ export default function Users() {
 
                 </div>
 
-                <button
+
+                <div
+                    className="mt-10"
+                >
+
+                    <CusModal
+                        mainButtonTitle="Delete User"
+                        smButtonTitle="Delete"
+                        modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
+                        clickButton={() => delOne()}
+                    />
+
+                </div>
+                {/* <button
                     className="btn btn-primary w-full mt-10"
                     onClick={() => delOne()}
                 // type="submit"
@@ -120,7 +134,7 @@ export default function Users() {
 
 
                     {isLoading ? "Loading..." : "DELETE USER"}
-                </button>
+                </button> */}
 
             </>
         </AdminLayout >

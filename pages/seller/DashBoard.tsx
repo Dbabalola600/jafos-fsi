@@ -206,7 +206,7 @@ function DashBoard() {
                             // className=" grid grid-cols-2 space-y-5 lg:mt-1 space-x-5 bg-red-500"
                             >
                                 <div
-                                    className="text-green-500 btn btn-primary"
+                                    className="text-green-500 btn btn-primary "
                                     onClick={OpStat}
                                 >
                                     OPEN

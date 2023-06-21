@@ -70,7 +70,7 @@ export default function Users() {
 
 
 
-    console.log("this" + staff)
+
     if (staff?.firstname === undefined) {
         return (
 

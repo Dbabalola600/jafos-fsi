@@ -2,6 +2,8 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import AdminLayout from "./Layout/AdminLayout";
 import Link from 'next/link'
+import Header from "../../components/shared/Header";
+import UserDash2 from "../../components/shared/UserDash2";
 
 type Admin = {
     _id: string
@@ -53,23 +55,28 @@ export default function DashBoard() {
 
 
             >
+                <Header
+                    title="Dashboard"
+                />
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
+                    <div className=" grid grid-cols-1 lg:grid-cols-1 rounded-lg   lg:text-3xl  text-lg  ">
+
+                        <div className="text-primary lg:text-3xl  text-lg">
+                            Welcome {admin?.firstname} {" "} {admin?.lastname}
+                        </div>
 
 
-
-                <div
-                    className=" ">
-                    <div className="text-primary text-3xl">
-                        Welcome {admin?.firstname} {" "} {admin?.lastname}
+                    </div>
+                    <div className="text-primary  lg:text-3xl  text-lg lg:text-right">
 
                         <div>
                             {admin?.AdminId}
                         </div>
-                        {/* <p>
-                        Balance: {admin?.account_bal}
-                        </p> */}
+
                     </div>
-                  
                 </div>
+              
 
 
 

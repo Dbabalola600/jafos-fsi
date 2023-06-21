@@ -34,7 +34,7 @@ export default function StoreButton(props: StoreProps) {
                         <div className="w-1/2  relative">
 
 
-                            <div className="text-black   font-bold text-lg">
+                            <div className="text-black break-words  font-bold text-lg">
                                 {props.name}
                             </div>
 

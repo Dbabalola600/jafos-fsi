@@ -55,9 +55,7 @@ export default function NavBar2() {
 
         if (userCheck == true) {
             deleteCookie('Adminuser', { path: '/', domain: 'localhost' })
-
-            router.push('/ADMIN2823/')
-
+            router.push('/')
         }
 
 

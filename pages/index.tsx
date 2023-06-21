@@ -73,12 +73,13 @@ const Home: NextPage = () => {
 
     const response = await fetch("/api/login", { method: "POST", body: JSON.stringify(body) })
       .then(res => {
-
+        if (res.status == 205) {
+          setgoodtoast({ message: " message", show: true })
+          router.push("/ADMIN2823/DashBoard")
+        }
         if (res.status == 204) {
           setgoodtoast({ message: " message", show: true })
           router.push("/student/DashBoard")
-
-
         }
         if (res.status == 203) {
           setgoodtoast({ message: " message", show: true })

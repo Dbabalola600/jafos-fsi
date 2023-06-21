@@ -3,7 +3,7 @@ import Student from "../../model/Student/StudentModel";
 import Staff from "../../model/Staff/StaffModel"
 import Seller from "../../model/Seller/Seller"
 import Creder from "../../model/Creder/Creder"
-
+import Admin from "../../model/Admin/AdminModel"
 
 import { setCookie } from "cookies-next";
 
@@ -22,7 +22,7 @@ export default async function Login(req, res) {
 
         const existingStudent = await Student.findOne({ matricno: name })
 
-        
+
         // make different error codes for each
         // make failed password the same error code 
         //each success codes should make to the user dash
@@ -36,10 +36,24 @@ export default async function Login(req, res) {
                 if (existingSeller === null) {
                     const existingCreder = await Creder.findOne({ creder_no: name })
                     if (existingCreder === null) {
-                        return res.status(402).json("not a user")
+
+                        const existingAdmin = await Admin.findOne({ AdminId: name })
+                        if (existingAdmin === null) {
+                            return res.status(402).json("not a user")
+                        } else {
+                            if (password === existingAdmin.password) {
+                                setCookie('Adminuser', existingAdmin._id, { req, res, maxAge: 86400 })
+                                return res.status(205).json("admin logged in")
+
+                            } else {
+                                return res.status(402).json("invalid password")
+                      
+                            }
+                        }
+
                     } else {
                         if (password === existingCreder.password) {
-                            setCookie('Creduser', existingCreder._id, { req, res, maxAge:86400 })
+                            setCookie('Creduser', existingCreder._id, { req, res, maxAge: 86400 })
                             return res.status(201).json("ayeee creder")
                         } else {
                             return res.status(402).json("invalid password")
@@ -47,7 +61,7 @@ export default async function Login(req, res) {
                     }
                 } else {
                     if (password === existingSeller.password) {
-                        setCookie('Selluser', existingSeller._id, { req, res, maxAge:86400 })
+                        setCookie('Selluser', existingSeller._id, { req, res, maxAge: 86400 })
 
 
                         return res.status(202).json("ayeeee seller")
@@ -57,7 +71,7 @@ export default async function Login(req, res) {
                 }
             } else {
                 if (password === existingStaff.password) {
-                    setCookie('Staffuser', existingStaff._id,{ req, res , maxAge:86400} )//maxage in seconds
+                    setCookie('Staffuser', existingStaff._id, { req, res, maxAge: 86400 })//maxage in seconds
 
                     return res.status(203).json("ayeeee staff")
 
@@ -68,8 +82,8 @@ export default async function Login(req, res) {
 
         } else {
             if (password === existingStudent.password) {
-                
-                setCookie('Normuser', existingStudent._id, { req, res , maxAge:86400})
+
+                setCookie('Normuser', existingStudent._id, { req, res, maxAge: 86400 })
                 return res.status(204).json("ayeeee")
 
             } else {

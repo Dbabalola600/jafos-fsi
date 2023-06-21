@@ -144,7 +144,7 @@ function NewOffer() {
                             // register={register("firstName")}
                             type="text"
 
-                            name="Category (eg. drinks, food, etc.)"
+                            name="Category (eg. drinks, rice, beef, etc.)"
                             id="description"
 
                         />
