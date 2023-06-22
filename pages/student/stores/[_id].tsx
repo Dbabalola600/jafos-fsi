@@ -8,6 +8,7 @@ import InputFromStore from "../../../components/shared/InputFromStore"
 import ProductBar from "../../../components/shared/ProductsBar"
 import ErrMess from "../../../components/shared/ErrMess"
 import EmptyCart from "../../../components/shared/Empty States/EmptyCart"
+import useSWR from "swr"
 
 
 
@@ -32,23 +33,25 @@ type Seller = {
 }
 
 
+const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 
 export default function Stores() {
     const router = useRouter()
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [seller, setSeller] = useState<Seller | null>(null);
     const [showtoast, settoast] = useState({ message: "", show: false })
-
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
     const [isLoading, setLoading] = useState(false)
-
     const [category, Setcategory] = useState<[]>([])
+
+    const [page, setPage] = useState(1)
+    const [pageCount, setPageCount] = useState(0)
 
     let ssd = router.query
 
-   
-   
-   
+
+
+
     useEffect(() => {
         if (showgoodtoast.show) {
             setTimeout(() => {
@@ -84,19 +87,7 @@ export default function Stores() {
 
         setSeller(response)
 
-        // console.log(response["storename"])
 
-        const body2 = {
-            name: response["storename"]
-
-        }
-
-        const Offerresponse = await fetch("/api/store/fetchOffer", { method: "POST", body: JSON.stringify(body2) })
-            .then(res => res.json()) as Offers[]
-
-
-        SetOffers(Offerresponse)
-        // console.log(Offerresponse[0].description)
 
 
 
@@ -117,9 +108,41 @@ export default function Stores() {
     }
 
 
+    //fecthing products pagination control
+    const { data, error } = useSWR(
+        `/api/seller/fetchOffer?page=${page}&id=${seller?._id}`,
+        fetcher
+    )
+    //conrols for the buttons
+    function handlePrevious() {
+        setPage((p) => {
+            if (p === 1) return p
+            else {
+                return p - 1;
+            }
+
+        })
+    }
+
+    function handleNext() {
+        setPage((p) => {
+            if (p === pageCount) return p;
+            else {
+                return p + 1;
+            }
+
+        })
+    }
 
 
+    useEffect(() => {
+        if (data) {
+            setPageCount(data.pagination.pageCount)
+        }
+    }, [data])
 
+
+    //add to cart controls
     const addCart: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
@@ -187,27 +210,27 @@ export default function Stores() {
 
 
 
-    if(offers[0] === undefined){
+    if (data?.offers[0] === undefined) {
         return (
             <StuLayout>
                 <>
                     <Header
                         title={seller?.storename}
                     />
-                  
 
-                  <EmptyCart/>
-                   
-    
-                   
-    
-    
-    
+
+                    <EmptyCart />
+
+
+
+
+
+
                 </>
-    
+
             </StuLayout>
         )
-    }else{
+    } else {
         return (
             <StuLayout>
                 <>
@@ -216,14 +239,14 @@ export default function Stores() {
                     />
                     <form
                         onSubmit={search}
-    
+
                     >
                         <div
                             className="text-center text-primary mb-3"
                         >
                             search for a product or category(eg. food, water, mouse pad etc)
                         </div>
-    
+
                         <div className="flex justify-center">
                             <div className="mb-3 xl:w-96">
                                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
@@ -233,12 +256,12 @@ export default function Stores() {
                                         placeholder="Search"
                                         aria-label="Search"
                                         aria-describedby="button-addon3"
-    
-    
+
+
                                     />
                                     <button
-    
-    
+
+
                                         className="relative z-[2] rounded-r border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
                                         type="submit"
                                         id="button-addon3"
@@ -248,17 +271,17 @@ export default function Stores() {
                                 </div>
                             </div>
                         </div>
-    
-    
+
+
                     </form>
                     {showgoodtoast.show && <GoodMess title="Added to Cart" />}
                     {showtoast.show && <ErrMess title="store is currently closed" />}
-                      
+
                     <div
                         className="grid grid-flow-col overflow-x-scroll mt-10 p-5   gap-5  "
-    
+
                     >
-    
+
                         {category.map((cat, index) => (
                             <div
                                 key={index}
@@ -269,35 +292,35 @@ export default function Stores() {
                                 />
                             </div>
                         ))}
-    
+
                     </div>
-    
+
                     <div
                         className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6"
-    
+
                     >
-    
-                        {offers.map((offer: {
+
+                        {data?.offers.map((offer: {
                             category: string
                             description: string
                             price: number
                             title: string;
                             owner: string
                             _id: string | null | undefined
-    
+
                         }) => (
                             <div
                                 key={offer._id}
                             >
                                 <form
                                     className=""
-    
+
                                     onSubmit={
                                         addCart
                                     }
                                 >
-    
-    
+
+
                                     <InputFromStore
                                         category={offer.category}
                                         price={offer.price}
@@ -305,31 +328,60 @@ export default function Stores() {
                                         owner={offer.owner}
                                         load={isLoading ? "ADDING..." : "ADD TO CART"}
                                     />
-    
-    
-    
-    
+
+
+
+
                                     {/* 
                                     <button
     
                                         type="submit"
                                         className="btn bg-black"
                                     > {isLoading ? "ADDING..." : "ADD TO CART"}</button> */}
-    
-    
+
+
                                 </form>
                             </div>
                         ))}
                     </div>
-    
-    
-    
+
+
+                    <div
+                        className="mt-5 space-x-5 text-black flex justify-center "
+                    >
+
+
+
+                        <button
+                            disabled={page === 1}
+                            onClick={handlePrevious}
+                            className="bg-black rounded-lg text-white p-3"
+                        >
+                            Previous
+                        </button>
+                        <div>
+                            Page: {page}
+                        </div>
+
+
+
+                        <button
+                            disabled={page === pageCount}
+                            onClick={handleNext}
+                            className="bg-black rounded-lg text-white p-3"
+                        >
+                            Next
+                        </button>
+                    </div>
+
+
+
                 </>
-    
+
             </StuLayout>
         )
 
     }
 
-   
+
 }

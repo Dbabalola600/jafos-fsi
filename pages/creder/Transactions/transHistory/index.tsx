@@ -123,7 +123,7 @@ export default function TransHistory() {
 
 
 
-    if (data.history[0] === undefined) {
+    if (data?.history[0] === undefined) {
         return (
             <CredLayout>
                 <div
