@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AdminLayout from "./Layout/AdminLayout";
 import Link from 'next/link'
 import Header from "../../components/shared/Header";
+import UserDash from "../../components/shared/UserDash";
 import UserDash2 from "../../components/shared/UserDash2";
 
 type Admin = {
@@ -19,7 +20,7 @@ type Admin = {
 
 export default function DashBoard() {
     const [admin, setAdmin] = useState<Admin | null>(null)
-
+    const [cash, setCash] = useState<number>(0)
 
 
     const showinfo = async () => {
@@ -39,6 +40,11 @@ export default function DashBoard() {
 
 
         setAdmin(response)
+
+
+        const cashresponse = await fetch("/api/admin/TotalAmount") .then(res => res.json())
+
+        setCash(cashresponse)
         console.log(response)
     }
 
@@ -59,7 +65,14 @@ export default function DashBoard() {
                     title="Dashboard"
                 />
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
+
+                <UserDash2
+                    AccId={admin?.AdminId}
+                    accBal={cash}
+                    name={admin?.firstname}
+
+                />
+                {/* <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-6">
                     <div className=" grid grid-cols-1 lg:grid-cols-1 rounded-lg   lg:text-3xl  text-lg  ">
 
                         <div className="text-primary lg:text-3xl  text-lg">
@@ -75,8 +88,8 @@ export default function DashBoard() {
                         </div>
 
                     </div>
-                </div>
-              
+                </div> */}
+
 
 
 

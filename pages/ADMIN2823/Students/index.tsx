@@ -3,36 +3,80 @@ import { useRouter } from "next/router";
 import { FormEventHandler, useEffect, useState } from "react";
 import Header from "../../../components/shared/Header";
 import AdminLayout from "../Layout/AdminLayout";
+import useSWR from 'swr'
 
+type Data = {
+    pagination: {
+        count: number
+        pageCount: number
+    }
+    students: {
+        _id: string
+        firstname: string
+        matricno: string
+        lastname: string
+    }[]
+
+}
+
+
+type Pagination = {
+    count: number
+    pageCount: number
+}
 type Students = {
     _id: string
     firstname: string
     matricno: string
     lastname: string
-}
+}[]
 
 
+const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 
 
 export default function Index() {
-    const [students, SetStudents] = useState<Students[]>([])
+    // const [data, SetData] = useState<Data>()
     const router = useRouter()
+    const [page, setPage] = useState(1)
+    const [pageCount, setPageCount] = useState(0)
+
+
+
+    const { data, error } = useSWR(
+        `/api/admin/student/fetchStudent?page=${page}`,
+
+        fetcher
+    )
+
+    // const showinfo = async () => {
+    //     const StudentResponse = await fetch("/api/admin/student/fetchStudent", { method: "Get" })
+    //         .then(res => res.json()) as Students[]
+
+    //     SetStudents(StudentResponse)
+
+    // }
+
+
 
 
 
     const showinfo = async () => {
-        const StudentResponse = await fetch("/api/admin/student/fetchStudent", { method: "Get" })
-            .then(res => res.json()) as Students[]
+        const StudentResponse = await fetch(`/api/admin/student/fetchStudent?page=${page}`, { method: "Get" })
+            .then(res => res.json()) as Data
 
-        SetStudents(StudentResponse)
+        // SetData(StudentResponse)
+        // console.log(StudentResponse)
 
     }
 
 
-    useEffect(() => {
-        showinfo()
-    }, [])
 
+    // useEffect(() => {
+    //     showinfo()
+    // }, [])
+
+    // console.log(data.students)
 
 
     const search: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -41,6 +85,36 @@ export default function Index() {
 
         router.push(`/ADMIN2823/Students/find/${form.item(0).value}`)
     }
+
+
+
+    function handlePrevious() {
+        setPage((p) => {
+            if (p === 1) return p
+            else {
+                return p - 1;
+            }
+
+        })
+    }
+
+    function handleNext() {
+        setPage((p) => {
+            if (p === pageCount) return p;
+            else {
+                return p + 1;
+            }
+
+        })
+    }
+
+
+    useEffect(() => {
+        if (data) {
+            setPageCount(data.pagination.pageCount)
+        }
+    }, [data])
+
 
     return (
         <AdminLayout>
@@ -112,11 +186,14 @@ export default function Index() {
 
                 >
 
-                    {students.map((student: {
+
+                    {data?.students.map((student: {
+
                         _id: string
                         firstname: string
                         matricno: string
                         lastname: string
+
                     }) =>
                         <div
                             key={student._id}
@@ -158,8 +235,34 @@ export default function Index() {
                         </div>
                     )}
 
+
                 </div>
 
+
+                <div
+                    className="mt-5 space-x-5 text-black"
+                >
+
+
+
+                    <button
+                        disabled={page === 1}
+                        onClick={handlePrevious}
+                        className="bg-black rounded-lg text-white p-3"
+                    >
+                        Previous
+                    </button>
+                    Page: {page}
+
+
+                    <button
+                        disabled={page === pageCount}
+                        onClick={handleNext}
+                        className="bg-black rounded-lg text-white p-3"
+                    >
+                        Next
+                    </button>
+                </div>
 
 
 

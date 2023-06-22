@@ -66,7 +66,7 @@ export default function NewSeller() {
 
                     <Header
                         title="Create Account"
-                        desc=" please provide necessary details for  Seller account creation" />
+                        desc="Please provide necessary details for  Seller account creation" />
 
                     <div className="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-12 md:gap-y-28">
 

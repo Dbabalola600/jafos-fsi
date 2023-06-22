@@ -15,35 +15,56 @@ import Seller from "../../../model/Seller/Seller";
 
 
 export default async function fetchOffer(req, res) {
-
-
-    if (req.method === "POST") {
+    try {
         console.log('CONNECTING TO MONGO');
         await connectMongo();
         console.log('CONNECTED TO MONGO');
 
-        const { name } = JSON.parse(req.body)
+
 
         console.log('FETCHING DOCUMENTS');
+        let name = req.query.id
 
-        const seller_id = await Seller.find({ storename: name }).select("_id storename");
+        //using pagination 
 
-        console.log(seller_id)
+        const ITEMS_PER_PAGE = 10;
+
+        const page = req.query.page || 1
 
 
+        const gen = await Product.find({ owner: name })
+        //to skip items 
+        const skip = (page - 1) * ITEMS_PER_PAGE
 
-        const offer = await Product.find({ owner: seller_id }).select("title price description category _id")
-        console.log(...offer)
-        return res.json(offer)
+        //put all query params here
+        const query = {}
+
+
+        const offerPromise = Product.find({ owner: name }).limit(ITEMS_PER_PAGE).skip(skip)
+
+
+        const countPromise = gen.length
+
+        const [count, offers] = await Promise.all([countPromise, offerPromise])
+        const pageCount = count / ITEMS_PER_PAGE;
+
+        return res.status(200).json(
+            {
+                pagination: {
+                    count,
+                    pageCount
+                },
+                offers
+            }
+        )
+
 
 
     }
-    else {
+    catch (error) {
 
-        return res.status(400).json({
-            notFound: true,
-        });
-
+        console.log(error);
+        res.json({ error })
     }
 
 

@@ -9,6 +9,7 @@ import CatLayout from "./Layout/CatLayout";
 import OrderCard from "../../components/shared/OrderCard";
 
 import EmptyOrder from "../../components/shared/Empty States/EmptyOrder";
+import Money_Format from "../../components/shared/money_format";
 
 type Seller = {
     _id: string
@@ -240,7 +241,8 @@ function DashBoard() {
                                     <p
                                         className="text-gray-400"
                                     >
-                                        ₦  {seller?.account_bal}
+                                        <Money_Format amount={seller?.account_bal}
+                                        />
                                     </p>
                                 </div>
                             </div>
@@ -285,7 +287,7 @@ function DashBoard() {
                     </div>
 
 
-                   <EmptyOrder/>
+                    <EmptyOrder />
 
 
 
@@ -357,7 +359,8 @@ function DashBoard() {
                                     <p
                                         className="text-gray-400"
                                     >
-                                        ₦  {seller?.account_bal}
+                                        <Money_Format amount={seller?.account_bal}
+                                        />
                                     </p>
                                 </div>
                             </div>

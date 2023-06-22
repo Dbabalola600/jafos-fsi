@@ -49,11 +49,7 @@ export default function Index() {
     return (
         <AdminLayout>
             <>
-                <Header
-                    title=" This displays all the staffs "
-                />
-
-
+            
                 <div className="grid grid-cols-2 space-x-10">
 
                     <Header

@@ -65,7 +65,7 @@ export default function NewStaff() {
                 >
                     <Header
                         title="Create Account"
-                        desc=" please provide necessary details for  Student account creation" />
+                        desc=" Please provide necessary details for  Staff account creation" />
 
 
 
