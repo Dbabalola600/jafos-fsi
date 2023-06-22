@@ -108,9 +108,10 @@ export default function Stores() {
     }
 
 
+
     //fecthing products pagination control
     const { data, error } = useSWR(
-        `/api/seller/fetchOffer?page=${page}&id=${seller?._id}`,
+        `/api/seller/fetchOffer?page=${page}&id=${ssd._id}`,
         fetcher
     )
     //conrols for the buttons

@@ -48,11 +48,7 @@ function Offerings() {
     const [offers, SetOffers] = useState<Offers[]>([]);
     const [category, Setcategory] = useState<[]>([])
 
-    const token = getCookie("Selluser")
-    const { data, error } = useSWR(
-        `/api/seller/fetchOffer?page=${page}&id=${token}`,
-        fetcher
-    )
+    
 
 
     const showinfo = async () => {
@@ -109,15 +105,18 @@ function Offerings() {
     }
 
 
-    useEffect(() => {
-        if (data) {
-            setPageCount(data.pagination.pageCount)
-        }
-    }, [data])
-
+   
     useEffect(() => {
         showinfo()
     }, []
+    )
+
+
+
+    const token = getCookie("Selluser")
+    const { data, error } = useSWR(
+        `/api/seller/fetchOffer?page=${page}&id=${token}`,
+        fetcher
     )
 
 
@@ -140,6 +139,11 @@ function Offerings() {
 
 
 
+    useEffect(() => {
+        if (data) {
+            setPageCount(data.pagination.pageCount)
+        }
+    }, [data])
 
 
     //search
