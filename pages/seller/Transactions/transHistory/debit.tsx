@@ -28,26 +28,21 @@ type TransHists = {
 
 
 type TransHistAmt = {
+
     debit: number | any
     all: number | any
     cred: number | any
 }
 
-const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 
 
-
-export default function TransHistory() {
+export default function TransHistoryDebit() {
     const [histAmt, setHistAmt] = useState<TransHistAmt | null>(null)
     const [hists, setHistory] = useState<TransHists[]>([])
-    const [page, setPage] = useState(1)
-    const [pageCount, setPageCount] = useState(0)
 
     const token = getCookie("Selluser")
-    const { data, error } = useSWR(
-        `/api/fetchTransHistoryPa?page=${page}&id=${token}`,
-        fetcher
-    )
+
+
 
     const showinfo = async () => {
         const token = getCookie("Selluser")
@@ -56,6 +51,10 @@ export default function TransHistory() {
         }
 
 
+        const response = await fetch("/api/transactionHistory/fetchDebit", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as TransHists[]
+
+        setHistory(response)
 
 
 
@@ -67,25 +66,7 @@ export default function TransHistory() {
 
     }
 
-    function handlePrevious() {
-        setPage((p) => {
-            if (p === 1) return p
-            else {
-                return p - 1;
-            }
 
-        })
-    }
-
-    function handleNext() {
-        setPage((p) => {
-            if (p === pageCount) return p;
-            else {
-                return p + 1;
-            }
-
-        })
-    }
 
 
     useEffect(() => {
@@ -93,14 +74,10 @@ export default function TransHistory() {
 
     }, [])
 
-    useEffect(() => {
-        if (data) {
-            setPageCount(data.pagination.pageCount)
-        }
-    }, [data])
 
 
-    if (data?.history[0] === undefined) {
+
+    if (hists[0] === undefined) {
         return (
             <CatLayout>
                 <>
@@ -119,9 +96,7 @@ export default function TransHistory() {
                         credLink={"/seller/Transactions/transHistory/credit"}
 
                     />
-
                     <EmptyTrans />
-
                 </>
             </CatLayout>
         )
@@ -147,7 +122,7 @@ export default function TransHistory() {
                     />
                     <div className="grid grid-cols-2 lg:grid-cols-2 mt-10 gap-6">
 
-                        {data?.history.map((hist: {
+                        {hists.map((hist: {
                             sender: string,
                             reciever: string,
                             amount: number,
@@ -198,33 +173,7 @@ export default function TransHistory() {
 
                     </div>
 
-                    <div
-                        className="mt-5 space-x-5 text-black flex justify-center "
-                    >
 
-
-
-                        <button
-                            disabled={page === 1}
-                            onClick={handlePrevious}
-                            className="bg-black rounded-lg text-white p-3"
-                        >
-                            Previous
-                        </button>
-                        <div>
-                            Page: {page}
-                        </div>
-
-
-
-                        <button
-                            disabled={page === pageCount}
-                            onClick={handleNext}
-                            className="bg-black rounded-lg text-white p-3"
-                        >
-                            Next
-                        </button>
-                    </div>
 
 
 

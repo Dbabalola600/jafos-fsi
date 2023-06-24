@@ -15,7 +15,7 @@ export default async function updateOrderStat(req, res) {
 
         const { id } = JSON.parse(req.body)
 
-        const updateItem = await OrderItem.findById(id).updateOne({status: "Canceled"})
+        const updateItem = await OrderItem.findById(id).updateOne({status: "Cancelled"})
 
         console.log(updateItem)
 

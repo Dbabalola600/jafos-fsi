@@ -46,7 +46,7 @@ export default async function Login(req, res) {
                                 return res.status(205).json("admin logged in")
 
                             } else {
-                                return res.status(402).json("invalid password")
+                                return res.status(401).json("invalid password")
                       
                             }
                         }
@@ -56,7 +56,7 @@ export default async function Login(req, res) {
                             setCookie('Creduser', existingCreder._id, { req, res, maxAge: 86400 })
                             return res.status(201).json("ayeee creder")
                         } else {
-                            return res.status(402).json("invalid password")
+                            return res.status(401).json("invalid password")
                         }
                     }
                 } else {
@@ -66,7 +66,7 @@ export default async function Login(req, res) {
 
                         return res.status(202).json("ayeeee seller")
                     } else {
-                        return res.status(402).json("invalid3")
+                        return res.status(401).json("invalid3")
                     }
                 }
             } else {
@@ -76,7 +76,7 @@ export default async function Login(req, res) {
                     return res.status(203).json("ayeeee staff")
 
                 } else {
-                    return res.status(402).json("invalid2")
+                    return res.status(401).json("invalid2")
                 }
             }
 
@@ -87,7 +87,7 @@ export default async function Login(req, res) {
                 return res.status(204).json("ayeeee")
 
             } else {
-                return res.status(402).json("invalid2")
+                return res.status(401).json("invalid2")
             }
         }
 

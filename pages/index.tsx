@@ -99,7 +99,7 @@ const Home: NextPage = () => {
 
 
         }
-        if (res.status == 402) {
+        if (res.status == 401) {
           settoast({ message: " message", show: true })
 
         }

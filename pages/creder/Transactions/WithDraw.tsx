@@ -4,7 +4,7 @@ import CredLayout from "../Layout/credLayout";
 import NavButton from "../../../components/shared/NavButton";
 import TextInput from "../../../components/shared/TextInput";
 import { useRouter } from "next/router";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import ErrMess from "../../../components/shared/ErrMess";
 import GoodMess from "../../../components/shared/GoodMess";
@@ -24,6 +24,7 @@ export default function WithDraw() {
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showtoast3, settoast3] = useState({ message: "", show: false })
+    const [showtoast4, settoast4] = useState({ message: "", show: false })
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
@@ -60,6 +61,9 @@ export default function WithDraw() {
                 if (res.status == 230) {
                     settoast3({ message: " message", show: true })
                 }
+                if (res.status == 257) {
+                    settoast4({ message: " message", show: true })
+                }
             })
 
 
@@ -67,6 +71,55 @@ export default function WithDraw() {
 
 
     }
+
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast3.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast3.show])
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+
+    useEffect(() => {
+        if (showtoast2.show) {
+            setTimeout(() => {
+                settoast2({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast2.show])
+
+    useEffect(() => {
+        if (showtoast4.show) {
+            setTimeout(() => {
+                settoast4({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast4.show])
 
 
     return (
@@ -87,7 +140,8 @@ export default function WithDraw() {
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showtoast3.show && <ErrMess title="insufficient funds" />}
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
-
+                    {showtoast4.show && <ErrMess title="insufficient cash with creder" />}
+                   
 
 
 

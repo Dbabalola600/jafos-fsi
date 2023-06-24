@@ -232,53 +232,7 @@ export default function PayPortal() {
 
 
 
-    // const Pay3 = async (_id: any) => {
-    //     setLoading(true)
-
-    //     const token = getCookie("Normuser")
-
-    //     const body2 = {
-    //         sen: token,
-    //         or_id: _id
-    //     }
-
-
-
-    //     const reponse = await fetch("/api/student/transactions/checkPay2", { method: "POST", body: JSON.stringify(body2) })
-    //         .then(async res => {
-    //             if (res.status === 200) {
-
-    //                 setgoodtoast({ message: " message", show: true })
-
-    //                 // router.push("/student/checkout/confirmOrder")
-    //                 router.reload()
-
-    //             } if (res.status == 256) {
-    //                 settoast({ message: " message", show: true })
-    //             }
-    //             if (res.status == 245) {
-    //                 settoast2({ message: " message", show: true })
-    //             }
-    //             if (res.status == 259) {
-    //                 settoastp({ message: " message", show: true })
-
-    //                 router.push("/student/checkout/confirmOrder")
-    //             }
-    //             else {
-    //                 settoast3({ message: " message", show: true })
-    //             }
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-
-
-
-
-
-    //     setLoading(false)
-
-    // }
-
+    
 
 
     //delete one item 

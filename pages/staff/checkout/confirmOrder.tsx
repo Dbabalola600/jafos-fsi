@@ -204,7 +204,7 @@ export default function ConfirmOrder() {
 
 
                 <Header
-                    title="Checkout"
+                    title="Confirm Order"
                 />
                 <div
                     className="text-black text-xl"
@@ -213,9 +213,9 @@ export default function ConfirmOrder() {
                     <div>
                         Amount Due:   ₦  {total}
                     </div>
-                    <div>
+                    {/* <div>
                         Payment Status: {orders[0]?.p_status}
-                    </div>
+                    </div> */}
                     <div>
                         Method Of Delivery: {orders[0]?.mod}
                     </div>
