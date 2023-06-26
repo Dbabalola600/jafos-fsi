@@ -14,11 +14,11 @@ import { setCookie, getCookie, getCookies } from 'cookies-next'
  * @param {import('next').NextApiRequest} req
  * @param {import('next').NextApiResponse} res
  */
- export default async function Login(req, res) {
+export default async function Login(req, res) {
 
 
     try {
-    
+
         console.log('CONNECTING TO MONGO');
         await connectMongo();
         console.log('CONNECTED TO MONGO');
@@ -38,10 +38,8 @@ import { setCookie, getCookie, getCookies } from 'cookies-next'
         console.log(isAdmin)
 
 
-        // const token = JWT.sign({ id: Seller._id }, JWT_SECRET);
-
         const user = existingAdmin._id
-        setCookie('Adminuser', existingAdmin._id, { req, res, maxAge:86400 })
+        setCookie('Adminuser', existingAdmin._id, { req, res, maxAge: 86400 })
 
 
 

@@ -111,7 +111,7 @@ export default function Creders() {
                         mainButtonTitle="Delete User"
                         smButtonTitle="Delete"
                         modalInfo="Are you sure you wish to delete the user? user will not be able to be retrieved"
-                        clickButton={() => { }}
+                        clickButton={() => { delOne()}}
                     />
                 </div>
 
