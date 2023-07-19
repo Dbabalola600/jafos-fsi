@@ -38,9 +38,14 @@ const StudentSchema = new Schema({
     default: "1234",
     length: 4
   },
+  bankDetails: {
+    accountNo: {
+      type: String
+    }
+  },
   role: {
     type: String,
-    enum: ['student', 'seller', 'Admin','creder','staff'],
+    enum: ['student', 'seller', 'Admin', 'creder', 'staff'],
     default: 'student'
   },
 },
