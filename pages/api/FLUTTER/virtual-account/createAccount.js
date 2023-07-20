@@ -7,7 +7,7 @@ export default  async function createAccount(req,res){
 
     const options = {
       method: 'POST',
-      url: 'https://fsi.ng/api/v1/flutterwave/v3/virtual-account-numbers',
+      url: `${process.env.SANDBOX_URL}/v1/flutterwave/v3/virtual-account-numbers`,
       headers: {
         'Content-Type': 'application/json',
         'sandbox-key': process.env.SANDBOX_KEY,
