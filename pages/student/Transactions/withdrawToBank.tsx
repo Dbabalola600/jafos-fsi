@@ -58,7 +58,7 @@ export default function WithdrawToBank() {
 
 
         setBankAccounts(response)
-        console.log(response)
+        console.log(response, "s")
     }
 
     useEffect(() => {
@@ -67,7 +67,7 @@ export default function WithdrawToBank() {
     }, [])
 
 
-    if (bankAccounts === null) {
+    if (bankAccounts === null || bankAccounts.length === 0) {
         return (
             <StuLayout>
                 <>
@@ -118,7 +118,12 @@ export default function WithdrawToBank() {
                                 <p className="text-white">{bankAccount.bankName}</p>
                                 <h1 className="text-white font-bold text-2xl">{bankAccount.accountNo}</h1>
                                 <p className="text-white text-xl">{bankAccount.accountName}</p>
-                                <button className="bg-black text-white px-4 py-2 mt-2 rounded-md font-medium">Withdraw</button>
+                                <button 
+                                    onClick={() => router.push(`/student/Transactions/WithDraw?bankId=${bankAccount.accountNo}`)}
+                                    className="bg-black text-white px-4 py-2 mt-2 rounded-md font-medium"
+                                >
+                                    Withdraw
+                                </button>
                             </div>
                         ))}
                     </div>
