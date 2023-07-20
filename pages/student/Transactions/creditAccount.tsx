@@ -96,10 +96,10 @@ export default function CreditAccount() {
 
                     <div className="flex justify-center mt-4">
                         <button
-                            onClick={() => router.push("/student/Transactions/addBank")}
-                            className="bg-black text-white font-bold text-2xl px-7 py-2 rounded-2xl"
+                            onClick={() => router.push("/student/Transactions/addCard")}
+                            className="bg-primary text-white font-bold text-2xl px-7 py-2 rounded-xl"
                         >
-                            Link Card
+                            Add New Card
                         </button>
                     </div>
 
