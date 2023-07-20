@@ -3,8 +3,7 @@ import Student from "../../../../model/Student/StudentModel";
 
 
 
-
-export default async function fetchStudentBanks(req, res) {
+export default async function fetchStudentCard(req, res) {
     if (req.method === "POST") {
         console.log('CONNECTING TO MONGO');
         await connectMongo();
@@ -14,15 +13,12 @@ export default async function fetchStudentBanks(req, res) {
 
         console.log('FETCHING DOCUMENTS');
 
-
-       
-
-        const student = await Student.findById(id).select("bankDetails");
+        const student = await Student.findById(id).select("cardDetails");
 
         console.log('FETCHED STUDENT');
 
         return res.status(200).json(
-            student.bankDetails
+            student.cardDetails
         )
     }
     else {

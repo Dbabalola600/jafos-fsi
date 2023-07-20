@@ -29,20 +29,7 @@ export default function WithdrawToBank() {
     const router = useRouter()
 
     const [bankAccounts, setBankAccounts] = useState<BankDetails[]>([])
-    // const [bankAccounts, setBankAccounts] = useState<BankAccount[] | null>([
-    //     {
-    //         accountNumber: 2209903548,
-    //         bankCode: 3001,
-    //         bankName: "Zenith Bank",
-    //         accountName: "Olatubosun John"
-    //     },
-    //     {
-    //         accountNumber: 2831072808,
-    //         bankCode: 2301,
-    //         bankName: "Eco Bank",
-    //         accountName: "Olatubosun John"
-    //     },
-    // ])
+    
 
 
     const showinfo = async () => {

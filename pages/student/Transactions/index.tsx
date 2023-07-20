@@ -49,7 +49,7 @@ export default function Index() {
 
 
                     <NavButton
-                        uLink="/student/Transactions/WithDraw"
+                        uLink="/student/Transactions/withdrawToBank"
                         title="Withdraw"
                     />
 
