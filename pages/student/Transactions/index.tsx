@@ -47,11 +47,11 @@ export default function Index() {
                     />
 
 
-{/* 
+
                     <NavButton
                         uLink="/student/Transactions/WithDraw"
                         title="Withdraw"
-                    /> */}
+                    />
 
 
 

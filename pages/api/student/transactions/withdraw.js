@@ -15,13 +15,13 @@ export default async function Withdraw(req, res) {
 
 
         const sender = await Student.findById(sen)
-        const reciever = await Creder.find({ creder_no: rec })
+        // const reciever = await Creder.find({ creder_no: rec })
 
    
 
-        if (reciever[0].creder_no === undefined) {
-            return res.status(240).json({ message: "not a creder" })
-        } else {
+        // if (reciever[0].creder_no === undefined) {
+        //     return res.status(240).json({ message: "not a creder" })
+        // } else {
             if (pin === sender.pin) {
                 if (sender.account_bal > amt) {
                     const new_sender_bal = sender.account_bal - amt
@@ -29,40 +29,13 @@ export default async function Withdraw(req, res) {
 
                     const sen_history = await TransferHistory.create({
                         sender: sender.firstname + sender.lastname,
-                        reciever: reciever[0].creder_no,
+                        reciever: sender.firstname + sender.lastname +"bank account",
                         amount: amt,
                         trans_type: "DEBIT",
                         send_id: sen,
-                        rec_id: reciever[0].id
+                        rec_id: sen
                     })
 
-
-
-                    console.log(reciever[0].account_bal)
-
-
-
-
-
-                    let new_reciever_bal = reciever[0].account_bal - JSON.parse(amt)
-
-
-
-
-
-                    console.log(new_reciever_bal)
-
-
-
-                    const reciever_bal = await Creder.findById(reciever[0]._id).updateOne({ account_bal: new_reciever_bal })
-                    const rec_history = await TransferHistory.create({
-                        sender: sender.firstname + sender.lastname,
-                        reciever: reciever[0].creder_no,
-                        amount: amt,
-                        trans_type: "WITHDRAW",
-                        send_id: sen,
-                        rec_id: reciever[0].id
-                    })
                     return res.status(200).json({
                         message: "successful"
                     }
@@ -79,7 +52,7 @@ export default async function Withdraw(req, res) {
                 })
             }
 
-        }
+        // }
 
 
 

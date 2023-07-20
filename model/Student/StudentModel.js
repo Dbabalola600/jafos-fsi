@@ -33,14 +33,57 @@ const StudentSchema = new Schema({
     type: Number,
     default: 400.50
   },
+
+
   pin: {
     type: String,
     default: "1234",
     length: 4
   },
+
+
+  // bank account 
+  bankDetails: {
+    type: Array,
+    accountNo: {
+      type: String,
+      required: true
+    },
+    firstname: {
+      type: String,
+      required: true
+    },
+    lastname: {
+      type: String,
+      required: true
+    }
+
+  },
+
+
+  //debit card
+  cardDetails: {
+    type: Array,
+    CardNo: {
+      type: String,
+      required: true
+    },
+    CVV: {
+      type: String,
+      required: true
+    },
+    ExpiryDate: {
+      type: String,
+      required: true
+    },
+    pin: {
+      type: String,
+      required: true
+    }
+  },
   role: {
     type: String,
-    enum: ['student', 'seller', 'Admin','creder','staff'],
+    enum: ['student', 'seller', 'Admin', 'creder', 'staff'],
     default: 'student'
   },
 },

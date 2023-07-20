@@ -9,19 +9,21 @@ import TextInput from "../../../components/shared/TextInput";
 import StuLayout from "../Layout/StuLayout";
 import GoodMess from "../../../components/shared/GoodMess";
 
-export default function Withdraw(){
+export default function Withdraw() {
 
     const router = useRouter()
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
     const [showtoast3, settoast3] = useState({ message: "", show: false })
+    const [showtoast4, settoast4] = useState({ message: "", show: false })
 
 
 
 
 
-    const [showgoodtoast, setgoodtoast ] = useState({  message: "", show:false }) 
+
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
     useEffect(() => {
         if (showgoodtoast.show) {
@@ -64,6 +66,15 @@ export default function Withdraw(){
 
 
 
+
+    useEffect(() => {
+        if (showtoast4.show) {
+            setTimeout(() => {
+                settoast4({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast4.show])
     const trans: FormEventHandler<HTMLFormElement> = async (e) => {
 
         e.preventDefault()
@@ -77,31 +88,39 @@ export default function Withdraw(){
 
         const body = {
             sen: info,
-            rec: form.item(0).value,
-            amt: form.item(1).value,
-            pin: form.item(2).value
+            // rec: form.item(0).value,
+            amt: form.item(0).value,
+            pin: form.item(1).value
         }
 
-
-
-        const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
-            .then(res => {
-                if (res.status == 200) {
-                    setgoodtoast({ message: " message", show: true })
-                   
-                    router.push("/student/DashBoard")
-                }
-                if (res.status == 256) {
-                    settoast({ message: " message", show: true })
-                }
-                if (res.status == 245) {
-                    settoast2({ message: " message", show: true })
-                }
-                if (res.status == 240) {
-                    settoast3({ message: " message", show: true })
+        const FluttTrans = await fetch("/api/FLUTTER/transfer/CreateTransfer")
+            .then(async res => {
+                if (res.status === 200) {
+                    const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
+                    .then(res => {
+                        if (res.status == 200) {
+                            setgoodtoast({ message: " message", show: true })
+        
+                            router.push("/student/DashBoard")
+                        }
+                        if (res.status == 256) {
+                            settoast({ message: " message", show: true })
+                        }
+                        if (res.status == 245) {
+                            settoast2({ message: " message", show: true })
+                        }
+                        if (res.status == 240) {
+                            settoast3({ message: " message", show: true })
+                        }
+                    })
+        
+                }else{
+                    settoast4({ message: " message", show: true })
+                       
                 }
             })
 
+       
 
         setLoading(false)
     }
@@ -118,12 +137,12 @@ export default function Withdraw(){
     return (
         <StuLayout>
             <>
-            <Header
-            title="Withdraw"
-            />
-            
+                <Header
+                    title="Withdraw"
+                />
 
-            <form
+
+                <form
                     onSubmit={trans}
                     className="w-full py-20 space-y-12  text-black text-base md:text-xl"
                 >
@@ -131,17 +150,17 @@ export default function Withdraw(){
                     {showtoast2.show && <ErrMess title="invalid pin" />}
                     {showgoodtoast.show && <GoodMess title="Transfer Sucessful" />}
                     {showtoast3.show && <ErrMess title="invalid Creder" />}
-                    
+                    {showtoast4.show && <ErrMess title="NETWORK ERROR" />}
 
 
 
                     <div className="mx-auto  w-full ">
-                        <TextInput
+                        {/* <TextInput
                             placeholder="Creder ID"
                             name="CREDER ID"
                             type='text'
 
-                        />
+                        /> */}
                     </div>
 
                     <div className="mx-auto  w-full ">
