@@ -18,10 +18,14 @@ export default function Withdraw() {
     const [showtoast3, settoast3] = useState({ message: "", show: false })
     const [showtoast4, settoast4] = useState({ message: "", show: false })
 
+    const [bankId, setBankId] = useState<string | null>(null)
 
-
-
-
+    useEffect(() => {
+        if (router.isReady && bankId === null) {
+            const bankId = router.query.bankId
+            setBankId(bankId as string)
+        }
+    }, [router.isReady])
 
     const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
