@@ -97,7 +97,7 @@ export default function CreditAccount() {
             <StuLayout>
                 <>
                     <Header
-                        title="Withdraw from Wallet"
+                        title="Credit Account"
                     />
 
                     <div className="grid lg:grid-cols-2 grid-cols-1  gap-11">
