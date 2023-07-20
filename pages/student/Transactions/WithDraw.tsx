@@ -93,34 +93,35 @@ export default function Withdraw() {
             pin: form.item(1).value
         }
 
-        const FluttTrans = await fetch("/api/FLUTTER/transfer/CreateTransfer")
+
+
+        const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
             .then(async res => {
-                if (res.status === 200) {
-                    const respone = await fetch("/api/student/transactions/withdraw", { method: "POST", body: JSON.stringify(body) })
-                    .then(res => {
-                        if (res.status == 200) {
-                            setgoodtoast({ message: " message", show: true })
-        
-                            router.push("/student/DashBoard")
-                        }
-                        if (res.status == 256) {
-                            settoast({ message: " message", show: true })
-                        }
-                        if (res.status == 245) {
-                            settoast2({ message: " message", show: true })
-                        }
-                        if (res.status == 240) {
-                            settoast3({ message: " message", show: true })
-                        }
-                    })
-        
-                }else{
-                    settoast4({ message: " message", show: true })
-                       
+                if (res.status == 200) {
+                    const FluttTrans = await fetch("/api/FLUTTER/transfer/CreateTransfer")
+                        .then(res => {
+                            if (res.status === 200) {
+                                setgoodtoast({ message: " message", show: true })
+                                router.push("/student/DashBoard")
+                            } else {
+                                settoast4({ message: " message", show: true })
+
+                            }
+                        })
+                }
+                if (res.status == 256) {
+                    settoast({ message: " message", show: true })
+                }
+                if (res.status == 245) {
+                    settoast2({ message: " message", show: true })
+                }
+                if (res.status == 240) {
+                    settoast3({ message: " message", show: true })
                 }
             })
 
-       
+
+
 
         setLoading(false)
     }

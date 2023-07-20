@@ -17,11 +17,18 @@ type BankAccount = {
     accountName: string;
 }
 
+type BankDetails = {
+    accountNo: string,
+    bankName: string,
+    accountName: string,
+    BVN: string
+}
+
 
 export default function WithdrawToBank() {
     const router = useRouter()
 
-    const [bankAccounts, setBankAccounts] = useState<BankAccount[] | null>(null)
+    const [bankAccounts, setBankAccounts] = useState<BankDetails[]>([])
     // const [bankAccounts, setBankAccounts] = useState<BankAccount[] | null>([
     //     {
     //         accountNumber: 2209903548,
@@ -36,6 +43,29 @@ export default function WithdrawToBank() {
     //         accountName: "Olatubosun John"
     //     },
     // ])
+
+
+    const showinfo = async () => {
+
+
+        const token = getCookie("Normuser")
+        const body = {
+            id: token
+        }
+
+        const response = await fetch("/api/student/account/getBank", { method: "POST", body: JSON.stringify(body) })
+            .then(res => res.json()) as BankDetails[]
+
+
+        setBankAccounts(response)
+        console.log(response)
+    }
+
+    useEffect(() => {
+        showinfo()
+
+    }, [])
+
 
     if (bankAccounts === null) {
         return (
@@ -63,7 +93,7 @@ export default function WithdrawToBank() {
                     </div>
 
                     <div className="flex justify-center mt-4">
-                        <button 
+                        <button
                             onClick={() => router.push("/student/Transactions/addBank")}
                             className="bg-black text-white font-bold text-2xl px-7 py-2 rounded-2xl"
                         >
@@ -83,15 +113,27 @@ export default function WithdrawToBank() {
                     />
 
                     <div className="grid grid-cols-2 gap-3">
-                    {bankAccounts && bankAccounts.map((bankAccount: BankAccount) => (
-                        <div className="bg-primary py-4 px-4 col-span-1 rounded-md" key={bankAccount.bankCode}>
-                            <p className="text-white">{bankAccount.bankName}</p>
-                            <h1 className="text-white font-bold text-2xl">{bankAccount.accountNumber}</h1>
-                            <p className="text-white text-xl">{bankAccount.accountName}</p>
-                            <button className="bg-black text-white px-4 py-2 mt-2 rounded-md font-medium">Withdraw</button>
-                        </div>
-                    ))}
+                        {bankAccounts.map((bankAccount: BankDetails) => (
+                            <div className="bg-primary py-4 px-4 col-span-1 rounded-md" key={bankAccount.accountNo}>
+                                <p className="text-white">{bankAccount.bankName}</p>
+                                <h1 className="text-white font-bold text-2xl">{bankAccount.accountNo}</h1>
+                                <p className="text-white text-xl">{bankAccount.accountName}</p>
+                                <button className="bg-black text-white px-4 py-2 mt-2 rounded-md font-medium">Withdraw</button>
+                            </div>
+                        ))}
                     </div>
+
+
+
+                    <div className="flex justify-center mt-4">
+                        <button
+                            onClick={() => router.push("/student/Transactions/addBank")}
+                            className="bg-black text-white font-bold text-2xl px-7 py-2 rounded-2xl"
+                        >
+                            Link Bank
+                        </button>
+                    </div>
+
                 </>
             </StuLayout>
         )

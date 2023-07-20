@@ -49,11 +49,15 @@ const StudentSchema = new Schema({
       type: String,
       required: true
     },
-    firstname: {
+    bankName: {
       type: String,
       required: true
     },
-    lastname: {
+    AccountName: {
+      type: String,
+      required: true
+    },
+    BVN: {
       type: String,
       required: true
     }

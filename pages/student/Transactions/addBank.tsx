@@ -9,6 +9,8 @@ import StuLayout from "../Layout/StuLayout";
 import TokenUserCard from "../../../components/shared/TokenUserCard";
 import EmptyTrans from "../../../components/shared/Empty States/EmptyTrans";
 import empty_card from "../../../public/empty_card.svg"
+import GoodMess from "../../../components/shared/GoodMess";
+import BankComponent from "../../../components/shared/FLUTTER/bankComponent";
 
 type BankAccount = {
     accountNumber: number;
@@ -18,22 +20,74 @@ type BankAccount = {
 }
 
 
+type Bank = {
+    id: number,
+    code: String,
+    name: string
+}
+
+
 export default function AddBank() {
-    const HandleSubmit: FormEventHandler<HTMLFormElement> = async (e) => { 
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
+    const [showtoast, settoast] = useState({ message: "", show: false })
+
+    const router = useRouter()
+    const token = getCookie("Normuser")
+
+    useEffect(() => {
+        if (showtoast.show) {
+            setTimeout(() => {
+                settoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast.show])
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
+
+
+
+    const HandleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
         const form = e.currentTarget.elements as any
 
         const body = {
+            id: token,
             bankName: form.item(0).value,
-            accountNumber: form.item(1).value,
+            accountNo: form.item(1).value,
             accountName: form.item(2).value,
             BVN: form.item(3).value,
         }
 
+        const response = await fetch("/api/student/account/AddBank", { method: "POST", body: JSON.stringify(body) })
+            .then(res => {
+                if (res.status === 200) {
+                    setgoodtoast({ message: "", show: true })
+                    router.push("/student/Transactions/withdrawToBank")
+                } else {
+                    settoast({ message: " message", show: true })
+
+                }
+            })
+
         console.log(body)
 
     }
+
+
+
+
+
+
 
     return (
         <StuLayout>
@@ -43,16 +97,45 @@ export default function AddBank() {
                     desc="Enter your withdrawal bank details"
                 />
 
-                <TextInput
-                    placeholder="Bank Name"
-                    name="Bank Name"
-                    type="text"
-                />
+                <div
+                    className="pt-5  "
+                >
+
+                    {/* <div
+                        className="form-control w-full max-w-xs mx-auto"
+                    >
+                        <label>
+                            <span className="label-text text-black  text-base">Bank Name</span>
+                        </label>
+                        <select className="select select-primary mt-3  max-w-xs w-full ">
+
+
+                            {bank.map((bank: {
+                                id: number,
+                                code: String,
+                                name: string
+                            }, index) => (
+                                <option
+                                    key={index}
+                                >
+                                    {bank.name}
+                                </option>
+                            ))}
+
+
+
+                        </select>
+                    </div> */}
+
+                    <BankComponent />
+
+
+                </div>
 
                 <TextInput
                     placeholder="Account Number"
                     name="Account Number"
-                    type="number"
+                    type="text"
                 />
 
                 <TextInput
@@ -64,7 +147,7 @@ export default function AddBank() {
                 <TextInput
                     placeholder="BVN"
                     name="BVN"
-                    type="number"
+                    type="text"
                 />
 
 
@@ -73,7 +156,16 @@ export default function AddBank() {
                         Submit
                     </button>
                 </div>
-                        
+
+                <div
+                    className="mt-10"
+                >
+                    {showtoast.show && <ErrMess title="Unknown Error" />}
+
+                    {showgoodtoast.show && <GoodMess title="created successfuly" />}
+
+                </div>
+
             </form>
         </StuLayout>
     )

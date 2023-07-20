@@ -89,14 +89,14 @@ export default function HistBar(props: histProps) {
 
 
             {/* token credit */}
-            <div
+            {/* <div
                 className="btn bg-black text-white text-center"
                 onClick={() => router.push(props.tokenLink)}
             >
 
                 Token Credit{"     "} {props.tokenAmt}
             </div>
-
+ */}
 
 
 

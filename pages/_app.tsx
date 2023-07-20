@@ -4,8 +4,11 @@ import '../styles/nprogress.css'
 import NProgress from 'nprogress';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import dotenv from 'dotenv';
 
 
+
+dotenv.config();
 function MyApp({ Component, pageProps }: AppProps) {
 
   const router = useRouter();

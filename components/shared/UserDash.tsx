@@ -61,7 +61,7 @@ export default function UserDash(props: DashProps) {
                         href={props.wLink}
                     >
                         <div
-                            className="rounded-xl w-full text-center text-sm  bg-black text-white "
+                            className="rounded-xl w-full text-center text-sm  bg-black text-white  cursor-pointer"
                         >
                             Withdraw
                         </div>
@@ -72,7 +72,7 @@ export default function UserDash(props: DashProps) {
                         href={props.uLink}
                     >
                         <div
-                            className="rounded-xl w-full text-center text-sm  bg-black text-white "
+                            className="rounded-xl w-full text-center text-sm  bg-black text-white cursor-pointer"
                         >
                             Credit Account
                         </div>

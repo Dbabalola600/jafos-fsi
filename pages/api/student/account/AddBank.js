@@ -14,7 +14,7 @@ export default async function AddBank(req, res) {
 
 
 
-        const { id, accountNo, firstname, lastname } = JSON.parse(req.body)
+        const { id, accountNo, bankName, accountName, BVN } = JSON.parse(req.body)
 
         const user = Student.findById(id)
 
@@ -35,7 +35,18 @@ export default async function AddBank(req, res) {
 
         const upper = await Student.updateOne(
             { _id: id },
-            { $push: { bankDetails: { $each: [{accountNo, firstname, lastname}], $position: 0 } } },
+            {
+                $push: {
+                    bankDetails: {
+                        $each: [{
+                            accountNo: accountNo,
+                            bankName: bankName,
+                            accountName: accountName,
+                            BVN: BVN
+                        }], $position: 0
+                    }
+                }
+            },
             { new: true }
         ).exec()
 
