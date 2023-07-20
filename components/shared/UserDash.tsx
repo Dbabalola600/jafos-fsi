@@ -7,6 +7,7 @@ type DashProps = {
     name: string | any;
     AccId: string | any;
     uLink: string
+    wLink: string
 }
 
 
@@ -54,14 +55,24 @@ export default function UserDash(props: DashProps) {
                 </div>
 
                 <div
-                    className="pt-2 float-right w-1/2 hover:cursor-pointer "
+                    className="flex justify-between space-x-2"
                 >
+                    <Link
+                        href={props.wLink}
+                    >
+                        <div
+                            className="rounded-xl w-full text-center text-sm  bg-black text-white  cursor-pointer"
+                        >
+                            Withdraw
+                        </div>
+
+                    </Link>
 
                     <Link
                         href={props.uLink}
                     >
                         <div
-                            className="rounded-xl text-center text-sm  bg-black text-white "
+                            className="rounded-xl w-full text-center text-sm  bg-black text-white cursor-pointer"
                         >
                             Credit Account
                         </div>

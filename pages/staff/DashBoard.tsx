@@ -90,13 +90,13 @@ export default function DashBoard() {
                     title="Dashboard"
                 />
 
-               <UserDash
+               {/* <UserDash
                AccId={staff?.staffid}
                accBal={staff?.account_bal}
                name={staff?.firstname}
                uLink="/staff/Transactions/creditAccount"
                
-               />
+               /> */}
 
                 <div
                     className="pt-5"

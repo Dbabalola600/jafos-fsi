@@ -9,6 +9,7 @@ import newStudent from "../api/student/createAccount";
 import addStudent from "../api/student/createAccount";
 import { useRouter } from "next/router";
 import ErrMess from "../../components/shared/ErrMess";
+import GoodMess from "../../components/shared/GoodMess";
 
 
 
@@ -21,7 +22,9 @@ function CreateAccount() {
     const [isLoading, setLoading] = useState(false)
     const [showtoast, settoast] = useState({ message: "", show: false })
     const [showtoast2, settoast2] = useState({ message: "", show: false })
+    const [showgoodtoast, setgoodtoast] = useState({ message: "", show: false })
 
+    const [showtoast3, settoast3] = useState({ message: "", show: false })
 
     useEffect(() => {
         if (showtoast.show) {
@@ -31,6 +34,8 @@ function CreateAccount() {
         }
 
     }, [showtoast.show])
+
+
     useEffect(() => {
         if (showtoast2.show) {
             setTimeout(() => {
@@ -39,6 +44,28 @@ function CreateAccount() {
         }
 
     }, [showtoast2.show])
+
+    useEffect(() => {
+        if (showtoast3.show) {
+            setTimeout(() => {
+                settoast3({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showtoast3.show])
+
+
+
+    useEffect(() => {
+        if (showgoodtoast.show) {
+            setTimeout(() => {
+                setgoodtoast({ message: "", show: false })
+            }, 5000)
+        }
+
+    }, [showgoodtoast.show])
+
+
 
 
     const newadd: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -58,29 +85,38 @@ function CreateAccount() {
         }
 
 
-
-        const response = await fetch("/api/student/createAccount", { method: "POST", body: JSON.stringify(body), headers:{role:"student"} })
-            .then(res => {
-
+        const FlutterAcc = await fetch("/api/FLUTTER/virtual-account/createAccount")
+            .then(async res => {
                 if (res.status === 200) {
-                    router.push("/")
-                }
-                if(res.status === 256){
-                    settoast2({message: "", show: true})
-                }
-               else {
-                    settoast({ message: " message", show: true })
-                }
+                    const response = await fetch("/api/student/createAccount", { method: "POST", body: JSON.stringify(body), headers: { role: "student" } })
+                        .then(res => {
 
-            }).catch(err => {
-                console.log(err)
+                            if (res.status === 200) {
+
+                                setgoodtoast({ message: "", show: true })
+                                router.push("/")
+                            }
+                            if (res.status === 256) {
+                                settoast2({ message: "", show: true })
+                            }
+                            else {
+                                settoast({ message: " message", show: true })
+                            }
+
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                } else {
+                    settoast3({ message: " message", show: true })
+                }
             })
+
 
         setLoading(false)
 
     }
 
-    
+
     return (
         <DefaultLayout>
             <form
@@ -101,9 +137,9 @@ function CreateAccount() {
                     {/* first name */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                          
+
                             placeholder="First Name"
-                           
+
                             type="text"
                             name="firstname"
                             id="firstname"
@@ -113,9 +149,9 @@ function CreateAccount() {
                     {/* lastname */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                          
+
                             placeholder="Last Name"
-                       
+
                             type="text"
                             name="lastname"
                             id="lastname"
@@ -125,9 +161,9 @@ function CreateAccount() {
                     {/* email */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                          
+
                             placeholder="Email"
-                    
+
                             type="email"
                             name="email"
                             id="email"
@@ -138,10 +174,10 @@ function CreateAccount() {
                     {/* matricNumber */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                         
+
                             placeholder="Matric Number"
-                        
-                            type="number"
+
+                            type="text"
 
                             name="matricno"
                             id="matricno"
@@ -153,12 +189,12 @@ function CreateAccount() {
                     {/* password */}
                     <div className="col-span-12  md:col-span-6 ">
                         <TextInput
-                     
+
                             placeholder="Password"
-                        
+
                             type="password"
                             name="Password"
-                          
+
 
                         />
                     </div>
@@ -171,11 +207,11 @@ function CreateAccount() {
 
                 {showtoast.show && <ErrMess title="invalid credentials specified" />}
                 {showtoast2.show && <ErrMess title="Already exits, please login" />}
-                   
-
+                {showgoodtoast.show && <GoodMess title="created successfuly" />}
+                {showtoast3.show && <ErrMess title="NETWORK ERROR" />}
 
                 <div className=" w-full  space-y-6">
-                  
+
                     <button className="w-full btn-primary btn "
                         type="submit">
                         {isLoading ? "Loading..." : "Proceed"}
