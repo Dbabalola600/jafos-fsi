@@ -105,6 +105,7 @@ function DashBoard() {
                    AccId={student?.matricno}
                    accBal={student?.account_bal}
                    name={student?.firstname}
+                   wLink="/student/Transactions/withdrawToBank"
                    uLink="/student/Transactions/creditAccount"
                    />
 
