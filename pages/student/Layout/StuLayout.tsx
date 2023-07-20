@@ -16,21 +16,21 @@ export default function StuLayout({ children }: { children?: JSX.Element }) {
     const router = useRouter()
 
 
-    // function checkUser() {
-    //     const userCheck = hasCookie("Normuser")
+    function checkUser() {
+        const userCheck = hasCookie("Normuser")
 
-    //     console.log(userCheck)
+        console.log(userCheck)
 
-    //     if (userCheck == false) {
-    //         router.push("/")
-    //     }
-    // }
+        if (userCheck == false) {
+            router.push("/")
+        }
+    }
 
 
 
-    // useEffect(() => {
-    //     checkUser()
-    // }, [])
+    useEffect(() => {
+        checkUser()
+    }, [])
 
     return (
         <div>
