@@ -45,10 +45,10 @@ export default function Index() {
 
 
 
-                    {/* <NavButton
+                    <NavButton
                         uLink="/seller/Transactions/WithDraw"
                         title="Withdraw"
-                    /> */}
+                    />
 
 
 
